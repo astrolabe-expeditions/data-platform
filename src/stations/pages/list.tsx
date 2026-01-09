@@ -2,10 +2,12 @@ import { useMemo } from 'react';
 import { EditButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
+import type { Station } from '@/shared/types/models';
+
 const ListStation = () => {
   const { dataGridProps } = useDataGrid();
 
-  const columns = useMemo<GridColDef<IStation>[]>(
+  const columns = useMemo<GridColDef<Station>[]>(
     () => [
       {
         field: 'id',
@@ -42,8 +44,3 @@ const ListStation = () => {
 };
 
 export { ListStation };
-
-interface IStation {
-  id: string;
-  name: string;
-}
