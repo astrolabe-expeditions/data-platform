@@ -37,6 +37,15 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
             routerProvider={routerProvider}
             i18nProvider={i18nProvider}
             notificationProvider={useNotificationProvider}
+            resources={[
+              {
+                name: 'stations',
+                list: '/stations',
+                show: '/stations/:id',
+                edit: '/stations/:id/edit',
+                create: '/stations/new',
+              },
+            ]}
           >
             {children}
           </Refine>

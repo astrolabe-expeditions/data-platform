@@ -53,8 +53,8 @@ const authProvider: AuthProvider = {
     return {
       success: false,
       error: {
-        message: "Login failed",
-        name: "Invalid email or password",
+        message: 'Login failed',
+        name: 'Invalid email or password',
       },
     };
   },
@@ -87,8 +87,8 @@ const authProvider: AuthProvider = {
     return {
       success: false,
       error: {
-        message: "Register failed",
-        name: "Invalid email or password",
+        message: 'Register failed',
+        name: 'Invalid email or password',
       },
     };
   },
@@ -110,8 +110,8 @@ const authProvider: AuthProvider = {
 
       if (data) {
         notification.open({
-          type: "success",
-          message: "Success",
+          type: 'success',
+          message: 'Success',
           description:
             "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.",
         });
@@ -129,8 +129,8 @@ const authProvider: AuthProvider = {
     return {
       success: false,
       error: {
-        message: "Forgot password failed",
-        name: "Invalid email",
+        message: 'Forgot password failed',
+        name: 'Invalid email',
       },
     };
   },
@@ -150,7 +150,7 @@ const authProvider: AuthProvider = {
       if (data) {
         return {
           success: true,
-          redirectTo: "/",
+          redirectTo: '/',
         };
       }
     } catch (error: any) {
@@ -162,8 +162,8 @@ const authProvider: AuthProvider = {
     return {
       success: false,
       error: {
-        message: "Update password failed",
-        name: "Invalid password",
+        message: 'Update password failed',
+        name: 'Invalid password',
       },
     };
   },
@@ -179,7 +179,7 @@ const authProvider: AuthProvider = {
 
     return {
       success: true,
-      redirectTo: "/",
+      redirectTo: '/',
     };
   },
   onError: async (error) => {
@@ -195,22 +195,22 @@ const authProvider: AuthProvider = {
         return {
           authenticated: false,
           error: {
-            message: "Check failed",
-            name: "Session not found",
+            message: 'Check failed',
+            name: 'Session not found',
           },
           logout: true,
-          redirectTo: "/login",
+          redirectTo: '/login',
         };
       }
     } catch (error: any) {
       return {
         authenticated: false,
         error: error || {
-          message: "Check failed",
-          name: "Session not found",
+          message: 'Check failed',
+          name: 'Session not found',
         },
         logout: true,
-        redirectTo: "/login",
+        redirectTo: '/login',
       };
     }
 
