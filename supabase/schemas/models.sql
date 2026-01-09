@@ -9,3 +9,9 @@ CREATE TABLE public.models (
 );
 
 ALTER TABLE public.models ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow all authenticated users to view models"
+  ON public.models
+  FOR SELECT
+  TO authenticated
+  USING (true);
