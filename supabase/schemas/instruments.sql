@@ -8,3 +8,9 @@ CREATE TABLE public.instruments (
 );
 
 ALTER TABLE public.instruments ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow all authenticated users to view instruments"
+  ON public.instruments
+  FOR SELECT
+  TO authenticated
+  USING (true);
