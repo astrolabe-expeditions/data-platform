@@ -2,10 +2,12 @@ import { useMemo } from 'react';
 import { EditButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
+import type { Instrument } from '@/shared/types/models';
+
 const ListInstrument = () => {
 	const { dataGridProps } = useDataGrid();
 
-	const columns = useMemo<GridColDef<IInstrument>[]>(
+	const columns = useMemo<GridColDef<Instrument>[]>(
 		() => [
 			{
 				field: 'id',
@@ -43,9 +45,3 @@ const ListInstrument = () => {
 };
 
 export { ListInstrument };
-
-interface IInstrument {
-	id: string;
-	identifier: string;
-	model_id: string;
-}
