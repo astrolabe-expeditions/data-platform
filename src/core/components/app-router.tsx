@@ -3,6 +3,8 @@ import { Navigate, Outlet, Route, Routes } from 'react-router';
 import { AuthPage } from '@refinedev/mui';
 
 import { ListStation } from '@/stations/pages/list';
+import { AppLayout } from '@/core/components/app-layout';
+import { DashboardPage } from '@/dashboard/pages';
 
 const AppRouter = () => {
   return (
@@ -10,11 +12,14 @@ const AppRouter = () => {
       <Route
         element={
           <Authenticated key="authenticated-routes" redirectOnFail="/login">
-            <Outlet />
+            <AppLayout>
+              <Outlet />
+            </AppLayout>
           </Authenticated>
         }
       >
-        <Route index element={<ListStation />} />
+        <Route index element={<DashboardPage />} />
+        <Route path="stations" element={<ListStation />} />
       </Route>
       <Route
         element={
