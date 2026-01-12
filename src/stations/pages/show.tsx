@@ -42,7 +42,7 @@ const ShowStation = () => {
   };
 
   return (
-    <Show isLoading={isLoading}>
+    <Show isLoading={isLoading} canEdit={false}>
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
           Name
