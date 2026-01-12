@@ -41,8 +41,6 @@ const CreateSession: FC = () => {
     id: id,
   });
 
-  console.log('Données de la station:', station);
-
   // Récupérer les relations instrument <-> station
   const {
     result: stationInstruments,
@@ -131,7 +129,7 @@ const CreateSession: FC = () => {
             )}
           />
         </Stack>
-        <Typography variant="h6">Instruments liés à la station</Typography>
+        <Typography variant="h6" mt={2}>Instruments associés à la station</Typography>
         {instrumentsLoading ? (
           <Typography>Chargement des instruments...</Typography>
         ) : instrumentsError ? (
