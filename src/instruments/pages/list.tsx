@@ -9,13 +9,7 @@ const ListInstrument = () => {
 
 	const columns = useMemo<GridColDef<Instrument>[]>(
 		() => [
-			{
-				field: 'id',
-				headerName: 'ID',
-				type: 'string',
-				width: 50,
-			},
-			{ field: 'identifier', headerName: 'Identifier', minWidth: 200, flex: 1 },
+			{ field: 'identifier', headerName: 'Identifier', minWidth: 200 },
 			{ field: 'model_id', headerName: 'Model ID', minWidth: 200, flex: 1 },
 			{
 				field: 'actions',
