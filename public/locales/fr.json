@@ -1,1 +1,7 @@
-{}
+{
+  "stations": {
+    "datasets": "Jeux de données",
+    "noDatasets": "Aucun jeu de données disponible",
+    "addDataset": "Ajouter un jeu de données"
+  }
+}

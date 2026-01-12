@@ -1,1 +1,7 @@
-{}
+{
+  "stations": {
+    "datasets": "Datasets",
+    "noDatasets": "No datasets available",
+    "addDataset": "Add a dataset"
+  }
+}

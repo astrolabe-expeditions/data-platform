@@ -1,12 +1,21 @@
-import { useShow, useMany } from '@refinedev/core';
+import { useShow, useMany, useGo } from '@refinedev/core';
 import {
   Show,
   TextFieldComponent as TextField,
   DateField,
 } from '@refinedev/mui';
-import { Stack, Typography, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Stack,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from '@mui/material';
 
 const ShowStation = () => {
+  const go = useGo();
+
   const {
     result: station,
     query: { isLoading },
@@ -24,6 +33,13 @@ const ShowStation = () => {
       enabled: true,
     },
   });
+
+  const handleCreateSession = () => {
+    go({
+      to: `/stations/${station?.id}/sessions/create`,
+      type: 'replace',
+    });
+  };
 
   return (
     <Show isLoading={isLoading}>
@@ -45,14 +61,35 @@ const ShowStation = () => {
         </Typography>
         <List dense>
           {instruments?.map((instrument) => (
-            <ListItem
-              key={instrument.id}
-              disableGutters
-            >
+            <ListItem key={instrument.id} disableGutters>
               <ListItemText primary={instrument.identifier} />
             </ListItem>
           ))}
         </List>
+        <Typography variant="body1" fontWeight="bold">
+          Session d'enregistrements
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateSession}
+          sx={{ mb: 1 }}
+        >
+          Ajouter une session
+        </Button>
+        {station?.sessions && station.sessions.length > 0 ? (
+          <List dense>
+            {station.sessions.map((session) => (
+              <ListItem key={session.id} disableGutters>
+                <ListItemText primary={session.name} />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <Typography variant="body2">
+            Aucune session d'enregistrement
+          </Typography>
+        )}
       </Stack>
     </Show>
   );
