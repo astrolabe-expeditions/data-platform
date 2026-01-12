@@ -43,15 +43,29 @@ const main = async () => {
     },
   ]);
 
-  const programs = ['LittObs', 'SensOcean', 'CosmicSail', 'SkyWater'];
+  const defaultModels = [
+    {
+      code: 'CTD',
+      name: 'Sonde conductitité, température et pression'
+    },
+    {
+      code: 'TSG',
+      name: 'Thermosalinographe de surface'
+    },
+    {
+      code: 'MD',
+      name: 'Détecteur de muons'
+    },
+    {
+      code: 'GNSS',
+      name: 'Positionnement GNSS et altimètre acoustique'
+    }
+  ]
 
-  const { models } = await seed.models((x) =>
-    x(5, {
-      name: ({ seed }) => copycat.word(seed),
-      version: '1.0.0',
-      program: ({ seed }) => copycat.oneOf(seed, programs),
-    }),
-  );
+  const { models } = await seed.models(defaultModels.map((model) => ({
+    ...model,
+    deleted_at: null
+  })));
 
   const { stations } = await seed.stations((x) =>
     x(10, ({ seed, index }) => {

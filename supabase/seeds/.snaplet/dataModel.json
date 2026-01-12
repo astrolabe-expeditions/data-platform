@@ -2084,11 +2084,11 @@
           "maxLength": null
         },
         {
-          "name": "sessions",
-          "type": "sessions",
+          "name": "auth_sessions",
+          "type": "auth_sessions",
           "isRequired": true,
           "kind": "object",
-          "relationName": "mfa_amr_claimsTosessions",
+          "relationName": "mfa_amr_claimsToauth_sessions",
           "relationFromFields": [
             "session_id"
           ],
@@ -2633,34 +2633,6 @@
           "maxLength": null
         },
         {
-          "id": "public.models.version",
-          "name": "version",
-          "columnName": "version",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "id": "public.models.program",
-          "name": "program",
-          "columnName": "program",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.models.created_at",
           "name": "created_at",
           "columnName": "created_at",
@@ -2694,6 +2666,34 @@
           "columnName": "deleted_at",
           "type": "timestamptz",
           "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.models.description",
+          "name": "description",
+          "columnName": "description",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.models.code",
+          "name": "code",
+          "columnName": "code",
+          "type": "text",
+          "isRequired": true,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
@@ -3290,11 +3290,11 @@
           "hasDefaultValue": false
         },
         {
-          "name": "sessions",
-          "type": "sessions",
+          "name": "auth_sessions",
+          "type": "auth_sessions",
           "isRequired": false,
           "kind": "object",
-          "relationName": "sessionsTooauth_clients",
+          "relationName": "auth_sessionsTooauth_clients",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -4043,11 +4043,11 @@
           "maxLength": null
         },
         {
-          "name": "sessions",
-          "type": "sessions",
+          "name": "auth_sessions",
+          "type": "auth_sessions",
           "isRequired": false,
           "kind": "object",
-          "relationName": "refresh_tokensTosessions",
+          "relationName": "refresh_tokensToauth_sessions",
           "relationFromFields": [
             "session_id"
           ],
@@ -5017,7 +5017,51 @@
         }
       ]
     },
-    "sessions": {
+    "seed_files": {
+      "id": "supabase_migrations.seed_files",
+      "schemaName": "supabase_migrations",
+      "tableName": "seed_files",
+      "fields": [
+        {
+          "id": "supabase_migrations.seed_files.path",
+          "name": "path",
+          "columnName": "path",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "supabase_migrations.seed_files.hash",
+          "name": "hash",
+          "columnName": "hash",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "seed_files_pkey",
+          "fields": [
+            "path"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
+    "auth_sessions": {
       "id": "auth.sessions",
       "schemaName": "auth",
       "tableName": "sessions",
@@ -5237,7 +5281,7 @@
           "type": "oauth_clients",
           "isRequired": false,
           "kind": "object",
-          "relationName": "sessionsTooauth_clients",
+          "relationName": "auth_sessionsTooauth_clients",
           "relationFromFields": [
             "oauth_client_id"
           ],
@@ -5255,7 +5299,7 @@
           "type": "users",
           "isRequired": true,
           "kind": "object",
-          "relationName": "sessionsTousers",
+          "relationName": "auth_sessionsTousers",
           "relationFromFields": [
             "user_id"
           ],
@@ -5273,7 +5317,7 @@
           "type": "mfa_amr_claims",
           "isRequired": false,
           "kind": "object",
-          "relationName": "mfa_amr_claimsTosessions",
+          "relationName": "mfa_amr_claimsToauth_sessions",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -5287,7 +5331,7 @@
           "type": "refresh_tokens",
           "isRequired": false,
           "kind": "object",
-          "relationName": "refresh_tokensTosessions",
+          "relationName": "refresh_tokensToauth_sessions",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -5298,6 +5342,138 @@
         }
       ],
       "uniqueConstraints": []
+    },
+    "public_sessions": {
+      "id": "public.sessions",
+      "schemaName": "public",
+      "tableName": "sessions",
+      "fields": [
+        {
+          "id": "public.sessions.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.start_at",
+          "name": "start_at",
+          "columnName": "start_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.end_at",
+          "name": "end_at",
+          "columnName": "end_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.updated_at",
+          "name": "updated_at",
+          "columnName": "updated_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.deleted_at",
+          "name": "deleted_at",
+          "columnName": "deleted_at",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.station_id",
+          "name": "station_id",
+          "columnName": "station_id",
+          "type": "uuid",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "stations",
+          "type": "stations",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "public_sessionsTostations",
+          "relationFromFields": [
+            "station_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "sessions_pkey",
+          "fields": [
+            "id"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
     },
     "spatial_ref_sys": {
       "id": "extensions.spatial_ref_sys",
@@ -5818,6 +5994,20 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "name": "public_sessions",
+          "type": "public_sessions",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "public_sessionsTostations",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
         },
         {
           "name": "station_has_instruments",
@@ -6840,11 +7030,11 @@
           "hasDefaultValue": false
         },
         {
-          "name": "sessions",
-          "type": "sessions",
+          "name": "auth_sessions",
+          "type": "auth_sessions",
           "isRequired": false,
           "kind": "object",
-          "relationName": "sessionsTousers",
+          "relationName": "auth_sessionsTousers",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
