@@ -1,41 +1,36 @@
 import { useMemo } from 'react';
-import { EditButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { List, useDataGrid } from '@refinedev/mui';
+import { DataGrid, type GridColDef, type GridEventListener } from '@mui/x-data-grid';
 
 import type { Instrument } from '@/shared/types/models';
+import { useGo } from '@refinedev/core';
 
 const ListInstrument = () => {
-	const { dataGridProps } = useDataGrid();
+  const go = useGo();
+  const { dataGridProps } = useDataGrid();
 
-	const columns = useMemo<GridColDef<Instrument>[]>(
-		() => [
-			{ field: 'identifier', headerName: 'Identifier', minWidth: 200 },
-			{ field: 'model_id', headerName: 'Model ID', minWidth: 200, flex: 1 },
-			{
-				field: 'actions',
-				headerName: 'Actions',
-				display: 'flex',
-				renderCell: function render({ row }) {
-					return (
-						<div>
-							<EditButton hideText recordItemId={row.id} />
-							<ShowButton hideText recordItemId={row.id} />
-						</div>
-					);
-				},
-				align: 'center',
-				headerAlign: 'center',
-				minWidth: 80,
-			},
-		],
-		[],
-	);
+  const columns = useMemo<GridColDef<Instrument>[]>(
+    () => [
+      { field: 'identifier', headerName: 'Identifier', minWidth: 200 },
+      { field: 'model_id', headerName: 'Model ID', minWidth: 200, flex: 1 },
+    ],
+    [],
+  );
 
-	return (
-		<List resource="instruments">
-			<DataGrid {...dataGridProps} columns={columns} />
-		</List>
-	);
+  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+    go({ to: `/instruments/${params.row.id}` });
+  };
+
+  return (
+    <List resource="instruments" canCreate={false}>
+      <DataGrid
+        {...dataGridProps}
+        columns={columns}
+        onRowClick={handleRowClick}
+        rowSelection={false}
+      />
+    </List>
+  );
 };
 
 export { ListInstrument };
