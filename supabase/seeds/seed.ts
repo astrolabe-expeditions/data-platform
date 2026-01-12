@@ -32,12 +32,12 @@ const main = async () => {
 
   await seed.users([
     {
-      email: 'anita.conti@astrolabe-expeditions.com',
+      email: 'anita.conti@astrolabe-expeditions.org',
       encrypted_password: await hashPassword('password'),
       ...authenticatedUser,
     },
     {
-      email: 'jacques-yves.cousteau@astrolabe-expeditions.com',
+      email: 'jacques-yves.cousteau@astrolabe-expeditions.org',
       encrypted_password: await hashPassword('password'),
       ...authenticatedUser,
     },
