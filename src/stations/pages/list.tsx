@@ -1,50 +1,49 @@
 import { useMemo } from 'react';
-import { EditButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { List, useDataGrid } from '@refinedev/mui';
+import {
+  DataGrid,
+  type GridColDef,
+  type GridEventListener,
+} from '@mui/x-data-grid';
+import { useGo, useTranslate } from '@refinedev/core';
 
 import type { Station } from '@/shared/types/models';
 import { Chip } from '@mui/material';
 
 const ListStation = () => {
+  const go = useGo();
+  const t = useTranslate();
   const { dataGridProps } = useDataGrid();
+
+  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+    go({ to: `/stations/${params.row.id}` });
+  };
 
   const columns = useMemo<GridColDef<Station>[]>(
     () => [
-      { field: 'name', headerName: 'Name', minWidth: 200 },
+      { field: 'name', headerName: t('stations.fields.name'), minWidth: 200 },
       {
         field: 'is_mobile',
-        headerName: 'Type',
+        headerName: t('stations.fields.type.title'),
         renderCell: (params) => (
           <Chip
-            label={params.value ? 'Mobile' : 'Fixed'}
+            label={params.value ? t('stations.fields.type.mobile') : t('stations.fields.type.fixed')}
             color={params.value ? 'primary' : 'secondary'}
           />
-        ),
-        flex: 1
-      },
-      {
-        field: 'actions',
-        headerName: 'Actions',
-        display: 'flex',
-        renderCell: function render({ row }) {
-          return (
-            <div>
-              <EditButton hideText recordItemId={row.id} />
-              <ShowButton hideText recordItemId={row.id} />
-            </div>
-          );
-        },
-        align: 'center',
-        headerAlign: 'center',
-        minWidth: 80,
-      },
+        )
+      }
     ],
-    [],
+    [t],
   );
 
   return (
-    <List resource="stations">
-      <DataGrid {...dataGridProps} columns={columns} />
+    <List resource="stations" canCreate={false}>
+      <DataGrid
+        {...dataGridProps}
+        columns={columns}
+        onRowClick={handleRowClick}
+        rowSelection={false}
+      />
     </List>
   );
 };
