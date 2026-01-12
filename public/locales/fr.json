@@ -1,4 +1,8 @@
 {
+  "dashboard": {
+    "welcome": "Bienvenue sur le tableau de bord",
+    "description": "Ici, vous pouvez gérer vos jeux de données et stations."
+  },
   "stations": {
     "datasets": "Jeux de données",
     "noDatasets": "Aucun jeu de données disponible",

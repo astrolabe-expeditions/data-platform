@@ -1,4 +1,8 @@
 {
+  "dashboard": {
+    "welcome": "Welcome to the Dashboard",
+    "description": "Here you can manage your datasets and stations."
+  },
   "stations": {
     "datasets": "Datasets",
     "noDatasets": "No datasets available",
