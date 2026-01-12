@@ -28,3 +28,9 @@ CREATE TABLE public.station_has_instruments (
 );
 
 ALTER TABLE public.station_has_instruments ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow all authenticated users to view station_has_instruments"
+  ON public.station_has_instruments
+  FOR SELECT
+  TO authenticated
+  USING (true);

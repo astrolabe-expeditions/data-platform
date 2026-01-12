@@ -1,6 +1,6 @@
 import { Authenticated } from '@refinedev/core';
 import { Navigate, Outlet, Route, Routes } from 'react-router';
-import { AuthPage } from '@refinedev/mui';
+import { AuthPage, Create } from '@refinedev/mui';
 
 import { ListStation } from '@/stations/pages/list';
 import { ListInstrument } from '@/instruments/pages/list';
@@ -8,6 +8,7 @@ import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
 import { ShowStation } from '@/stations/pages/show';
 import { ShowInstrument } from '@/instruments/pages/show';
+import { CreateSession } from '@/stations/pages/create-session';
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
         <Route path="stations">
           <Route index element={<ListStation />} />
           <Route path=":id" element={<ShowStation/>} />
+          <Route path=":id/sessions/create" element={<CreateSession />} />
         </Route>
         <Route path="instruments">
           <Route index element={<ListInstrument />} />

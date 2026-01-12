@@ -11,3 +11,7 @@ export type UpdateInstrument = TablesUpdate<'instruments'>;
 export type Station = Tables<'stations'>;
 export type InsertStation = TablesInsert<'stations'>;
 export type UpdateStation = TablesUpdate<'stations'>;
+
+export type Session = Tables<'sessions'>;
+export type InsertSession = TablesInsert<'sessions'>;
+export type UpdateSession = TablesUpdate<'sessions'>;
