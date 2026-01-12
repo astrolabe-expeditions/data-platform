@@ -3,19 +3,25 @@ import { EditButton, List, ShowButton, useDataGrid } from '@refinedev/mui';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 import type { Station } from '@/shared/types/models';
+import { Chip } from '@mui/material';
 
 const ListStation = () => {
   const { dataGridProps } = useDataGrid();
 
   const columns = useMemo<GridColDef<Station>[]>(
     () => [
+      { field: 'name', headerName: 'Name', minWidth: 200 },
       {
-        field: 'id',
-        headerName: 'ID',
-        type: 'string',
-        width: 50,
+        field: 'is_mobile',
+        headerName: 'Type',
+        renderCell: (params) => (
+          <Chip
+            label={params.value ? 'Mobile' : 'Fixed'}
+            color={params.value ? 'primary' : 'secondary'}
+          />
+        ),
+        flex: 1
       },
-      { field: 'name', headerName: 'Name', minWidth: 300, flex: 1 },
       {
         field: 'actions',
         headerName: 'Actions',

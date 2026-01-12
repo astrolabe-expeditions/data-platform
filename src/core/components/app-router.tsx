@@ -6,7 +6,7 @@ import { ListStation } from '@/stations/pages/list';
 import { ListInstrument } from '@/instruments/pages/list';
 import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
-import { Show } from '@/stations/pages/show';
+import { ShowStation } from '@/stations/pages/show';
 import { ShowInstrument } from '@/instruments/pages/show';
 
 const AppRouter = () => {
@@ -24,7 +24,7 @@ const AppRouter = () => {
         <Route index element={<DashboardPage />} />
         <Route path="stations">
           <Route index element={<ListStation />} />
-          <Route path=":id" element={<Show />} />
+          <Route path=":id" element={<ShowStation/>} />
         </Route>
         <Route path="instruments">
           <Route index element={<ListInstrument />} />
