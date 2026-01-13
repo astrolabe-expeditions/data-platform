@@ -128,9 +128,15 @@
       "list": "Stations d'observation",
       "show": "Afficher une station"
     },
-    "datasets": "Jeux de données",
-    "noDatasets": "Aucun jeu de données disponible",
-    "addDataset": "Ajouter un jeu de données"
+    "show": {
+      "instruments": "Instruments associés",
+      "sessions": "Sessions d'enregistrements",
+      "addSession": "Ajouter une session",
+      "noSessions": "Aucune session d'enregistrement",
+      "details": "Détail de la station",
+      "createdAt": "Créée le",
+      "updatedAt": "Dernière mise à jour"
+    }
   },
   "table": {
     "actions": "Actions"
