@@ -13,8 +13,9 @@ import {
 import { useForm } from '@refinedev/react-hook-form';
 import { Controller } from 'react-hook-form';
 import type { FC } from 'react';
-import { CreateSessionDataset } from '../components/create-session-dataset';
-import { useOneStation } from '../hooks/useOneStation';
+
+import { useOneStation } from '@/stations/hooks/useOneStation';
+import { Uploader } from '@/stations/components/uploader';
 
 interface ISession {
   id?: number;
@@ -28,7 +29,7 @@ interface ISession {
 const CreateSession: FC = () => {
   const { id } = useParsed();
   const t = useTranslate();
-  const { instruments, isInstrumentsLoading, isInstrumentsError } = useOneStation({
+  const { isInstrumentsLoading, isInstrumentsError } = useOneStation({
     id: id as string
   })
 
@@ -83,7 +84,7 @@ const CreateSession: FC = () => {
             )}
           />
         </Stack>
-        <Typography variant="h6" mt={2}>Instruments associés à la station</Typography>
+        <Typography variant="h6" mt={2} mb={2}>Fichiers liés</Typography>
         {isInstrumentsLoading ? (
           <Typography>Chargement des instruments...</Typography>
         ) : isInstrumentsError ? (
@@ -91,13 +92,14 @@ const CreateSession: FC = () => {
             Erreur lors du chargement des instruments
           </Typography>
         ) : (
-          instruments?.map((instrument) => (
-            <CreateSessionDataset key={instrument.id} instrument={instrument} />
-          ))
+          <Uploader />
         )}
       </Box>
     </Create>
   );
 };
+
+// Gérer le cas où il n'y a pas d'instruments (afficher un message d'erreur dans l'uploader)
+// Pas possible de créer une session sans instruments liés aux fichiers uploadés
 
 export { CreateSession };
