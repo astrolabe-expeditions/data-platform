@@ -1,25 +1,20 @@
 import {
   useTranslate,
-  useShow,
   type HttpError,
-  useParsed,
-  useMany,
-  useList,
+  useParsed
 } from '@refinedev/core';
 import { Create } from '@refinedev/mui';
 import {
   TextField,
   Box,
   Stack,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
+  Typography
 } from '@mui/material';
 import { useForm } from '@refinedev/react-hook-form';
 import { Controller } from 'react-hook-form';
 import type { FC } from 'react';
 import { CreateSessionDataset } from '../components/create-session-dataset';
+import { useOneStation } from '../hooks/useOneStation';
 
 interface ISession {
   id?: number;
@@ -32,47 +27,14 @@ interface ISession {
 
 const CreateSession: FC = () => {
   const { id } = useParsed();
-
-  const {
-    result: station,
-    query: { isLoading, isError },
-  } = useShow({
-    resource: 'stations',
-    id: id,
-  });
-
-  // Récupérer les relations instrument <-> station
-  const {
-    result: stationInstruments,
-    query: { isLoading: instrumentsLoading, isError: instrumentsError },
-  } = useList({
-    resource: 'station_has_instruments',
-    filters: [
-      {
-        field: 'station_id',
-        operator: 'eq',
-        value: id,
-      },
-    ],
-    pagination: { pageSize: 100 },
-  });
-
-  // Récupérer les instruments liés
-  const instrumentIds =
-    stationInstruments?.data?.map((rel) => rel.instrument_id) || [];
-  const {
-    result: { data: instruments },
-  } = useMany({
-    resource: 'instruments',
-    ids: instrumentIds,
-    queryOptions: { enabled: instrumentIds.length > 0 },
-  });
-
   const t = useTranslate();
+  const { instruments, isInstrumentsLoading, isInstrumentsError } = useOneStation({
+    id: id as string
+  })
+
   const {
     saveButtonProps,
     refineCore: { formLoading },
-    register,
     control,
     formState: { errors },
   } = useForm<ISession, HttpError, Partial<ISession>>({
@@ -81,17 +43,9 @@ const CreateSession: FC = () => {
     },
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading station data</div>;
-  }
-
   return (
     <Create
-      isLoading={formLoading || instrumentsLoading}
+      isLoading={formLoading}
       saveButtonProps={saveButtonProps}
       title={t('sessions.titles.create', 'Create Session')}
     >
@@ -130,9 +84,9 @@ const CreateSession: FC = () => {
           />
         </Stack>
         <Typography variant="h6" mt={2}>Instruments associés à la station</Typography>
-        {instrumentsLoading ? (
+        {isInstrumentsLoading ? (
           <Typography>Chargement des instruments...</Typography>
-        ) : instrumentsError ? (
+        ) : isInstrumentsError ? (
           <Typography color="error">
             Erreur lors du chargement des instruments
           </Typography>

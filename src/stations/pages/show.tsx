@@ -1,4 +1,4 @@
-import { useShow, useMany, useGo } from '@refinedev/core';
+import { useGo } from '@refinedev/core';
 import {
   Show,
   TextFieldComponent as TextField,
@@ -12,27 +12,13 @@ import {
   ListItemText,
   Button,
 } from '@mui/material';
+import { useParsed } from '@refinedev/core';
+import { useOneStation } from '@/stations/hooks/useOneStation';
 
 const ShowStation = () => {
   const go = useGo();
-
-  const {
-    result: station,
-    query: { isLoading },
-  } = useShow();
-
-  const {
-    result: { data: instruments },
-  } = useMany({
-    resource: 'instruments',
-    ids: [
-      '497e59b3-b6d1-59b6-81a5-5963a182fe55',
-      'b0d7ee5b-1b5a-5921-a7bc-5b5b8427a123',
-    ],
-    queryOptions: {
-      enabled: true,
-    },
-  });
+  const { id } = useParsed();
+  const { station, instruments, isLoading } = useOneStation({ id: id as string });
 
   const handleCreateSession = () => {
     go({
@@ -77,19 +63,9 @@ const ShowStation = () => {
         >
           Ajouter une session
         </Button>
-        {station?.sessions && station.sessions.length > 0 ? (
-          <List dense>
-            {station.sessions.map((session) => (
-              <ListItem key={session.id} disableGutters>
-                <ListItemText primary={session.name} />
-              </ListItem>
-            ))}
-          </List>
-        ) : (
           <Typography variant="body2">
             Aucune session d'enregistrement
           </Typography>
-        )}
       </Stack>
     </Show>
   );
