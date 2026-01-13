@@ -18,7 +18,9 @@ import { useOneStation } from '@/stations/hooks/useOneStation';
 const ShowStation = () => {
   const go = useGo();
   const { id } = useParsed();
-  const { station, instruments, isLoading } = useOneStation({ id: id as string });
+  const { station, instruments, isLoading } = useOneStation({
+    id: id as string,
+  });
 
   const handleCreateSession = () => {
     go({
@@ -28,7 +30,11 @@ const ShowStation = () => {
   };
 
   return (
-    <Show isLoading={isLoading} canEdit={false}>
+    <Show
+      isLoading={isLoading}
+      canEdit={false}
+      title={<Typography variant="h5">{station?.name}</Typography>}
+    >
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
           Name
@@ -63,9 +69,7 @@ const ShowStation = () => {
         >
           Ajouter une session
         </Button>
-          <Typography variant="body2">
-            Aucune session d'enregistrement
-          </Typography>
+        <Typography variant="body2">Aucune session d'enregistrement</Typography>
       </Stack>
     </Show>
   );
