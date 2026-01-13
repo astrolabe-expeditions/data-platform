@@ -35,3 +35,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Dummy data files
+data/generated/*
+!data/generated/.gitkeep
