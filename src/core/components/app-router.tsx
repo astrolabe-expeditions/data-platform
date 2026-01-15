@@ -9,6 +9,8 @@ import { DashboardPage } from '@/dashboard/pages';
 import { ShowStation } from '@/stations/pages/show';
 import { ShowInstrument } from '@/instruments/pages/show';
 import { CreateSession } from '@/sessions/pages/create';
+import { ListSession } from '@/sessions/pages/list';
+import { ShowSession } from '@/sessions/pages/show';
 
 const AppRouter = () => {
   return (
@@ -31,6 +33,11 @@ const AppRouter = () => {
         <Route path="instruments">
           <Route index element={<ListInstrument />} />
           <Route path=":id" element={<ShowInstrument />} />
+        </Route>
+        <Route path="sessions">
+          <Route index element={<ListSession />} />
+          <Route path=":id" element={<ShowSession />} />
+          <Route path="new" element={<CreateSession />} />
         </Route>
       </Route>
       <Route
