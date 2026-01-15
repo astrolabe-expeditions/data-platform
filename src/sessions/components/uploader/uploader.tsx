@@ -1,8 +1,9 @@
 import type { FC } from 'react';
 import { useState, useRef } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 import UploadIcon from '@mui/icons-material/CloudUpload';
 import { useTranslation } from 'react-i18next';
+import { useNotification } from '@refinedev/core';
 
 import {
   Box,
@@ -16,7 +17,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Chip,
   Stack,
 } from '@mui/material';
 
@@ -43,8 +43,9 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { open } = useNotification();
 
-  const instrumentIdentifiers = instruments.map((inst) => inst.identifier);
+  const instrumentIdentifiers = instruments.map((inst) => inst.serial_number);
 
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList) return;
@@ -53,12 +54,24 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
       const parsed = parseFileName(file.name);
       let instrument = parsed?.instrument ?? null;
       let error: string | undefined;
+
+      if (files.some((f) => f.file.name === file.name)) {
+        open?.({
+          type: 'error',
+          message: t('sessions.uploader.errors.duplicateFile', {
+            fileName: file.name,
+          }),
+        });
+        return;
+      }
+
       if (instrument && !instrumentIdentifiers.includes(instrument)) {
-        error = t('Instrument not part of current station');
+        error = t('sessions.uploader.errors.instrumentNotPartOfStation');
         instrument = null;
       } else if (!instrument) {
-        error = t('Instrument not found in filename');
+        error = t('sessions.uploader.errors.instrumentNotFoundInFilename');
       }
+
       newFiles.push({
         file,
         instrument,
@@ -168,11 +181,8 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                         disabled={uploading}
                       >
                         {instruments.map((inst) => (
-                          <MenuItem
-                            key={inst.identifier}
-                            value={inst.identifier}
-                          >
-                            {inst.identifier}
+                          <MenuItem key={inst.id} value={inst.serial_number}>
+                            {inst.serial_number}
                           </MenuItem>
                         ))}
                       </Select>
@@ -183,7 +193,7 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                       onClick={() => handleRemove(idx)}
                       disabled={uploading}
                     >
-                      <DeleteIcon />
+                      <CloseIcon />
                     </IconButton>
                   </Stack>
                 }
@@ -193,16 +203,19 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                   secondary={
                     <>
                       {file.status === 'pending' && (
-                        <Chip label={t('Pending')} size="small" />
+                        <Typography variant="caption">
+                          {t('sessions.uploader.status.pending')}
+                        </Typography>
                       )}
                       {file.error && (
-                        <Typography
-                          color="error"
-                          variant="caption"
-                          sx={{ ml: 1 }}
-                        >
-                          {file.error}
-                        </Typography>
+                        <>
+                          <Typography variant="caption" sx={{ mx: 1 }}>
+                            -
+                          </Typography>
+                          <Typography color="error" variant="caption">
+                            {file.error}
+                          </Typography>
+                        </>
                       )}
                     </>
                   }
