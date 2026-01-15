@@ -138,6 +138,17 @@
       "updatedAt": "Dernière mise à jour"
     }
   },
+  "instruments": {
+    "instruments": "Instruments",
+    "titles": {
+      "list": "Instruments",
+      "show": "Afficher un instrument"
+    },
+    "list": {
+      "serial_number": "Numéro de série",
+      "model": "Modèle"
+    }
+  },
   "sessions": {
     "sessions": "Sessions d'enregistrements",
     "titles": {
