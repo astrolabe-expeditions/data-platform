@@ -71,38 +71,84 @@ export type Database = {
       }
       models: {
         Row: {
+          code: string
           created_at: string
           deleted_at: string | null
+          description: string | null
           id: string
           name: string
-          program: string
           updated_at: string
-          version: string
         }
         Insert: {
+          code: string
           created_at?: string
           deleted_at?: string | null
+          description?: string | null
           id?: string
           name: string
-          program: string
           updated_at?: string
-          version: string
         }
         Update: {
+          code?: string
           created_at?: string
           deleted_at?: string | null
+          description?: string | null
           id?: string
           name?: string
-          program?: string
           updated_at?: string
-          version?: string
         }
         Relationships: []
+      }
+      session_files: {
+        Row: {
+          id: string
+          instrument_id: string
+          processed: boolean | null
+          processed_at: string | null
+          session_id: string
+          storage_path: string
+          uploaded_at: string | null
+        }
+        Insert: {
+          id?: string
+          instrument_id: string
+          processed?: boolean | null
+          processed_at?: string | null
+          session_id: string
+          storage_path: string
+          uploaded_at?: string | null
+        }
+        Update: {
+          id?: string
+          instrument_id?: string
+          processed?: boolean | null
+          processed_at?: string | null
+          session_id?: string
+          storage_path?: string
+          uploaded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_files_instrument_id_fkey"
+            columns: ["instrument_id"]
+            isOneToOne: false
+            referencedRelation: "instruments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_files_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sessions: {
         Row: {
           created_at: string
           deleted_at: string | null
+          description: string | null
           end_at: string
           id: string
           start_at: string
@@ -112,6 +158,7 @@ export type Database = {
         Insert: {
           created_at?: string
           deleted_at?: string | null
+          description?: string | null
           end_at: string
           id?: string
           start_at: string
@@ -121,6 +168,7 @@ export type Database = {
         Update: {
           created_at?: string
           deleted_at?: string | null
+          description?: string | null
           end_at?: string
           id?: string
           start_at?: string
