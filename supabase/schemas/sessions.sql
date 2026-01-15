@@ -6,7 +6,7 @@ CREATE TABLE public.sessions (
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   deleted_at TIMESTAMPTZ,
-  station_id uuid REFERENCES public.stations(id) ON DELETE CASCADE
+  station_id uuid NOT NULL REFERENCES public.stations(id) ON DELETE CASCADE
 );
 
 ALTER TABLE public.sessions ENABLE ROW LEVEL SECURITY;
