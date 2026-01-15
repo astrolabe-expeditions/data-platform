@@ -150,5 +150,14 @@
       "sectionTitle": "Uploaded files",
       "instrument": "Instrument"
     }
+  },
+  "models": {
+    "models": "Instrument models",
+    "titles": {
+      "list": "Instrument models"
+    },
+    "fields": {
+      "name": "Name"
+    }
   }
 }

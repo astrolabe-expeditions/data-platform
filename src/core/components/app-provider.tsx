@@ -46,6 +46,12 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
                 create: '/stations/new',
               },
               {
+                name: 'sessions',
+                list: '/sessions',
+                show: '/sessions/:id',
+                create: '/sessions/new',
+              },
+              {
                 name: 'instruments',
                 list: '/instruments',
                 show: '/instruments/:id',
@@ -53,10 +59,8 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
                 create: '/instruments/new',
               },
               {
-                name: 'sessions',
-                list: '/sessions',
-                show: '/sessions/:id',
-                create: '/sessions/new',
+                name: 'models',
+                list: '/models'
               }
             ]}
           >

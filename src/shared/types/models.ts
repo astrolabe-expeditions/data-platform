@@ -15,3 +15,7 @@ export type UpdateStation = TablesUpdate<'stations'>;
 export type Session = Tables<'sessions'>;
 export type InsertSession = TablesInsert<'sessions'>;
 export type UpdateSession = TablesUpdate<'sessions'>;
+
+export type Model = Tables<'models'>;
+export type InsertModel = TablesInsert<'models'>;
+export type UpdateModel = TablesUpdate<'models'>;
