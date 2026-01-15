@@ -82,14 +82,19 @@ const main = async () => {
     }),
   );
 
+  const ownerPrefixes = ['OSO', 'AE'];
+
   for (const station of stations) {
     const numberOfInstruments = station.is_mobile ? 1 : 3;
     const { instruments } = await seed.instruments((x) =>
-      x(numberOfInstruments, ({ seed }) => ({
-        serial_number: `OSO-${copycat.int(seed, { min: 1000, max: 9999 })}`,
-        model_id: copycat.oneOf(seed, models).id,
-        deleted_at: null,
-      })),
+      x(numberOfInstruments, ({ seed }) => {
+        const model = copycat.oneOf(seed, models);
+        return {
+          serial_number: `${copycat.oneOf(seed, ownerPrefixes)}_${model.code}_${copycat.int(seed, { min: 0, max: 999 })}`,
+          model_id: model.id,
+          deleted_at: null,
+        };
+      }),
     );
 
     await seed.station_has_instruments(
