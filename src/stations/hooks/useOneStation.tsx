@@ -1,12 +1,10 @@
 import type { Instrument, Station } from '@/shared/types/models';
 import { useList, useMany, useOne, type HttpError } from '@refinedev/core';
 
-
 const useOneStation = ({ id }: { id: string | undefined }) => {
-
   const {
     result: station,
-    query: { isLoading, isError }
+    query: { isLoading, isError },
   } = useOne<Station, HttpError>({
     resource: 'stations',
     id: id,
@@ -15,9 +13,7 @@ const useOneStation = ({ id }: { id: string | undefined }) => {
     },
   });
 
-  const {
-    result: stationInstruments,
-  } = useList({
+  const { result: stationInstruments } = useList({
     resource: 'station_has_instruments',
     filters: [
       {
@@ -44,8 +40,14 @@ const useOneStation = ({ id }: { id: string | undefined }) => {
     queryOptions: { enabled: instrumentIds.length > 0 },
   });
 
-  return { station: station, instruments, isLoading, isError, isInstrumentsLoading, isInstrumentsError };
-
+  return {
+    station: station,
+    instruments,
+    isLoading,
+    isError,
+    isInstrumentsLoading,
+    isInstrumentsError,
+  };
 };
 
 export { useOneStation };

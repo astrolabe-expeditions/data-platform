@@ -28,7 +28,7 @@ const AppRouter = () => {
         <Route index element={<DashboardPage />} />
         <Route path="stations">
           <Route index element={<ListStation />} />
-          <Route path=":id" element={<ShowStation/>} />
+          <Route path=":id" element={<ShowStation />} />
           <Route path=":id/sessions/create" element={<CreateSession />} />
         </Route>
         <Route path="instruments">

@@ -156,7 +156,9 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                       sx={{ minWidth: 120, mt: 1 }}
                       error={!!file.error}
                     >
-                      <InputLabel>{t('sessions.uploader.instrument')}</InputLabel>
+                      <InputLabel>
+                        {t('sessions.uploader.instrument')}
+                      </InputLabel>
                       <Select
                         value={file.instrument ?? ''}
                         label={t('sessions.uploader.instrument')}
