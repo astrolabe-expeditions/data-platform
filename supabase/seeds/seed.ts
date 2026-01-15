@@ -86,7 +86,7 @@ const main = async () => {
     const numberOfInstruments = station.is_mobile ? 1 : 3;
     const { instruments } = await seed.instruments((x) =>
       x(numberOfInstruments, ({ seed }) => ({
-        identifier: `OSO-${copycat.int(seed, { min: 1000, max: 9999 })}`,
+        serial_number: `OSO-${copycat.int(seed, { min: 1000, max: 9999 })}`,
         model_id: copycat.oneOf(seed, models).id,
         deleted_at: null,
       })),
