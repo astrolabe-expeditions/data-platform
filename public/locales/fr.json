@@ -139,8 +139,14 @@
     }
   },
   "sessions": {
+    "sessions": "Sessions d'enregistrements",
     "titles": {
+      "list": "Sessions d'enregistrements",
       "create": "Créer une session d'enregistrement"
+    },
+    "list": {
+      "station": "Station",
+      "period": "Plage d'enregistrement"
     },
     "fields": {
       "description": "Description",
