@@ -1,6 +1,6 @@
 import { Authenticated } from '@refinedev/core';
 import { Navigate, Outlet, Route, Routes } from 'react-router';
-import { AuthPage, Create } from '@refinedev/mui';
+import { AuthPage } from '@refinedev/mui';
 
 import { ListStation } from '@/stations/pages/list';
 import { ListInstrument } from '@/instruments/pages/list';
@@ -8,7 +8,7 @@ import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
 import { ShowStation } from '@/stations/pages/show';
 import { ShowInstrument } from '@/instruments/pages/show';
-import { CreateSession } from '@/stations/pages/create-session';
+import { CreateSession } from '@/sessions/pages/create';
 
 const AppRouter = () => {
   return (
