@@ -172,7 +172,18 @@
       "subtitle": "Téléchargez vos fichiers de données en cliquant pour sélectionner des fichiers.",
       "button": "Sélectionner des fichiers",
       "sectionTitle": "Fichiers téléchargés",
-      "instrument": "Instrument"
+      "instrument": "Instrument",
+      "status": {
+        "pending": "En attente de traitement",
+        "processing": "Traitement en cours",
+        "processed": "Traitement terminé",
+        "error": "Erreur lors du traitement"
+      },
+      "errors": {
+        "instrumentNotPartOfStation": "L'instrument ne fait pas partie de la station actuelle.",
+        "instrumentNotFoundInFilename": "L'instrument n'a pas été trouvé dans le nom du fichier.",
+        "duplicateFile": "Le fichier '{{fileName}}' a déjà été ajouté."
+      }
     }
   },
   "models": {
