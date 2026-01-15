@@ -16,3 +16,9 @@ CREATE POLICY "Allow all authenticated users to view sessions"
   FOR SELECT
   TO authenticated
   USING (true);
+
+CREATE POLICY "Allow all authenticated users to insert sessions"
+  ON public.sessions
+  FOR INSERT
+  TO authenticated
+  WITH CHECK (true);
