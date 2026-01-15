@@ -11,6 +11,7 @@ import { ShowInstrument } from '@/instruments/pages/show';
 import { CreateSession } from '@/sessions/pages/create';
 import { ListSession } from '@/sessions/pages/list';
 import { ShowSession } from '@/sessions/pages/show';
+import { ListModel } from '@/models/pages/list';
 
 const AppRouter = () => {
   return (
@@ -38,6 +39,9 @@ const AppRouter = () => {
           <Route index element={<ListSession />} />
           <Route path=":id" element={<ShowSession />} />
           <Route path="new" element={<CreateSession />} />
+        </Route>
+        <Route path="models">
+          <Route index element={<ListModel />} />
         </Route>
       </Route>
       <Route

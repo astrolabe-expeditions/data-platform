@@ -158,7 +158,13 @@
       "instrument": "Instrument"
     }
   },
-  "table": {
-    "actions": "Actions"
+  "models": {
+    "models": "Modèles d'instruments",
+    "titles": {
+      "list": "Modèles d'instruments"
+    },
+    "fields": {
+      "name": "Nom"
+    }
   }
 }
