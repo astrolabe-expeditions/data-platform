@@ -52,6 +52,12 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
                 edit: '/instruments/:id/edit',
                 create: '/instruments/new',
               },
+              {
+                name: 'sessions',
+                list: '/sessions',
+                show: '/sessions/:id',
+                create: '/sessions/new',
+              }
             ]}
           >
             {children}
