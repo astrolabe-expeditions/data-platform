@@ -6,7 +6,7 @@ import { Controller } from 'react-hook-form';
 import type { FC } from 'react';
 
 import { useOneStation } from '@/stations/hooks/useOneStation';
-import { Uploader } from '@/stations/components/uploader/uploader';
+import { Uploader } from '@/sessions/components/uploader/uploader';
 
 interface ISession {
   id?: number;

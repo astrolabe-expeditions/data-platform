@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 
 import type { Instrument } from '@/shared/types/models.ts';
-import { parseFileName } from '@/stations/components/uploader/helpers.ts';
+import { parseFileName } from '@/sessions/components/uploader/helpers';
 
 type FileStatus = 'pending' | 'uploading' | 'done' | 'error';
 
