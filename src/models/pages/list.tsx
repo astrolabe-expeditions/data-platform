@@ -26,7 +26,7 @@ const ListModel = () => {
         valueGetter: (value, row) => {
           return `${value} (${row.code})`;
         },
-        flex: 1
+        flex: 1,
       },
     ],
     [t],

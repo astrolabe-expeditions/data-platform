@@ -37,7 +37,7 @@ const ShowStation = () => {
       title={<Typography variant="h5">{station?.name}</Typography>}
     >
       <Stack
-        direction={{ xs: "column", md: "row" }}
+        direction={{ xs: 'column', md: 'row' }}
         spacing={2}
         alignItems="flex-start"
       >
@@ -46,7 +46,7 @@ const ShowStation = () => {
             spacing={1}
             p={2}
             sx={{
-              bgcolor: "background.paper",
+              bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 1,
               width: { xs: '100%', md: 'auto' },
@@ -67,13 +67,17 @@ const ShowStation = () => {
             spacing={1}
             p={2}
             sx={{
-              bgcolor: "background.paper",
+              bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 1,
               width: { xs: '100%', md: 'auto' },
             }}
           >
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               <Typography variant="h6" fontWeight="bold">
                 {t('stations.show.sessions')}
               </Typography>
@@ -86,7 +90,9 @@ const ShowStation = () => {
                 {t('stations.show.addSession')}
               </Button>
             </Stack>
-            <Typography variant="body2">{t('stations.show.noSessions')}</Typography>
+            <Typography variant="body2">
+              {t('stations.show.noSessions')}
+            </Typography>
           </Stack>
         </Stack>
         <Stack
@@ -94,11 +100,11 @@ const ShowStation = () => {
           spacing={2}
           p={2}
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
             borderRadius: 2,
             boxShadow: 1,
             minWidth: { md: 280 },
-            width: { xs: '100%', md: "33%" },
+            width: { xs: '100%', md: '33%' },
             mt: { xs: 2, md: 0 },
           }}
         >

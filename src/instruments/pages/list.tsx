@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 import { List, useDataGrid } from '@refinedev/mui';
-import { DataGrid, type GridColDef, type GridEventListener } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  type GridColDef,
+  type GridEventListener,
+} from '@mui/x-data-grid';
 
 import type { Instrument } from '@/shared/types/models';
 import { useGo } from '@refinedev/core';

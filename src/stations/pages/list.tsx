@@ -27,11 +27,15 @@ const ListStation = () => {
         headerName: t('stations.fields.type.title'),
         renderCell: (params) => (
           <Chip
-            label={params.value ? t('stations.fields.type.mobile') : t('stations.fields.type.fixed')}
+            label={
+              params.value
+                ? t('stations.fields.type.mobile')
+                : t('stations.fields.type.fixed')
+            }
             color={params.value ? 'primary' : 'secondary'}
           />
-        )
-      }
+        ),
+      },
     ],
     [t],
   );

@@ -21,17 +21,17 @@ const ListSession = () => {
   const columns = useMemo<GridColDef<Session>[]>(
     () => [
       {
-        field: "id",
-        headerName: t("sessions.fields.id")
+        field: 'id',
+        headerName: t('sessions.fields.id'),
       },
       {
-        field: "station",
-        headerName: t("sessions.fields.station")
+        field: 'station',
+        headerName: t('sessions.fields.station'),
       },
       {
-        field: "dateRange",
-        headerName: t("sessions.fields.dateRange")
-      }
+        field: 'dateRange',
+        headerName: t('sessions.fields.dateRange'),
+      },
     ],
     [t],
   );

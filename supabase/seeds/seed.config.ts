@@ -9,5 +9,12 @@ export default defineConfig({
     );
     return new SeedPostgres(client);
   },
-  select: ['!*', 'public*', 'auth.users', 'auth.identities', 'auth.sessions', 'auth.oauth_clients'],
+  select: [
+    '!*',
+    'public*',
+    'auth.users',
+    'auth.identities',
+    'auth.sessions',
+    'auth.oauth_clients',
+  ],
 });

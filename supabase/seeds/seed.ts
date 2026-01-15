@@ -46,26 +46,28 @@ const main = async () => {
   const defaultModels = [
     {
       code: 'CTD',
-      name: 'Sonde conductitité, température et pression'
+      name: 'Sonde conductitité, température et pression',
     },
     {
       code: 'TSG',
-      name: 'Thermosalinographe de surface'
+      name: 'Thermosalinographe de surface',
     },
     {
       code: 'MD',
-      name: 'Détecteur de muons'
+      name: 'Détecteur de muons',
     },
     {
       code: 'GNSS',
-      name: 'Positionnement GNSS et altimètre acoustique'
-    }
-  ]
+      name: 'Positionnement GNSS et altimètre acoustique',
+    },
+  ];
 
-  const { models } = await seed.models(defaultModels.map((model) => ({
-    ...model,
-    deleted_at: null
-  })));
+  const { models } = await seed.models(
+    defaultModels.map((model) => ({
+      ...model,
+      deleted_at: null,
+    })),
+  );
 
   const { stations } = await seed.stations((x) =>
     x(10, ({ seed, index }) => {
@@ -82,16 +84,20 @@ const main = async () => {
 
   for (const station of stations) {
     const numberOfInstruments = station.is_mobile ? 1 : 3;
-    const { instruments } = await seed.instruments((x) => x(numberOfInstruments, ({ seed }) => ({
-      identifier: `OSO-${copycat.int(seed, { min: 1000, max: 9999 })}`,
-      model_id: copycat.oneOf(seed, models).id,
-      deleted_at: null
-    })));
+    const { instruments } = await seed.instruments((x) =>
+      x(numberOfInstruments, ({ seed }) => ({
+        identifier: `OSO-${copycat.int(seed, { min: 1000, max: 9999 })}`,
+        model_id: copycat.oneOf(seed, models).id,
+        deleted_at: null,
+      })),
+    );
 
-    await seed.station_has_instruments(instruments.map((instrument) => ({
-      station_id: station.id,
-      instrument_id: instrument.id,
-    })));
+    await seed.station_has_instruments(
+      instruments.map((instrument) => ({
+        station_id: station.id,
+        instrument_id: instrument.id,
+      })),
+    );
   }
 
   process.exit();

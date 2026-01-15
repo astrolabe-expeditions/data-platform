@@ -60,8 +60,8 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
               },
               {
                 name: 'models',
-                list: '/models'
-              }
+                list: '/models',
+              },
             ]}
           >
             {children}
