@@ -1,5 +1,6 @@
 CREATE TABLE public.sessions (
 	id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  description TEXT,
   start_at TIMESTAMPTZ NOT NULL,
   end_at TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
