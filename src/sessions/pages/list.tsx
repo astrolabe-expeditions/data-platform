@@ -7,30 +7,41 @@ import {
 } from '@mui/x-data-grid';
 import { useGo, useTranslate } from '@refinedev/core';
 
-import type { Session } from '@/shared/types/models';
+import type { Session, Station } from '@/shared/types/models';
+
+type SessionWithRelations = Session & {
+  stations: Station;
+};
 
 const ListSession = () => {
   const go = useGo();
   const t = useTranslate();
-  const { dataGridProps } = useDataGrid();
+  const { dataGridProps } = useDataGrid<SessionWithRelations>({
+    meta: {
+      'select': '*, stations(*)',
+    }
+  });
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
     go({ to: `/sessions/${params.row.id}` });
   };
 
-  const columns = useMemo<GridColDef<Session>[]>(
+  const columns = useMemo<GridColDef<SessionWithRelations>[]>(
     () => [
       {
-        field: 'id',
-        headerName: t('sessions.fields.id'),
-      },
-      {
         field: 'station',
-        headerName: t('sessions.fields.station'),
+        headerName: t('sessions.list.station'),
+        valueGetter: (_, row) => row.stations?.name || '',
       },
       {
-        field: 'dateRange',
-        headerName: t('sessions.fields.dateRange'),
+        field: 'period',
+        headerName: t('sessions.list.period'),
+        valueGetter: (_, row) => {
+          const start = new Date(row.start_at).toLocaleString();
+          const end = new Date(row.end_at).toLocaleString();
+          return `${start} - ${end}`;
+        },
+        flex: 1,
       },
     ],
     [t],
