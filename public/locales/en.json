@@ -130,5 +130,25 @@
     "datasets": "Datasets",
     "noDatasets": "No datasets available",
     "addDataset": "Add a dataset"
+  },
+  "sessions": {
+    "titles": {
+      "create": "Create a recording session"
+    },
+    "fields": {
+      "description": "Description",
+      "startDate": "Start date",
+      "endDate": "End date"
+    },
+    "sections": {
+      "details": "Details"
+    },
+    "uploader": {
+      "title": "Data files",
+      "subtitle": "Upload your data files by clicking to select files.",
+      "button": "Select files",
+      "sectionTitle": "Uploaded files",
+      "instrument": "Instrument"
+    }
   }
 }

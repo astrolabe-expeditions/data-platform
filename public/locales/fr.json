@@ -138,6 +138,26 @@
       "updatedAt": "Dernière mise à jour"
     }
   },
+  "sessions": {
+    "titles": {
+      "create": "Créer une session d'enregistrement"
+    },
+    "fields": {
+      "description": "Description",
+      "startDate": "Date de début",
+      "endDate": "Date de fin"
+    },
+    "sections": {
+      "details": "Détails"
+    },
+    "uploader": {
+      "title": "Fichiers de données",
+      "subtitle": "Téléchargez vos fichiers de données en cliquant pour sélectionner des fichiers.",
+      "button": "Sélectionner des fichiers",
+      "sectionTitle": "Fichiers téléchargés",
+      "instrument": "Instrument"
+    }
+  },
   "table": {
     "actions": "Actions"
   }
