@@ -6,19 +6,37 @@ import {
   type GridEventListener,
 } from '@mui/x-data-grid';
 
-import type { Instrument } from '@/shared/types/models';
-import { useGo } from '@refinedev/core';
+import type { Instrument, Model } from '@/shared/types/models';
+import { useGo, useTranslate } from '@refinedev/core';
+
+type InstrumentWithRelations = Instrument & {
+  models: Model;
+};
 
 const ListInstrument = () => {
+  const t = useTranslate();
   const go = useGo();
-  const { dataGridProps } = useDataGrid();
+  const { dataGridProps } = useDataGrid({
+    meta: {
+      select: '*, models(*)',
+    },
+  });
 
-  const columns = useMemo<GridColDef<Instrument>[]>(
+  const columns = useMemo<GridColDef<InstrumentWithRelations>[]>(
     () => [
-      { field: 'identifier', headerName: 'Identifier', minWidth: 200 },
-      { field: 'model_id', headerName: 'Model ID', minWidth: 200, flex: 1 },
+      {
+        field: 'serial_number',
+        headerName: t('instruments.list.serial_number'),
+        minWidth: 200,
+      },
+      {
+        field: 'models',
+        headerName: t('instruments.list.model'),
+        valueGetter: (_, row) => `${row.models.name} (${row.models.code})`,
+        flex: 1,
+      },
     ],
-    [],
+    [t],
   );
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {

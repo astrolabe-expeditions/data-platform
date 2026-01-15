@@ -1760,20 +1760,6 @@
           "maxLength": null
         },
         {
-          "id": "public.instruments.identifier",
-          "name": "identifier",
-          "columnName": "identifier",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.instruments.created_at",
           "name": "created_at",
           "columnName": "created_at",
@@ -1830,6 +1816,20 @@
           "maxLength": null
         },
         {
+          "id": "public.instruments.serial_number",
+          "name": "serial_number",
+          "columnName": "serial_number",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "models",
           "type": "models",
           "isRequired": true,
@@ -1842,6 +1842,20 @@
             "id"
           ],
           "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "session_files",
+          "type": "session_files",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "session_filesToinstruments",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
           "isId": false,
           "isGenerated": false,
           "sequence": false,
@@ -1864,16 +1878,16 @@
       ],
       "uniqueConstraints": [
         {
-          "name": "instruments_identifier_key",
+          "name": "instruments_pkey",
           "fields": [
-            "identifier"
+            "id"
           ],
           "nullNotDistinct": false
         },
         {
-          "name": "instruments_pkey",
+          "name": "instruments_serial_number_key",
           "fields": [
-            "id"
+            "serial_number"
           ],
           "nullNotDistinct": false
         }
@@ -5061,6 +5075,156 @@
         }
       ]
     },
+    "session_files": {
+      "id": "public.session_files",
+      "schemaName": "public",
+      "tableName": "session_files",
+      "fields": [
+        {
+          "id": "public.session_files.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.session_id",
+          "name": "session_id",
+          "columnName": "session_id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.storage_path",
+          "name": "storage_path",
+          "columnName": "storage_path",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.uploaded_at",
+          "name": "uploaded_at",
+          "columnName": "uploaded_at",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.processed",
+          "name": "processed",
+          "columnName": "processed",
+          "type": "bool",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.processed_at",
+          "name": "processed_at",
+          "columnName": "processed_at",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.session_files.instrument_id",
+          "name": "instrument_id",
+          "columnName": "instrument_id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "instruments",
+          "type": "instruments",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "session_filesToinstruments",
+          "relationFromFields": [
+            "instrument_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "public_sessions",
+          "type": "public_sessions",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "session_filesTopublic_sessions",
+          "relationFromFields": [
+            "session_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "session_files_pkey",
+          "fields": [
+            "id"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
     "auth_sessions": {
       "id": "auth.sessions",
       "schemaName": "auth",
@@ -5437,6 +5601,20 @@
           "name": "station_id",
           "columnName": "station_id",
           "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.sessions.description",
+          "name": "description",
+          "columnName": "description",
+          "type": "text",
           "isRequired": false,
           "kind": "scalar",
           "isList": false,
@@ -5449,7 +5627,7 @@
         {
           "name": "stations",
           "type": "stations",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "object",
           "relationName": "public_sessionsTostations",
           "relationFromFields": [
@@ -5459,6 +5637,20 @@
             "id"
           ],
           "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "session_files",
+          "type": "session_files",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "session_filesTopublic_sessions",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
           "isId": false,
           "isGenerated": false,
           "sequence": false,
