@@ -14,9 +14,12 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(script_dir, "generated")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+instrument_serials = ["AE_TSG_629", "AE_GNSS_891", "OSO_MD_291", "UNKNOWN_123"]
+
 for i in range(NUM_FILES):
   file_datetime = BASE_DATE + timedelta(seconds=i * 82)
-  filename = f"OSOCTD_{file_datetime.strftime('%Y-%m-%d_%H:%M:%S')}.csv"
+  instrument = random.choice(instrument_serials)
+  filename = f"{instrument}_{file_datetime.strftime('%Y-%m-%d_%H:%M:%S')}.csv"
   filepath = os.path.join(OUTPUT_DIR, filename)
 
   print(f"Creating file: {filename}")
