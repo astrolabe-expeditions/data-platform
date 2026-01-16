@@ -27,16 +27,17 @@ models {
   program String
 }
 
-sessions {
+datasets {
   id Uuid
   start_at DateTime
   end_at DateTime
   user_id Uuid
 }
 
-datasets {
+dataset_files {
   id Uuid
   sync Boolean
+  dataset_id Uuid
   instrument_id Uuid
 }
 
@@ -46,16 +47,14 @@ measures {
   position Geography
   parameters Json
   instrument_id Uuid
-  session_id Uuid
   dataset_id Uuid
 }
 
 stations ||--|{ instruments : has
 models ||--|{ instruments : defines
-stations ||--|{ sessions : has
-sessions ||--|{ datasets : has
-datasets ||--|{ instruments : has
+stations ||--|{ datasets : has
+datasets ||--|{ dataset_files : has
+dataset_files ||--|{ instruments : has
 measures ||--|{ datasets : has
-measures ||--|{ sessions : has
 measures ||--|{ instruments : has
 ```

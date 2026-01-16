@@ -6,30 +6,30 @@ import {
   type PropsWithChildren,
 } from 'react';
 import { useSupabaseUpload } from '@/core/hooks/use-supabase-upload';
-import type { UploadFile } from '@/sessions/types/upload.ts';
+import type { UploadFile } from '@/datasets/types/upload.ts';
 import { useCreate, useTranslate, useNotification } from '@refinedev/core';
 
-type SessionUploadFileContextType = {
+type DatasetUploadFileContextType = {
   files: UploadFile[];
   hasFiles: boolean;
   setFiles: (files: UploadFile[]) => void;
   addFile: (file: UploadFile) => void;
   removeFile: (fileName: string) => void;
-  uploadFiles: (sessionId: string) => Promise<void>;
+  uploadFiles: (datasetId: string) => Promise<void>;
   updateFile: (fileName: string, updatedFile: Partial<UploadFile>) => void;
 };
 
-const SessionUploadFileContext = createContext<
-  SessionUploadFileContextType | undefined
+const DatasetUploadFileContext = createContext<
+  DatasetUploadFileContextType | undefined
 >(undefined);
 
-export const SessionUploadFileProvider: FC<PropsWithChildren> = ({
+export const DatasetUploadFileProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const [files, setFiles] = useState<UploadFile[]>([]);
-  const { upload } = useSupabaseUpload({ bucket: 'session_files' });
+  const { upload } = useSupabaseUpload({ bucket: 'dataset_files' });
   const { mutateAsync } = useCreate({
-    resource: 'session_files',
+    resource: 'dataset_files',
   });
   const t = useTranslate();
   const { open } = useNotification();
@@ -39,7 +39,7 @@ export const SessionUploadFileProvider: FC<PropsWithChildren> = ({
     if (files.some((f) => f.file.name === file.file.name)) {
       open?.({
         type: 'error',
-        message: t('sessions.uploader.errors.duplicateFile', {
+        message: t('datasets.uploader.errors.duplicateFile', {
           fileName: file.file.name,
         })
       });
@@ -56,13 +56,13 @@ export const SessionUploadFileProvider: FC<PropsWithChildren> = ({
       ),
     );
   };
-  const uploadFiles = async (sessionId: string) => {
+  const uploadFiles = async (datasetId: string) => {
     console.log('Uploading files:', files);
     for (const file of files) {
-      const storagePath = `sessions/${sessionId}/instruments/${file.instrument?.serial_number ?? 'unknown'}/${file.file.name}`;
+      const storagePath = `datasets/${datasetId}/instruments/${file.instrument?.serial_number ?? 'unknown'}/${file.file.name}`;
       await mutateAsync({
         values: {
-          session_id: sessionId,
+          dataset_id: datasetId,
           instrument_id: file.instrument?.id ?? null,
           storage_path: storagePath,
         },
@@ -72,7 +72,7 @@ export const SessionUploadFileProvider: FC<PropsWithChildren> = ({
   };
 
   return (
-    <SessionUploadFileContext.Provider
+    <DatasetUploadFileContext.Provider
       value={{
         files,
         hasFiles,
@@ -84,15 +84,15 @@ export const SessionUploadFileProvider: FC<PropsWithChildren> = ({
       }}
     >
       {children}
-    </SessionUploadFileContext.Provider>
+    </DatasetUploadFileContext.Provider>
   );
 };
 
-export const useSessionUploadFile = () => {
-  const context = useContext(SessionUploadFileContext);
+export const useDatasetUploadFile = () => {
+  const context = useContext(DatasetUploadFileContext);
   if (!context) {
     throw new Error(
-      'useSessionUploadFile must be used within a SessionUploadFileProvider',
+      'useDatasetUploadFile must be used within a DatasetUploadFileProvider',
     );
   }
   return context;

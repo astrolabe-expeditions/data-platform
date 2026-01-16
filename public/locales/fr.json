@@ -130,9 +130,9 @@
     },
     "show": {
       "instruments": "Instruments associés",
-      "sessions": "Sessions d'enregistrements",
-      "addSession": "Ajouter une session",
-      "noSessions": "Aucune session d'enregistrement",
+      "datasets": "Jeux de données",
+      "addDataset": "Ajouter un jeu de données",
+      "noDatasets": "Aucun jeu de données",
       "details": "Détail de la station",
       "createdAt": "Créée le",
       "updatedAt": "Dernière mise à jour"
@@ -149,11 +149,11 @@
       "model": "Modèle"
     }
   },
-  "sessions": {
-    "sessions": "Sessions d'enregistrements",
+  "datasets": {
+    "datasets": "Jeux de données",
     "titles": {
-      "list": "Sessions d'enregistrements",
-      "create": "Créer une session d'enregistrement"
+      "list": "Jeux de données",
+      "create": "Créer un jeu de données"
     },
     "list": {
       "station": "Station",

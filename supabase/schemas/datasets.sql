@@ -1,4 +1,4 @@
-CREATE TABLE public.sessions (
+CREATE TABLE public.datasets (
 	id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   description TEXT,
   start_at TIMESTAMPTZ NOT NULL,
@@ -9,16 +9,16 @@ CREATE TABLE public.sessions (
   station_id uuid NOT NULL REFERENCES public.stations(id) ON DELETE CASCADE
 );
 
-ALTER TABLE public.sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.datasets ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Allow all authenticated users to view sessions"
-  ON public.sessions
+CREATE POLICY "Allow all authenticated users to view datasets"
+  ON public.datasets
   FOR SELECT
   TO authenticated
   USING (true);
 
-CREATE POLICY "Allow all authenticated users to insert sessions"
-  ON public.sessions
+CREATE POLICY "Allow all authenticated users to insert datasets"
+  ON public.datasets
   FOR INSERT
   TO authenticated
   WITH CHECK (true);

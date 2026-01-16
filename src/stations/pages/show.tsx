@@ -22,9 +22,9 @@ const ShowStation = () => {
     id: id as string,
   });
 
-  const handleCreateSession = () => {
+  const handleCreateDataset = () => {
     go({
-      to: `/stations/${station?.id}/sessions/create`,
+      to: `/stations/${station?.id}/datasets/create`,
       type: 'replace',
     });
   };
@@ -78,19 +78,19 @@ const ShowStation = () => {
               justifyContent="space-between"
             >
               <Typography variant="h6" fontWeight="bold">
-                {t('stations.show.sessions')}
+                {t('stations.show.datasets')}
               </Typography>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleCreateSession}
+                onClick={handleCreateDataset}
                 sx={{ mb: { xs: 1, md: 0 } }}
               >
-                {t('stations.show.addSession')}
+                {t('stations.show.addDataset')}
               </Button>
             </Stack>
             <Typography variant="body2">
-              {t('stations.show.noSessions')}
+              {t('stations.show.noDatasets')}
             </Typography>
           </Stack>
         </Stack>

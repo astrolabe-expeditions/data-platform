@@ -7,35 +7,35 @@ import {
 } from '@mui/x-data-grid';
 import { useGo, useTranslate } from '@refinedev/core';
 
-import type { Session, Station } from '@/shared/types/models';
+import type { Dataset, Station } from '@/shared/types/models';
 
-type SessionWithRelations = Session & {
+type DatasetWithRelations = Dataset & {
   stations: Station;
 };
 
-const ListSession = () => {
+const ListDataset = () => {
   const go = useGo();
   const t = useTranslate();
-  const { dataGridProps } = useDataGrid<SessionWithRelations>({
+  const { dataGridProps } = useDataGrid<DatasetWithRelations>({
     meta: {
       'select': '*, stations(*)',
     }
   });
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    go({ to: `/sessions/${params.row.id}` });
+    go({ to: `/datasets/${params.row.id}` });
   };
 
-  const columns = useMemo<GridColDef<SessionWithRelations>[]>(
+  const columns = useMemo<GridColDef<DatasetWithRelations>[]>(
     () => [
       {
         field: 'station',
-        headerName: t('sessions.list.station'),
+        headerName: t('datasets.list.station'),
         valueGetter: (_, row) => row.stations?.name || '',
       },
       {
         field: 'period',
-        headerName: t('sessions.list.period'),
+        headerName: t('datasets.list.period'),
         valueGetter: (_, row) => {
           const start = new Date(row.start_at).toLocaleString();
           const end = new Date(row.end_at).toLocaleString();
@@ -48,7 +48,7 @@ const ListSession = () => {
   );
 
   return (
-    <List resource="sessions" canCreate>
+    <List resource="datasets" canCreate>
       <DataGrid
         {...dataGridProps}
         columns={columns}
@@ -59,4 +59,4 @@ const ListSession = () => {
   );
 };
 
-export { ListSession };
+export { ListDataset };

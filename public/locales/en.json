@@ -131,9 +131,10 @@
     "noDatasets": "No datasets available",
     "addDataset": "Add a dataset"
   },
-  "sessions": {
+  "datasets": {
+    "datasets": "Datasets",
     "titles": {
-      "create": "Create a recording session"
+      "create": "Create a dataset"
     },
     "fields": {
       "description": "Description",
