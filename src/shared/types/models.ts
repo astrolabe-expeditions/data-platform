@@ -12,9 +12,9 @@ export type Station = Tables<'stations'>;
 export type InsertStation = TablesInsert<'stations'>;
 export type UpdateStation = TablesUpdate<'stations'>;
 
-export type Session = Tables<'sessions'>;
-export type InsertSession = TablesInsert<'sessions'>;
-export type UpdateSession = TablesUpdate<'sessions'>;
+export type Dataset = Tables<'datasets'>;
+export type InsertDataset = TablesInsert<'datasets'>;
+export type UpdateDataset = TablesUpdate<'datasets'>;
 
 export type Model = Tables<'models'>;
 export type InsertModel = TablesInsert<'models'>;

@@ -14,14 +14,12 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadIcon from '@mui/icons-material/CloudUpload';
-import { useNotification } from '@refinedev/core';
 import { type FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { Instrument } from '@/shared/types/models.ts';
-import { parseFileName } from '@/sessions/components/uploader/helpers.ts';
-import { useSessionUploadFile } from '@/sessions/components/session-upload-file-provider.tsx';
-import type { UploadFile } from '@/sessions/types/upload.ts';
+import { parseFileName } from '@/datasets/components/uploader/helpers.ts';
+import { useDatasetUploadFile } from '@/datasets/components/dataset-upload-file-provider.tsx';
 
 interface UploaderProps {
   instruments: Instrument[];
@@ -30,8 +28,7 @@ interface UploaderProps {
 const Uploader: FC<UploaderProps> = ({ instruments }) => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { open } = useNotification();
-  const { files, addFile, removeFile, updateFile } = useSessionUploadFile();
+  const { files, addFile, removeFile, updateFile } = useDatasetUploadFile();
 
   const instrumentIdentifiers = instruments.map((inst) => inst.serial_number);
 
@@ -43,10 +40,10 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
       let error: string | undefined;
 
       if (instrumentSerialNumber && !instrumentIdentifiers.includes(instrumentSerialNumber)) {
-        error = t('sessions.uploader.errors.instrumentNotPartOfStation');
+        error = t('datasets.uploader.errors.instrumentNotPartOfStation');
         instrumentSerialNumber = null;
       } else if (!instrumentSerialNumber) {
-        error = t('sessions.uploader.errors.instrumentNotFoundInFilename');
+        error = t('datasets.uploader.errors.instrumentNotFoundInFilename');
       }
 
       const instrument = instruments.find(
@@ -85,10 +82,10 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
   return (
     <Box>
       <Typography variant="h5" mt={2}>
-        {t('sessions.uploader.title')}
+        {t('datasets.uploader.title')}
       </Typography>
       <Typography variant="subtitle1" mb={2}>
-        {t('sessions.uploader.subtitle')}
+        {t('datasets.uploader.subtitle')}
       </Typography>
       <input
         ref={inputRef}
@@ -103,12 +100,12 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
         startIcon={<UploadIcon />}
         onClick={() => inputRef.current?.click()}
       >
-        {t('sessions.uploader.button')}
+        {t('datasets.uploader.button')}
       </Button>
       {files.length > 0 && (
         <Box>
           <Typography variant="h6" mt={2}>
-            {t('sessions.uploader.sectionTitle')}
+            {t('datasets.uploader.sectionTitle')}
           </Typography>
           <List>
             {files.map((file, idx) => (
@@ -123,11 +120,11 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                       error={!!file.error}
                     >
                       <InputLabel>
-                        {t('sessions.uploader.instrument')}
+                        {t('datasets.uploader.instrument')}
                       </InputLabel>
                       <Select
                         value={file.instrument?.serial_number ?? ''}
-                        label={t('sessions.uploader.instrument')}
+                        label={t('datasets.uploader.instrument')}
                         onChange={(e) =>
                           handleInstrumentChange(idx, e.target.value)
                         }
@@ -158,7 +155,7 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                     <>
                       {file.status === 'pending' && (
                         <Typography variant="caption">
-                          {t('sessions.uploader.status.pending')}
+                          {t('datasets.uploader.status.pending')}
                         </Typography>
                       )}
                       {file.error && (

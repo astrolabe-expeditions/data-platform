@@ -8,9 +8,9 @@ import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
 import { ShowStation } from '@/stations/pages/show';
 import { ShowInstrument } from '@/instruments/pages/show';
-import { CreateSession } from '@/sessions/pages/create';
-import { ListSession } from '@/sessions/pages/list';
-import { ShowSession } from '@/sessions/pages/show';
+import { CreateDataset } from '@/datasets/pages/create';
+import { ListDataset } from '@/datasets/pages/list';
+import { ShowDataset } from '@/datasets/pages/show';
 import { ListModel } from '@/models/pages/list';
 
 const AppRouter = () => {
@@ -29,16 +29,16 @@ const AppRouter = () => {
         <Route path="stations">
           <Route index element={<ListStation />} />
           <Route path=":id" element={<ShowStation />} />
-          <Route path=":id/sessions/create" element={<CreateSession />} />
+          <Route path=":id/datasets/create" element={<CreateDataset />} />
         </Route>
         <Route path="instruments">
           <Route index element={<ListInstrument />} />
           <Route path=":id" element={<ShowInstrument />} />
         </Route>
-        <Route path="sessions">
-          <Route index element={<ListSession />} />
-          <Route path=":id" element={<ShowSession />} />
-          <Route path="new" element={<CreateSession />} />
+        <Route path="datasets">
+          <Route index element={<ListDataset />} />
+          <Route path=":id" element={<ShowDataset />} />
+          <Route path="new" element={<CreateDataset />} />
         </Route>
         <Route path="models">
           <Route index element={<ListModel />} />

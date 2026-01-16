@@ -34,6 +34,92 @@ export type Database = {
   }
   public: {
     Tables: {
+      dataset_files: {
+        Row: {
+          dataset_id: string
+          id: string
+          instrument_id: string
+          processed: boolean | null
+          processed_at: string | null
+          storage_path: string
+          uploaded_at: string | null
+        }
+        Insert: {
+          dataset_id: string
+          id?: string
+          instrument_id: string
+          processed?: boolean | null
+          processed_at?: string | null
+          storage_path: string
+          uploaded_at?: string | null
+        }
+        Update: {
+          dataset_id?: string
+          id?: string
+          instrument_id?: string
+          processed?: boolean | null
+          processed_at?: string | null
+          storage_path?: string
+          uploaded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dataset_files_dataset_id_fkey"
+            columns: ["dataset_id"]
+            isOneToOne: false
+            referencedRelation: "datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dataset_files_instrument_id_fkey"
+            columns: ["instrument_id"]
+            isOneToOne: false
+            referencedRelation: "instruments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      datasets: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          description: string | null
+          end_at: string
+          id: string
+          start_at: string
+          station_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          end_at: string
+          id?: string
+          start_at: string
+          station_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          end_at?: string
+          id?: string
+          start_at?: string
+          station_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "datasets_station_id_fkey"
+            columns: ["station_id"]
+            isOneToOne: false
+            referencedRelation: "stations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       instruments: {
         Row: {
           created_at: string
@@ -98,92 +184,6 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
-      }
-      session_files: {
-        Row: {
-          id: string
-          instrument_id: string
-          processed: boolean | null
-          processed_at: string | null
-          session_id: string
-          storage_path: string
-          uploaded_at: string | null
-        }
-        Insert: {
-          id?: string
-          instrument_id: string
-          processed?: boolean | null
-          processed_at?: string | null
-          session_id: string
-          storage_path: string
-          uploaded_at?: string | null
-        }
-        Update: {
-          id?: string
-          instrument_id?: string
-          processed?: boolean | null
-          processed_at?: string | null
-          session_id?: string
-          storage_path?: string
-          uploaded_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "session_files_instrument_id_fkey"
-            columns: ["instrument_id"]
-            isOneToOne: false
-            referencedRelation: "instruments"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "session_files_session_id_fkey"
-            columns: ["session_id"]
-            isOneToOne: false
-            referencedRelation: "sessions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      sessions: {
-        Row: {
-          created_at: string
-          deleted_at: string | null
-          description: string | null
-          end_at: string
-          id: string
-          start_at: string
-          station_id: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          deleted_at?: string | null
-          description?: string | null
-          end_at: string
-          id?: string
-          start_at: string
-          station_id: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          deleted_at?: string | null
-          description?: string | null
-          end_at?: string
-          id?: string
-          start_at?: string
-          station_id?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sessions_station_id_fkey"
-            columns: ["station_id"]
-            isOneToOne: false
-            referencedRelation: "stations"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       station_has_instruments: {
         Row: {

@@ -1,25 +1,25 @@
-import { useTranslate, type HttpError, useParsed } from '@refinedev/core';
+import { useTranslate, type HttpError } from '@refinedev/core';
 import { Create } from '@refinedev/mui';
 import { TextField, Box, Stack, Typography } from '@mui/material';
 import { useForm } from '@refinedev/react-hook-form';
 import type { FieldValues } from 'react-hook-form';
-import { Uploader } from '@/sessions/components/uploader/uploader';
-import type { Session } from '@/shared/types/models';
+import { Uploader } from '@/datasets/components/uploader/uploader';
+import type { Dataset } from '@/shared/types/models';
 import type { FC } from 'react';
 import { useOneStation } from '@/stations/hooks/useOneStation';
-import { useSessionUploadFile } from './session-upload-file-provider';
+import { useDatasetUploadFile } from './dataset-upload-file-provider';
 
-interface CreateSessionFormProps {
+interface CreateDatasetFormProps {
   stationId?: string;
 }
 
-const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
+const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
   const t = useTranslate();
   const { instruments, isInstrumentsLoading, isInstrumentsError } =
     useOneStation({
       id: stationId,
     });
-  const { hasFiles, uploadFiles } = useSessionUploadFile();
+  const { hasFiles, uploadFiles } = useDatasetUploadFile();
 
   const {
     saveButtonProps,
@@ -27,9 +27,9 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Session, HttpError, Partial<Session>>({
+  } = useForm<Dataset, HttpError, Partial<Dataset>>({
     refineCoreProps: {
-      resource: 'sessions',
+      resource: 'datasets',
       redirect: false,
     },
   });
@@ -46,7 +46,7 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
   return (
     <Create
       isLoading={formLoading || isInstrumentsLoading}
-      title={t('sessions.titles.create')}
+      title={t('datasets.titles.create')}
       saveButtonProps={{
         onClick: handleSubmit(onFinishHandler),
         disabled: !hasFiles || saveButtonProps.disabled,
@@ -55,11 +55,11 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
       <Box component="form" autoComplete="off">
         <Stack spacing={2}>
           <Typography variant="h5" gutterBottom>
-            {t('sessions.sections.details')}
+            {t('datasets.sections.details')}
           </Typography>
           <TextField
             {...register('description')}
-            label={t('sessions.fields.description')}
+            label={t('datasets.fields.description')}
             error={!!errors.description}
             helperText={errors.description?.message}
             multiline
@@ -69,9 +69,9 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
           <Stack spacing={2} direction="row">
             <TextField
               {...register('start_at', {
-                required: t('sessions.validation.startAtRequired'),
+                required: t('datasets.validation.startAtRequired'),
               })}
-              label={t('sessions.fields.start_at', 'Start')}
+              label={t('datasets.fields.start_at', 'Start')}
               type="date"
               error={!!errors.start_at}
               helperText={errors.start_at?.message}
@@ -79,9 +79,9 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
             />
             <TextField
               {...register('end_at', {
-                required: t('sessions.validation.endAtRequired'),
+                required: t('datasets.validation.endAtRequired'),
               })}
-              label={t('sessions.fields.end_at', 'End')}
+              label={t('datasets.fields.end_at', 'End')}
               type="date"
               error={!!errors.end_at}
               helperText={errors.end_at?.message}
@@ -97,4 +97,4 @@ const CreateSessionForm: FC<CreateSessionFormProps> = ({ stationId }) => {
   );
 };
 
-export { CreateSessionForm };
+export { CreateDatasetForm };
