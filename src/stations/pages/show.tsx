@@ -1,7 +1,6 @@
 import { useGo, useTranslate } from '@refinedev/core';
 import {
   Show,
-  TextFieldComponent as TextField,
   DateField,
 } from '@refinedev/mui';
 import {
@@ -58,7 +57,7 @@ const ShowStation = () => {
             <List dense>
               {instruments?.map((instrument) => (
                 <ListItem key={instrument.id} disableGutters>
-                  <ListItemText primary={instrument.identifier} />
+                  <ListItemText primary={instrument.serial_number} />
                 </ListItem>
               ))}
             </List>
