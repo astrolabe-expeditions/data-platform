@@ -1,10 +1,3 @@
-import type { FC } from 'react';
-import { useState, useRef } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import UploadIcon from '@mui/icons-material/CloudUpload';
-import { useTranslation } from 'react-i18next';
-import { useNotification } from '@refinedev/core';
-
 import {
   Box,
   Button,
@@ -19,20 +12,16 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import UploadIcon from '@mui/icons-material/CloudUpload';
+import { useNotification } from '@refinedev/core';
+import { type FC, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import type { Instrument } from '@/shared/types/models.ts';
-import { parseFileName } from '@/sessions/components/uploader/helpers';
-
-type FileStatus = 'pending' | 'uploading' | 'done' | 'error';
-
-interface UploadFile {
-  file: File;
-  instrument: string | null;
-  date: string | null;
-  time: string | null;
-  status: FileStatus;
-  error?: string;
-}
+import { parseFileName } from '@/sessions/components/uploader/helpers.ts';
+import { useSessionUploadFile } from '@/sessions/components/session-upload-file-provider.tsx';
+import type { UploadFile } from '@/sessions/types/upload.ts';
 
 interface UploaderProps {
   instruments: Instrument[];
@@ -40,92 +29,57 @@ interface UploaderProps {
 
 const Uploader: FC<UploaderProps> = ({ instruments }) => {
   const { t } = useTranslation();
-  const [files, setFiles] = useState<UploadFile[]>([]);
-  const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { open } = useNotification();
+  const { files, addFile, removeFile, updateFile } = useSessionUploadFile();
 
   const instrumentIdentifiers = instruments.map((inst) => inst.serial_number);
 
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList) return;
-    const newFiles: UploadFile[] = [];
     Array.from(fileList).forEach((file) => {
       const parsed = parseFileName(file.name);
-      let instrument = parsed?.instrument ?? null;
+      let instrumentSerialNumber = parsed?.instrument ?? null;
       let error: string | undefined;
 
-      if (files.some((f) => f.file.name === file.name)) {
-        open?.({
-          type: 'error',
-          message: t('sessions.uploader.errors.duplicateFile', {
-            fileName: file.name,
-          }),
-        });
-        return;
-      }
-
-      if (instrument && !instrumentIdentifiers.includes(instrument)) {
+      if (instrumentSerialNumber && !instrumentIdentifiers.includes(instrumentSerialNumber)) {
         error = t('sessions.uploader.errors.instrumentNotPartOfStation');
-        instrument = null;
-      } else if (!instrument) {
+        instrumentSerialNumber = null;
+      } else if (!instrumentSerialNumber) {
         error = t('sessions.uploader.errors.instrumentNotFoundInFilename');
       }
 
-      newFiles.push({
+      const instrument = instruments.find(
+        (inst) => inst.serial_number === instrumentSerialNumber,
+      );
+
+      addFile({
         file,
-        instrument,
+        instrument: instrument ? { id: instrument.id, serial_number: instrument.serial_number } : null,
         date: parsed?.date ?? null,
         time: parsed?.time ?? null,
         status: 'pending',
         error,
       });
     });
-    setFiles((prev) => [...prev, ...newFiles]);
   };
 
-  const handleInstrumentChange = (idx: number, value: string) => {
-    setFiles((prev) =>
-      prev.map((f, i) =>
-        i === idx ? { ...f, instrument: value, error: undefined } : f,
-      ),
+  const handleInstrumentChange = (idx: number, serial_number: string) => {
+    const instrument = instruments.find(
+      (inst) => inst.serial_number === serial_number,
     );
+    if (!instrument) return;
+
+    updateFile(files[idx].file.name, {
+      instrument: {
+        id: instrument.id,
+        serial_number: instrument.serial_number,
+      },
+    });
   };
 
-  const handleRemove = (idx: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== idx));
-  };
-
-  const handleUpload = async () => {
-    setUploading(true);
-    let completed = 0;
-    for (let i = 0; i < files.length; i++) {
-      setFiles((prev) =>
-        prev.map((f, idx) => (idx === i ? { ...f, status: 'uploading' } : f)),
-      );
-      // Simulate upload delay
-      await new Promise((res) => setTimeout(res, 500));
-      // Simulate error if instrument missing
-      if (!files[i].instrument) {
-        setFiles((prev) =>
-          prev.map((f, idx) =>
-            idx === i
-              ? {
-                  ...f,
-                  status: 'error',
-                  error: t('Instrument required'),
-                }
-              : f,
-          ),
-        );
-      } else {
-        setFiles((prev) =>
-          prev.map((f, idx) => (idx === i ? { ...f, status: 'done' } : f)),
-        );
-      }
-      completed++;
-    }
-    setUploading(false);
+  const handleRemove = (fileName: string) => {
+    removeFile(fileName);
   };
 
   return (
@@ -148,7 +102,6 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
         variant="contained"
         startIcon={<UploadIcon />}
         onClick={() => inputRef.current?.click()}
-        disabled={uploading}
       >
         {t('sessions.uploader.button')}
       </Button>
@@ -173,16 +126,18 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                         {t('sessions.uploader.instrument')}
                       </InputLabel>
                       <Select
-                        value={file.instrument ?? ''}
+                        value={file.instrument?.serial_number ?? ''}
                         label={t('sessions.uploader.instrument')}
                         onChange={(e) =>
                           handleInstrumentChange(idx, e.target.value)
                         }
-                        disabled={uploading}
                       >
-                        {instruments.map((inst) => (
-                          <MenuItem key={inst.id} value={inst.serial_number}>
-                            {inst.serial_number}
+                        {instruments.map((instrument) => (
+                          <MenuItem
+                            key={instrument.id}
+                            value={instrument.serial_number}
+                          >
+                            {instrument.serial_number}
                           </MenuItem>
                         ))}
                       </Select>
@@ -190,8 +145,7 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
                     <IconButton
                       edge="end"
                       aria-label={t('Delete')}
-                      onClick={() => handleRemove(idx)}
-                      disabled={uploading}
+                      onClick={() => handleRemove(file.file.name)}
                     >
                       <CloseIcon />
                     </IconButton>
