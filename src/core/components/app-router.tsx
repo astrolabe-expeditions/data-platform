@@ -11,6 +11,7 @@ import { ShowInstrument } from '@/instruments/pages/show';
 import { CreateDataset } from '@/datasets/pages/create';
 import { ListDataset } from '@/datasets/pages/list';
 import { ShowDataset } from '@/datasets/pages/show';
+import { ShowDatasetFiles } from '@/datasets/pages/show-files';
 import { ListModel } from '@/models/pages/list';
 
 const AppRouter = () => {
@@ -38,6 +39,7 @@ const AppRouter = () => {
         <Route path="datasets">
           <Route index element={<ListDataset />} />
           <Route path=":id" element={<ShowDataset />} />
+          <Route path=":id/files" element={<ShowDatasetFiles />} />
           <Route path="new" element={<CreateDataset />} />
         </Route>
         <Route path="models">

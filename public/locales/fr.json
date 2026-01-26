@@ -160,6 +160,7 @@
       "period": "Plage d'enregistrement"
     },
     "fields": {
+      "period": "Période",
       "description": "Description",
       "startDate": "Date de début",
       "endDate": "Date de fin"
@@ -184,6 +185,10 @@
         "instrumentNotFoundInFilename": "L'instrument n'a pas été trouvé dans le nom du fichier.",
         "duplicateFile": "Le fichier '{{fileName}}' a déjà été ajouté."
       }
+    },
+    "tabs": {
+      "metadata": "Métadonnées",
+      "files": "Fichiers"
     }
   },
   "models": {
@@ -193,6 +198,12 @@
     },
     "fields": {
       "name": "Nom"
+    }
+  },
+  "commons": {
+    "fields": {
+      "createdAt": "Créé le",
+      "updatedAt": "Mis à jour le"
     }
   }
 }

@@ -150,6 +150,10 @@
       "button": "Select files",
       "sectionTitle": "Uploaded files",
       "instrument": "Instrument"
+    },
+    "tabs": {
+      "metadata": "Metadata",
+      "files": "Files"
     }
   },
   "models": {
