@@ -57,17 +57,24 @@ export const DatasetUploadFileProvider: FC<PropsWithChildren> = ({
     );
   };
   const uploadFiles = async (datasetId: string) => {
-    console.log('Uploading files:', files);
     for (const file of files) {
-      const storagePath = `datasets/${datasetId}/instruments/${file.instrument?.serial_number ?? 'unknown'}/${file.file.name}`;
+      const path = `datasets/${datasetId}/instruments/${file.instrument?.serial_number ?? 'unknown'}/${file.file.name}`;
+      let startedAt = null;
+      if (file.date && file.time) {
+        const dateTimeString = `${file.date}T${file.time}`;
+        startedAt = new Date(dateTimeString).toISOString();
+      }
       await mutateAsync({
         values: {
+          name: file.file.name.replace(/\.csv$/, ''),
+          extension: 'csv',
+          started_at: startedAt,
           dataset_id: datasetId,
           instrument_id: file.instrument?.id ?? null,
-          storage_path: storagePath,
+          path: path
         },
       });
-      await upload(file.file, storagePath);
+      await upload(file.file, path);
     }
   };
 
