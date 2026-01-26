@@ -28,8 +28,6 @@ const ShowDatasetFiles = () => {
     },
   });
 
-  console.log('Files:', files);
-
   return (
     <Show
       isLoading={isLoading}
