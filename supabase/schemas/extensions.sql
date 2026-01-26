@@ -1,1 +1,1 @@
-create extension postgis with schema "extensions";
+CREATE extension postgis WITH schema "extensions";
