@@ -16,6 +16,10 @@ export type Dataset = Tables<'datasets'>;
 export type InsertDataset = TablesInsert<'datasets'>;
 export type UpdateDataset = TablesUpdate<'datasets'>;
 
+export type DatasetFile = Tables<'dataset_files'>;
+export type InsertDatasetFile = TablesInsert<'dataset_files'>;
+export type UpdateDatasetFile = TablesUpdate<'dataset_files'>;
+
 export type Model = Tables<'models'>;
 export type InsertModel = TablesInsert<'models'>;
 export type UpdateModel = TablesUpdate<'models'>;
