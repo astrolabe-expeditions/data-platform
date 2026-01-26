@@ -1,13 +1,14 @@
+import { useCreate, useNotification, useTranslate } from '@refinedev/core';
 import {
   createContext,
-  useContext,
-  useState,
   type FC,
   type PropsWithChildren,
+  useContext,
+  useState,
 } from 'react';
+
 import { useSupabaseUpload } from '@/core/hooks/use-supabase-upload';
 import type { UploadFile } from '@/datasets/types/upload.ts';
-import { useCreate, useTranslate, useNotification } from '@refinedev/core';
 
 type DatasetUploadFileContextType = {
   files: UploadFile[];
@@ -41,7 +42,7 @@ export const DatasetUploadFileProvider: FC<PropsWithChildren> = ({
         type: 'error',
         message: t('datasets.uploader.errors.duplicateFile', {
           fileName: file.file.name,
-        })
+        }),
       });
       return;
     }
@@ -71,7 +72,7 @@ export const DatasetUploadFileProvider: FC<PropsWithChildren> = ({
           started_at: startedAt,
           dataset_id: datasetId,
           instrument_id: file.instrument?.id ?? null,
-          path: path
+          path: path,
         },
       });
       await upload(file.file, path);

@@ -1,8 +1,8 @@
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
+import { useTranslate } from '@refinedev/core';
 import type { FC } from 'react';
 
 import type { DatasetFile } from '@/shared/types/models.ts';
-import { List, ListItem, ListItemText, Typography } from '@mui/material';
-import { useTranslate } from '@refinedev/core';
 
 interface FileListProps {
   files: DatasetFile[];

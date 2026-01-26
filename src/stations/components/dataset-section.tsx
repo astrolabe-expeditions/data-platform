@@ -1,8 +1,8 @@
+import { Button, Stack, Typography } from '@mui/material';
+import { useGo, useList, useTranslate } from '@refinedev/core';
 import type { FC } from 'react';
-import type { Dataset } from '@/shared/types/models';
-import { useList, useGo, useTranslate } from '@refinedev/core';
-import { Stack, Typography, Button } from '@mui/material';
 
+import type { Dataset } from '@/shared/types/models';
 import { DatasetList } from '@/stations/components/dataset-list';
 
 interface DatasetSectionProps {

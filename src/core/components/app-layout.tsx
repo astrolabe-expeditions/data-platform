@@ -1,5 +1,5 @@
-import type { PropsWithChildren, FC } from 'react';
 import { ThemedLayout, ThemedTitle } from '@refinedev/mui';
+import type { FC, PropsWithChildren } from 'react';
 
 const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   return (

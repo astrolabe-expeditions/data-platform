@@ -1,5 +1,6 @@
+import { type HttpError, useList, useMany, useOne } from '@refinedev/core';
+
 import type { Instrument, Station } from '@/shared/types/models';
-import { useList, useMany, useOne, type HttpError } from '@refinedev/core';
 
 const useOneStation = ({ id }: { id: string | undefined }) => {
   const {

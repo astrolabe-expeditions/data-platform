@@ -1,8 +1,9 @@
-import { Tabs, Tab } from '@mui/material';
-import { Link } from 'react-router';
-import { useRouteMatch } from '@/shared/hooks/use-route-match';
-import type { FC } from 'react';
+import { Tab, Tabs } from '@mui/material';
 import { useTranslate } from '@refinedev/core';
+import type { FC } from 'react';
+import { Link } from 'react-router';
+
+import { useRouteMatch } from '@/shared/hooks/use-route-match';
 
 interface DatasetTabsProps {
   datasetId: string;

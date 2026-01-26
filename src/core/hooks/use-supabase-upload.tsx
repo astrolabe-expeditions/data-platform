@@ -9,16 +9,15 @@ interface UseSupabaseUploadReturn {
 }
 
 const useSupabaseUpload = ({
-  bucket
+  bucket,
 }: UseSupabaseUploadProps): UseSupabaseUploadReturn => {
-
   const upload = async (file: File, path: string) => {
     const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(path, file, {
-          upsert: false,
-          contentType: file.type,
-        });
+      .from(bucket)
+      .upload(path, file, {
+        upsert: false,
+        contentType: file.type,
+      });
 
     if (uploadError) {
       throw uploadError;

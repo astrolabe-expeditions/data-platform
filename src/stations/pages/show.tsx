@@ -1,16 +1,9 @@
-import { useTranslate } from '@refinedev/core';
-import { Show, DateField } from '@refinedev/mui';
-import {
-  Stack,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
-import { useParsed } from '@refinedev/core';
+import { List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
+import { useParsed, useTranslate } from '@refinedev/core';
+import { DateField, Show } from '@refinedev/mui';
 
-import { useOneStation } from '@/stations/hooks/useOneStation';
 import { DatasetSection } from '@/stations/components/dataset-section';
+import { useOneStation } from '@/stations/hooks/useOneStation';
 
 const ShowStation = () => {
   const t = useTranslate();
