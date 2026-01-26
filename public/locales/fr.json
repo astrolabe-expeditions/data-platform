@@ -130,12 +130,20 @@
     },
     "show": {
       "instruments": "Instruments associés",
-      "datasets": "Jeux de données",
-      "addDataset": "Ajouter un jeu de données",
-      "noDatasets": "Aucun jeu de données",
       "details": "Détail de la station",
       "createdAt": "Créée le",
-      "updatedAt": "Dernière mise à jour"
+      "updatedAt": "Dernière mise à jour",
+      "datasets": {
+        "title": "Jeux de données",
+        "empty": "Aucun jeu de données disponible",
+        "create": "Ajouter",
+        "listItem": {
+          "primary": "Donnée du {{start, datetime}} au {{end, datetime}}"
+        },
+        "actions": {
+          "view": "Voir le jeu de données"
+        }
+      }
     }
   },
   "instruments": {
@@ -204,6 +212,11 @@
     "fields": {
       "createdAt": "Créé le",
       "updatedAt": "Mis à jour le"
+    }
+  },
+  "shared": {
+    "buttons": {
+      "more": "Plus d'actions"
     }
   }
 }
