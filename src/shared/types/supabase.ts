@@ -37,29 +37,38 @@ export type Database = {
       dataset_files: {
         Row: {
           dataset_id: string
+          extension: string
           id: string
           instrument_id: string
+          name: string
+          path: string
           processed: boolean | null
           processed_at: string | null
-          storage_path: string
+          started_at: string | null
           uploaded_at: string | null
         }
         Insert: {
           dataset_id: string
+          extension: string
           id?: string
           instrument_id: string
+          name: string
+          path: string
           processed?: boolean | null
           processed_at?: string | null
-          storage_path: string
+          started_at?: string | null
           uploaded_at?: string | null
         }
         Update: {
           dataset_id?: string
+          extension?: string
           id?: string
           instrument_id?: string
+          name?: string
+          path?: string
           processed?: boolean | null
           processed_at?: string | null
-          storage_path?: string
+          started_at?: string | null
           uploaded_at?: string | null
         }
         Relationships: [
