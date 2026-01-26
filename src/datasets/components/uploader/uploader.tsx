@@ -1,25 +1,25 @@
+import CloseIcon from '@mui/icons-material/Close';
+import UploadIcon from '@mui/icons-material/CloudUpload';
 import {
   Box,
   Button,
-  Typography,
-  IconButton,
-  Select,
-  MenuItem,
   FormControl,
+  IconButton,
   InputLabel,
   List,
   ListItem,
   ListItemText,
+  MenuItem,
+  Select,
   Stack,
+  Typography,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import UploadIcon from '@mui/icons-material/CloudUpload';
 import { type FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { Instrument } from '@/shared/types/models.ts';
-import { parseFileName } from '@/datasets/components/uploader/helpers.ts';
 import { useDatasetUploadFile } from '@/datasets/components/dataset-upload-file-provider.tsx';
+import { parseFileName } from '@/datasets/components/uploader/helpers.ts';
+import type { Instrument } from '@/shared/types/models.ts';
 
 interface UploaderProps {
   instruments: Instrument[];
@@ -39,7 +39,10 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
       let instrumentSerialNumber = parsed?.instrument ?? null;
       let error: string | undefined;
 
-      if (instrumentSerialNumber && !instrumentIdentifiers.includes(instrumentSerialNumber)) {
+      if (
+        instrumentSerialNumber &&
+        !instrumentIdentifiers.includes(instrumentSerialNumber)
+      ) {
         error = t('datasets.uploader.errors.instrumentNotPartOfStation');
         instrumentSerialNumber = null;
       } else if (!instrumentSerialNumber) {
@@ -52,7 +55,9 @@ const Uploader: FC<UploaderProps> = ({ instruments }) => {
 
       addFile({
         file,
-        instrument: instrument ? { id: instrument.id, serial_number: instrument.serial_number } : null,
+        instrument: instrument
+          ? { id: instrument.id, serial_number: instrument.serial_number }
+          : null,
         date: parsed?.date ?? null,
         time: parsed?.time ?? null,
         status: 'pending',

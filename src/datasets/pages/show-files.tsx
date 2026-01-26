@@ -1,9 +1,10 @@
+import { Stack, Typography } from '@mui/material';
 import { useList, useParsed, useShow } from '@refinedev/core';
 import { Show } from '@refinedev/mui';
-import { Stack, Typography } from '@mui/material';
-import type { Dataset, DatasetFile } from '@/shared/types/models';
+
 import { DatasetTabs } from '@/datasets/components/dataset-tabs';
 import { FileList } from '@/datasets/components/file-list.tsx';
+import type { Dataset, DatasetFile } from '@/shared/types/models';
 
 const ShowDatasetFiles = () => {
   const { id: datasetId } = useParsed();

@@ -1,10 +1,10 @@
-import { useShow, useOne } from '@refinedev/core';
+import { Stack, Typography } from '@mui/material';
+import { useOne, useShow } from '@refinedev/core';
 import {
+  DateField,
   Show,
   TextFieldComponent as TextField,
-  DateField,
 } from '@refinedev/mui';
-import { Stack, Typography } from '@mui/material';
 
 const ShowInstrument = () => {
   const {

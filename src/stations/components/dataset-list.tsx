@@ -1,9 +1,9 @@
-import { useGo, useTranslate } from '@refinedev/core';
-import { List, ListItem, ListItemText, Box, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { useGo, useTranslate } from '@refinedev/core';
 
-import type { Dataset } from '@/shared/types/models';
 import { MoreMenu } from '@/shared/components/more-menu';
+import type { Dataset } from '@/shared/types/models';
 
 type DatasetListProps = {
   isLoading?: boolean;
@@ -52,13 +52,12 @@ export const DatasetList: React.FC<DatasetListProps> = ({
           disableGutters
           secondaryAction={<MoreMenu items={menuItems} current={dataset} />}
         >
-
           <ListItemText
             primary={t('stations.show.datasets.listItem.primary', {
-          start: new Date(dataset.start_at),
-          end: new Date(dataset.end_at),
-          interpolation: { escapeValue: false }
-        })}
+              start: new Date(dataset.start_at),
+              end: new Date(dataset.end_at),
+              interpolation: { escapeValue: false },
+            })}
           />
         </ListItem>
       ))}

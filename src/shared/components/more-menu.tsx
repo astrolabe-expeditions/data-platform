@@ -1,10 +1,9 @@
-import { useState, type MouseEvent } from 'react';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { IconButton } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { IconButton } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslate } from '@refinedev/core';
-
+import { type MouseEvent, useState } from 'react';
 
 interface MoreMenuItem<C> {
   id: string;
@@ -47,7 +46,7 @@ const MoreMenu = <C,>({ items, current }: MoreMenuProps<C>) => {
         <MoreVertIcon />
       </IconButton>
       <Menu
-      id="more-menu"
+        id="more-menu"
         elevation={0}
         anchorOrigin={{
           vertical: 'bottom',
@@ -67,7 +66,11 @@ const MoreMenu = <C,>({ items, current }: MoreMenuProps<C>) => {
         onClose={handleClose}
       >
         {items.map((item) => (
-          <MenuItem key={item.id} onClick={() => handleItem(item)} disableRipple>
+          <MenuItem
+            key={item.id}
+            onClick={() => handleItem(item)}
+            disableRipple
+          >
             {item.icon}
             {item.label}
           </MenuItem>

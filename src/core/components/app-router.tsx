@@ -1,18 +1,18 @@
 import { Authenticated } from '@refinedev/core';
-import { Navigate, Outlet, Route, Routes } from 'react-router';
 import { AuthPage } from '@refinedev/mui';
+import { Navigate, Outlet, Route, Routes } from 'react-router';
 
-import { ListStation } from '@/stations/pages/list';
-import { ListInstrument } from '@/instruments/pages/list';
 import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
-import { ShowStation } from '@/stations/pages/show';
-import { ShowInstrument } from '@/instruments/pages/show';
 import { CreateDataset } from '@/datasets/pages/create';
 import { ListDataset } from '@/datasets/pages/list';
 import { ShowDataset } from '@/datasets/pages/show';
 import { ShowDatasetFiles } from '@/datasets/pages/show-files';
+import { ListInstrument } from '@/instruments/pages/list';
+import { ShowInstrument } from '@/instruments/pages/show';
 import { ListModel } from '@/models/pages/list';
+import { ListStation } from '@/stations/pages/list';
+import { ShowStation } from '@/stations/pages/show';
 
 const AppRouter = () => {
   return (

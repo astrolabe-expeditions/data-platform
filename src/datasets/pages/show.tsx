@@ -1,8 +1,9 @@
+import { Stack, Typography } from '@mui/material';
 import { useShow, useTranslate } from '@refinedev/core';
 import { Show } from '@refinedev/mui';
-import { Stack, Typography } from '@mui/material';
-import type { Dataset } from '@/shared/types/models';
+
 import { DatasetTabs } from '@/datasets/components/dataset-tabs';
+import type { Dataset } from '@/shared/types/models';
 
 const ShowDataset = () => {
   const t = useTranslate();
@@ -20,13 +21,16 @@ const ShowDataset = () => {
       <Stack spacing={2} mt={2}>
         {dataset ? <DatasetTabs datasetId={dataset?.id} /> : null}
         <Typography>
-          <strong>{t('datasets.fields.period')}:</strong> {dataset?.start_at} - {dataset?.end_at}
+          <strong>{t('datasets.fields.period')}:</strong> {dataset?.start_at} -{' '}
+          {dataset?.end_at}
         </Typography>
         <Typography>
-          <strong>{t('commons.fields.createdAt')}:</strong> {dataset?.created_at}
+          <strong>{t('commons.fields.createdAt')}:</strong>{' '}
+          {dataset?.created_at}
         </Typography>
         <Typography>
-          <strong>{t('commons.fields.updatedAt')}:</strong> {dataset?.updated_at}
+          <strong>{t('commons.fields.updatedAt')}:</strong>{' '}
+          {dataset?.updated_at}
         </Typography>
       </Stack>
     </Show>
