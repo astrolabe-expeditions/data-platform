@@ -1,8 +1,11 @@
 create table public.dataset_files (
   id uuid primary key default gen_random_uuid(),
+  name text not null,
+  extension text not null,
   dataset_id uuid not null references public.datasets(id) on delete cascade,
   instrument_id uuid not null references public.instruments(id) on delete cascade,
-  storage_path text not null,
+  path text not null,
+  started_at timestamp with time zone,
   uploaded_at timestamp with time zone default now(),
   processed boolean default false,
   processed_at timestamp with time zone
