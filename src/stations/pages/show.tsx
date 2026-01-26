@@ -1,33 +1,23 @@
-import { useGo, useTranslate } from '@refinedev/core';
-import {
-  Show,
-  DateField,
-} from '@refinedev/mui';
+import { useTranslate } from '@refinedev/core';
+import { Show, DateField } from '@refinedev/mui';
 import {
   Stack,
   Typography,
   List,
   ListItem,
   ListItemText,
-  Button,
 } from '@mui/material';
 import { useParsed } from '@refinedev/core';
+
 import { useOneStation } from '@/stations/hooks/useOneStation';
+import { DatasetSection } from '@/stations/components/dataset-section';
 
 const ShowStation = () => {
   const t = useTranslate();
-  const go = useGo();
   const { id } = useParsed();
   const { station, instruments, isLoading } = useOneStation({
     id: id as string,
   });
-
-  const handleCreateDataset = () => {
-    go({
-      to: `/stations/${station?.id}/datasets/create`,
-      type: 'replace',
-    });
-  };
 
   return (
     <Show
@@ -72,26 +62,7 @@ const ShowStation = () => {
               width: { xs: '100%', md: 'auto' },
             }}
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography variant="h6" fontWeight="bold">
-                {t('stations.show.datasets')}
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleCreateDataset}
-                sx={{ mb: { xs: 1, md: 0 } }}
-              >
-                {t('stations.show.addDataset')}
-              </Button>
-            </Stack>
-            <Typography variant="body2">
-              {t('stations.show.noDatasets')}
-            </Typography>
+            <DatasetSection stationId={station?.id as string} />
           </Stack>
         </Stack>
         <Stack
