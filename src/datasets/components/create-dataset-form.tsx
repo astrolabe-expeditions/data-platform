@@ -8,7 +8,7 @@ import type { FieldValues } from 'react-hook-form';
 import { useDatasetUploadFile } from '@/datasets/components/dataset-upload-file-provider';
 import { Uploader } from '@/datasets/components/uploader/uploader';
 import type { Dataset } from '@/shared/types/models';
-import { useOneStation } from '@/stations/hooks/useOneStation';
+import { useOneStation } from '@/stations/hooks/use-one-station';
 
 interface CreateDatasetFormProps {
   stationId?: string;
