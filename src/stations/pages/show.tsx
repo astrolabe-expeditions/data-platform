@@ -3,7 +3,7 @@ import { useParsed, useTranslate } from '@refinedev/core';
 import { DateField, Show } from '@refinedev/mui';
 
 import { DatasetSection } from '@/stations/components/dataset-section';
-import { useOneStation } from '@/stations/hooks/useOneStation';
+import { useOneStation } from '@/stations/hooks/use-one-station';
 
 const ShowStation = () => {
   const t = useTranslate();
