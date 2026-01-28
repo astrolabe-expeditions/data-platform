@@ -39,3 +39,5 @@ dist-ssr
 # Dummy data files
 data/generated/*
 !data/generated/.gitkeep
+
+.vite
