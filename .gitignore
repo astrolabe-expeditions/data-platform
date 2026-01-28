@@ -36,8 +36,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Dummy data files
-data/generated/*
-!data/generated/.gitkeep
+# Dummy files for tests
+tests/dummy/generated/*
+!tests/dummy/generated/.gitkeep
 
 .vite
