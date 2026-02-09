@@ -49,4 +49,6 @@ jobs:
           GIT_COMMITTER_EMAIL: 'release-bot@astrolabe-expeditions.org'
           DOCKER_REGISTRY_USER: ${{ github.actor }}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: npx --package semantic-release@25 --package @codedependant/semantic-release-docker semantic-release

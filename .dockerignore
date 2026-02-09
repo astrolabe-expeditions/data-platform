@@ -1,0 +1,30 @@
+# Environment config
+.env*
+
+# Mac
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build
+/dist
+
+# Node
+node_modules
+
+# Git config
+.git
+.github
+.gitignore
+.gitattributes
+
+# Editor Config
+.editorconfig
+
+# Docker config
+Dockerfile
+.dockerignore
+
+# Other
+*.md
+LICENSE
