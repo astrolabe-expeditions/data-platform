@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import { useOne, useShow } from '@refinedev/core';
+import { useOne, useShow, useTranslate } from '@refinedev/core';
 import {
   DateField,
   Show,
@@ -7,6 +7,7 @@ import {
 } from '@refinedev/mui';
 
 const ShowInstrument = () => {
+  const t = useTranslate();
   const {
     result: instrument,
     query: { isLoading },
@@ -27,21 +28,21 @@ const ShowInstrument = () => {
     <Show isLoading={isLoading}>
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
-          Identifier
+          {t('instruments.fields.serial_number')}
         </Typography>
-        <TextField value={instrument?.identifier} />
+        <TextField value={instrument?.serial_number} />
         <Typography variant="body1" fontWeight="bold">
-          Model
+          {t('instruments.fields.model')}
         </Typography>
         {modelIsLoading ? (
           <>Loading...</>
         ) : (
           <>
-            {model?.name} ({model?.version})
+            {model?.name} ({model?.code})
           </>
         )}
         <Typography variant="body1" fontWeight="bold">
-          Created At
+          {t('commons.fields.createdAt')}
         </Typography>
         <DateField value={instrument?.created_at} />
       </Stack>
