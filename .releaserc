@@ -4,6 +4,7 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     ["@codedependant/semantic-release-docker", {
+      "dockerImage": "astrolabe-expeditions/data-platform",
       "dockerRegistry": "ghcr.io"
     }],
     "@semantic-release/github"
