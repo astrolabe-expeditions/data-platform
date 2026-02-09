@@ -26,12 +26,12 @@ const ListInstrument = () => {
     () => [
       {
         field: 'serial_number',
-        headerName: t('instruments.list.serial_number'),
+        headerName: t('instruments.fields.serial_number'),
         minWidth: 200,
       },
       {
         field: 'models',
-        headerName: t('instruments.list.model'),
+        headerName: t('instruments.fields.model'),
         valueGetter: (_, row) => `${row.models.name} (${row.models.code})`,
         flex: 1,
       },

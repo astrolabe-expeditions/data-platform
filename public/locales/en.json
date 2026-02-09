@@ -164,5 +164,16 @@
     "fields": {
       "name": "Name"
     }
+  },
+  "instruments": {
+    "instruments": "Instruments",
+    "titles": {
+      "list": "Instruments",
+      "show": "Show an instrument"
+    },
+    "fields": {
+      "serial_number": "Serial Number",
+      "model": "Model"
+    }
   }
 }

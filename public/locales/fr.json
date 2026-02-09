@@ -152,7 +152,7 @@
       "list": "Instruments",
       "show": "Afficher un instrument"
     },
-    "list": {
+    "fields": {
       "serial_number": "Numéro de série",
       "model": "Modèle"
     }
