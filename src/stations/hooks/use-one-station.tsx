@@ -46,7 +46,7 @@ const useOneStation = ({ id }: { id: string | undefined }) => {
     instruments,
     isLoading: isLoading || !id,
     isError,
-    isInstrumentsLoading : isInstrumentsLoading || !id,
+    isInstrumentsLoading: isInstrumentsLoading || !id,
     isInstrumentsError,
   };
 };
