@@ -53,4 +53,4 @@ jobs:
           GIT_AUTHOR_EMAIL: 'release-bot@astrolabe-expeditions.org'
           GIT_COMMITTER_NAME: 'Release Bot'
           GIT_COMMITTER_EMAIL: 'release-bot@astrolabe-expeditions.org'
-        run: npx semantic-release --package @codedependant/semantic-release-docker
+        run: npx --package semantic-release@25 --package @codedependant/semantic-release-docker semantic-release
