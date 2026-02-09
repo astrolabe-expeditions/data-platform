@@ -1,22 +1,13 @@
-import {
-  DataGrid,
-  type GridColDef,
-  type GridEventListener,
-} from '@mui/x-data-grid';
-import { useGo, useTranslate } from '@refinedev/core';
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { useTranslate } from '@refinedev/core';
 import { List, useDataGrid } from '@refinedev/mui';
 import { useMemo } from 'react';
 
 import type { Model } from '@/shared/types/models';
 
 const ListModel = () => {
-  const go = useGo();
   const t = useTranslate();
   const { dataGridProps } = useDataGrid();
-
-  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    go({ to: `/models/${params.row.id}` });
-  };
 
   const columns = useMemo<GridColDef<Model>[]>(
     () => [
@@ -34,12 +25,7 @@ const ListModel = () => {
 
   return (
     <List resource="models">
-      <DataGrid
-        {...dataGridProps}
-        columns={columns}
-        onRowClick={handleRowClick}
-        rowSelection={false}
-      />
+      <DataGrid {...dataGridProps} columns={columns} rowSelection={false} />
     </List>
   );
 };
