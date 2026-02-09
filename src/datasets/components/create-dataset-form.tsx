@@ -36,9 +36,10 @@ const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
     },
   });
 
-  const [selectedStation, setSelectedStation] = useState<
-    AutocompleteOption | null
-  >(stationId ? { id: stationId, label: '' } : null);
+  const [selectedStation, setSelectedStation] =
+    useState<AutocompleteOption | null>(
+      stationId ? { id: stationId, label: '' } : null,
+    );
 
   const handleStationChange = (
     _: SyntheticEvent<Element, Event>,
