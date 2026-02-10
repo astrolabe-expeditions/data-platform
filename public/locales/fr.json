@@ -1,212 +1,26 @@
 {
-  "pages": {
-    "login": {
-      "title": "Connectez-vous à votre compte",
-      "signin": "Se connecter",
-      "signup": "S'inscrire",
-      "divider": "ou",
-      "fields": {
-        "email": "E-mail",
-        "password": "Mot de passe"
-      },
-      "errors": {
-        "validEmail": "Adresse e-mail invalide",
-        "requiredEmail": "L'e-mail est requis",
-        "requiredPassword": "Le mot de passe est requis"
-      },
-      "buttons": {
-        "submit": "Connexion",
-        "forgotPassword": "Mot de passe oublié ?",
-        "noAccount": "Vous n'avez pas de compte ?",
-        "rememberMe": "Se souvenir de moi"
-      }
-    },
-    "forgotPassword": {
-      "title": "Mot de passe oublié ?",
-      "fields": {
-        "email": "E-mail"
-      },
-      "errors": {
-        "validEmail": "Adresse e-mail invalide",
-        "requiredEmail": "L'e-mail est requis"
-      },
-      "buttons": {
-        "submit": "Envoyer les instructions de réinitialisation"
-      }
-    },
-    "register": {
-      "title": "Inscrivez-vous à votre compte",
-      "fields": {
-        "email": "E-mail",
-        "password": "Mot de passe"
-      },
-      "errors": {
-        "validEmail": "Adresse e-mail invalide",
-        "requiredEmail": "L'e-mail est requis",
-        "requiredPassword": "Le mot de passe est requis"
-      },
-      "buttons": {
-        "submit": "S'inscrire",
-        "haveAccount": "Vous avez déjà un compte ?"
-      }
-    },
-    "updatePassword": {
-      "title": "Mettre à jour le mot de passe",
-      "fields": {
-        "password": "Nouveau mot de passe",
-        "confirmPassword": "Confirmer le nouveau mot de passe"
-      },
-      "errors": {
-        "confirmPasswordNotMatch": "Les mots de passe ne correspondent pas",
-        "requiredPassword": "Le mot de passe est requis",
-        "requiredConfirmPassword": "La confirmation du mot de passe est requise"
-      },
-      "buttons": {
-        "submit": "Mettre à jour"
-      }
-    },
-    "error": {
-      "info": "Vous avez peut-être oublié d'ajouter le composant {{action}} à la ressource {{resource}}.",
-      "404": "Désolé, la page que vous avez visitée n'existe pas.",
-      "resource404": "Êtes-vous sûr d'avoir créé la ressource {{resource}} ?",
-      "backHome": "Retour à l'accueil"
-    }
-  },
   "actions": {
-    "list": "Liste",
     "create": "Créer",
     "edit": "Modifier",
+    "list": "Liste",
     "show": "Afficher"
   },
   "buttons": {
+    "cancel": "Annuler",
+    "clear": "Effacer",
+    "clone": "Cloner",
+    "confirm": "Êtes-vous sûr ?",
     "create": "Créer",
-    "save": "Enregistrer",
-    "logout": "Déconnexion",
     "delete": "Supprimer",
     "edit": "Modifier",
-    "cancel": "Annuler",
-    "confirm": "Êtes-vous sûr ?",
     "filter": "Filtrer",
-    "clear": "Effacer",
-    "refresh": "Rafraîchir",
-    "show": "Afficher",
-    "undo": "Annuler",
     "import": "Importer",
-    "clone": "Cloner",
-    "notAccessTitle": "Vous n'avez pas la permission d'accéder"
-  },
-  "warnWhenUnsavedChanges": "Êtes-vous sûr de vouloir quitter ? Vous avez des modifications non enregistrées.",
-  "notifications": {
-    "success": "Succès",
-    "error": "Erreur (code : {{statusCode}})",
-    "undoable": "Vous avez {{seconds}} secondes pour annuler",
-    "createSuccess": "{{resource}} créé avec succès",
-    "createError": "Erreur lors de la création de {{resource}} (code : {{statusCode}})",
-    "deleteSuccess": "{{resource}} supprimé avec succès",
-    "deleteError": "Erreur lors de la suppression de {{resource}} (code : {{statusCode}})",
-    "editSuccess": "{{resource}} modifié avec succès",
-    "editError": "Erreur lors de la modification de {{resource}} (code : {{statusCode}})",
-    "importProgress": "Importation : {{processed}}/{{total}}"
-  },
-  "loading": "Chargement...",
-  "dashboard": {
-    "title": "Tableau de bord",
-    "welcome": "Bienvenue sur le tableau de bord",
-    "description": "Ici, vous pouvez gérer vos jeux de données et stations."
-  },
-  "stations": {
-    "stations": "Stations d'observation",
-    "fields": {
-      "name": "Nom",
-      "type": {
-        "title": "Type",
-        "fixed": "Fixe",
-        "mobile": "Mobile"
-      }
-    },
-    "titles": {
-      "list": "Stations d'observation",
-      "show": "Afficher une station"
-    },
-    "show": {
-      "instruments": "Instruments associés",
-      "details": "Détail de la station",
-      "createdAt": "Créée le",
-      "updatedAt": "Dernière mise à jour",
-      "datasets": {
-        "title": "Jeux de données",
-        "empty": "Aucun jeu de données disponible",
-        "create": "Ajouter",
-        "listItem": {
-          "primary": "Donnée du {{start, datetime}} au {{end, datetime}}"
-        },
-        "actions": {
-          "view": "Voir le jeu de données"
-        }
-      }
-    }
-  },
-  "instruments": {
-    "instruments": "Instruments",
-    "titles": {
-      "list": "Instruments",
-      "show": "Afficher un instrument"
-    },
-    "fields": {
-      "serial_number": "Numéro de série",
-      "model": "Modèle"
-    }
-  },
-  "datasets": {
-    "datasets": "Jeux de données",
-    "titles": {
-      "list": "Jeux de données",
-      "create": "Créer un jeu de données"
-    },
-    "list": {
-      "station": "Station",
-      "period": "Plage d'enregistrement"
-    },
-    "fields": {
-      "period": "Période",
-      "description": "Description",
-      "startDate": "Date de début",
-      "endDate": "Date de fin"
-    },
-    "sections": {
-      "details": "Détails"
-    },
-    "uploader": {
-      "title": "Fichiers de données",
-      "subtitle": "Téléchargez vos fichiers de données en cliquant pour sélectionner des fichiers.",
-      "button": "Sélectionner des fichiers",
-      "sectionTitle": "Fichiers téléchargés",
-      "instrument": "Instrument",
-      "status": {
-        "pending": "En attente de traitement",
-        "processing": "Traitement en cours",
-        "processed": "Traitement terminé",
-        "error": "Erreur lors du traitement"
-      },
-      "errors": {
-        "instrumentNotPartOfStation": "L'instrument ne fait pas partie de la station actuelle.",
-        "instrumentNotFoundInFilename": "L'instrument n'a pas été trouvé dans le nom du fichier.",
-        "duplicateFile": "Le fichier '{{fileName}}' a déjà été ajouté."
-      }
-    },
-    "tabs": {
-      "metadata": "Métadonnées",
-      "files": "Fichiers"
-    }
-  },
-  "models": {
-    "models": "Modèles d'instruments",
-    "titles": {
-      "list": "Modèles d'instruments"
-    },
-    "fields": {
-      "name": "Nom"
-    }
+    "logout": "Déconnexion",
+    "notAccessTitle": "Vous n'avez pas la permission d'accéder",
+    "refresh": "Rafraîchir",
+    "save": "Enregistrer",
+    "show": "Afficher",
+    "undo": "Annuler"
   },
   "commons": {
     "fields": {
@@ -214,9 +28,195 @@
       "updatedAt": "Mis à jour le"
     }
   },
+  "dashboard": {
+    "description": "Ici, vous pouvez gérer vos jeux de données et stations.",
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue sur le tableau de bord"
+  },
+  "datasets": {
+    "datasets": "Jeux de données",
+    "fields": {
+      "description": "Description",
+      "endDate": "Date de fin",
+      "period": "Période",
+      "startDate": "Date de début"
+    },
+    "list": {
+      "period": "Plage d'enregistrement",
+      "station": "Station"
+    },
+    "sections": {
+      "details": "Détails"
+    },
+    "tabs": {
+      "files": "Fichiers",
+      "metadata": "Métadonnées"
+    },
+    "titles": {
+      "create": "Créer un jeu de données",
+      "list": "Jeux de données"
+    },
+    "uploader": {
+      "button": "Sélectionner des fichiers",
+      "errors": {
+        "duplicateFile": "Le fichier '{{fileName}}' a déjà été ajouté.",
+        "instrumentNotFoundInFilename": "L'instrument n'a pas été trouvé dans le nom du fichier.",
+        "instrumentNotPartOfStation": "L'instrument ne fait pas partie de la station actuelle."
+      },
+      "instrument": "Instrument",
+      "sectionTitle": "Fichiers téléchargés",
+      "status": {
+        "error": "Erreur lors du traitement",
+        "pending": "En attente de traitement",
+        "processed": "Traitement terminé",
+        "processing": "Traitement en cours"
+      },
+      "subtitle": "Téléchargez vos fichiers de données en cliquant pour sélectionner des fichiers.",
+      "title": "Fichiers de données"
+    }
+  },
+  "instruments": {
+    "fields": {
+      "model": "Modèle",
+      "serial_number": "Numéro de série"
+    },
+    "instruments": "Instruments",
+    "titles": {
+      "list": "Instruments",
+      "show": "Afficher un instrument"
+    }
+  },
+  "loading": "Chargement...",
+  "models": {
+    "fields": {
+      "name": "Nom"
+    },
+    "models": "Modèles d'instruments",
+    "titles": {
+      "list": "Modèles d'instruments"
+    }
+  },
+  "notifications": {
+    "createError": "Erreur lors de la création de {{resource}} (code : {{statusCode}})",
+    "createSuccess": "{{resource}} créé avec succès",
+    "deleteError": "Erreur lors de la suppression de {{resource}} (code : {{statusCode}})",
+    "deleteSuccess": "{{resource}} supprimé avec succès",
+    "editError": "Erreur lors de la modification de {{resource}} (code : {{statusCode}})",
+    "editSuccess": "{{resource}} modifié avec succès",
+    "error": "Erreur (code : {{statusCode}})",
+    "importProgress": "Importation : {{processed}}/{{total}}",
+    "success": "Succès",
+    "undoable": "Vous avez {{seconds}} secondes pour annuler"
+  },
+  "pages": {
+    "error": {
+      "404": "Désolé, la page que vous avez visitée n'existe pas.",
+      "backHome": "Retour à l'accueil",
+      "info": "Vous avez peut-être oublié d'ajouter le composant {{action}} à la ressource {{resource}}.",
+      "resource404": "Êtes-vous sûr d'avoir créé la ressource {{resource}} ?"
+    },
+    "forgotPassword": {
+      "buttons": {
+        "submit": "Envoyer les instructions de réinitialisation"
+      },
+      "errors": {
+        "requiredEmail": "L'e-mail est requis",
+        "validEmail": "Adresse e-mail invalide"
+      },
+      "fields": {
+        "email": "E-mail"
+      },
+      "title": "Mot de passe oublié ?"
+    },
+    "login": {
+      "buttons": {
+        "forgotPassword": "Mot de passe oublié ?",
+        "noAccount": "Vous n'avez pas de compte ?",
+        "rememberMe": "Se souvenir de moi",
+        "submit": "Connexion"
+      },
+      "divider": "ou",
+      "errors": {
+        "requiredEmail": "L'e-mail est requis",
+        "requiredPassword": "Le mot de passe est requis",
+        "validEmail": "Adresse e-mail invalide"
+      },
+      "fields": {
+        "email": "E-mail",
+        "password": "Mot de passe"
+      },
+      "signin": "Se connecter",
+      "signup": "S'inscrire",
+      "title": "Connectez-vous à votre compte"
+    },
+    "register": {
+      "buttons": {
+        "haveAccount": "Vous avez déjà un compte ?",
+        "submit": "S'inscrire"
+      },
+      "errors": {
+        "requiredEmail": "L'e-mail est requis",
+        "requiredPassword": "Le mot de passe est requis",
+        "validEmail": "Adresse e-mail invalide"
+      },
+      "fields": {
+        "email": "E-mail",
+        "password": "Mot de passe"
+      },
+      "title": "Inscrivez-vous à votre compte"
+    },
+    "updatePassword": {
+      "buttons": {
+        "submit": "Mettre à jour"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "Les mots de passe ne correspondent pas",
+        "requiredConfirmPassword": "La confirmation du mot de passe est requise",
+        "requiredPassword": "Le mot de passe est requis"
+      },
+      "fields": {
+        "confirmPassword": "Confirmer le nouveau mot de passe",
+        "password": "Nouveau mot de passe"
+      },
+      "title": "Mettre à jour le mot de passe"
+    }
+  },
   "shared": {
     "buttons": {
       "more": "Plus d'actions"
     }
-  }
+  },
+  "stations": {
+    "fields": {
+      "name": "Nom",
+      "type": {
+        "fixed": "Fixe",
+        "mobile": "Mobile",
+        "title": "Type"
+      }
+    },
+    "show": {
+      "createdAt": "Créée le",
+      "datasets": {
+        "actions": {
+          "view": "Voir le jeu de données"
+        },
+        "create": "Ajouter",
+        "empty": "Aucun jeu de données disponible",
+        "listItem": {
+          "primary": "Donnée du {{start, datetime}} au {{end, datetime}}"
+        },
+        "title": "Jeux de données"
+      },
+      "details": "Détail de la station",
+      "instruments": "Instruments associés",
+      "updatedAt": "Dernière mise à jour"
+    },
+    "stations": "Stations d'observation",
+    "titles": {
+      "list": "Stations d'observation",
+      "show": "Afficher une station"
+    }
+  },
+  "warnWhenUnsavedChanges": "Êtes-vous sûr de vouloir quitter ? Vous avez des modifications non enregistrées."
 }
