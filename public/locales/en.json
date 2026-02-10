@@ -1,179 +1,179 @@
 {
-  "pages": {
-    "login": {
-      "title": "Sign in to your account",
-      "signin": "Sign in",
-      "signup": "Sign up",
-      "divider": "or",
-      "fields": {
-        "email": "Email",
-        "password": "Password"
-      },
-      "errors": {
-        "validEmail": "Invalid email address",
-        "requiredEmail": "Email is required",
-        "requiredPassword": "Password is required"
-      },
-      "buttons": {
-        "submit": "Login",
-        "forgotPassword": "Forgot password?",
-        "noAccount": "Don’t have an account?",
-        "rememberMe": "Remember me"
-      }
-    },
-    "forgotPassword": {
-      "title": "Forgot your password?",
-      "fields": {
-        "email": "Email"
-      },
-      "errors": {
-        "validEmail": "Invalid email address",
-        "requiredEmail": "Email is required"
-      },
-      "buttons": {
-        "submit": "Send reset instructions"
-      }
-    },
-    "register": {
-      "title": "Sign up for your account",
-      "fields": {
-        "email": "Email",
-        "password": "Password"
-      },
-      "errors": {
-        "validEmail": "Invalid email address",
-        "requiredEmail": "Email is required",
-        "requiredPassword": "Password is required"
-      },
-      "buttons": {
-        "submit": "Register",
-        "haveAccount": "Have an account?"
-      }
-    },
-    "updatePassword": {
-      "title": "Update password",
-      "fields": {
-        "password": "New Password",
-        "confirmPassword": "Confirm new password"
-      },
-      "errors": {
-        "confirmPasswordNotMatch": "Passwords do not match",
-        "requiredPassword": "Password required",
-        "requiredConfirmPassword": "Confirm password is required"
-      },
-      "buttons": {
-        "submit": "Update"
-      }
-    },
-    "error": {
-      "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
-      "404": "Sorry, the page you visited does not exist.",
-      "resource404": "Are you sure you have created the {{resource}} resource.",
-      "backHome": "Back Home"
-    }
-  },
   "actions": {
-    "list": "List",
     "create": "Create",
     "edit": "Edit",
+    "list": "List",
     "show": "Show"
   },
   "buttons": {
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "clone": "Clone",
+    "confirm": "Are you sure?",
     "create": "Create",
-    "save": "Save",
-    "logout": "Logout",
     "delete": "Delete",
     "edit": "Edit",
-    "cancel": "Cancel",
-    "confirm": "Are you sure?",
     "filter": "Filter",
-    "clear": "Clear",
-    "refresh": "Refresh",
-    "show": "Show",
-    "undo": "Undo",
     "import": "Import",
-    "clone": "Clone",
-    "notAccessTitle": "You don't have permission to access"
-  },
-  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
-  "notifications": {
-    "success": "Successful",
-    "error": "Error (status code: {{statusCode}})",
-    "undoable": "You have {{seconds}} seconds to undo",
-    "createSuccess": "Successfully created {{resource}}",
-    "createError": "There was an error creating {{resource}} (status code: {{statusCode}})",
-    "deleteSuccess": "Successfully deleted {{resource}}",
-    "deleteError": "Error when deleting {{resource}} (status code: {{statusCode}})",
-    "editSuccess": "Successfully edited {{resource}}",
-    "editError": "Error when editing {{resource}} (status code: {{statusCode}})",
-    "importProgress": "Importing: {{processed}}/{{total}}"
-  },
-  "loading": "Loading",
-  "tags": {
-    "clone": "Clone"
+    "logout": "Logout",
+    "notAccessTitle": "You don't have permission to access",
+    "refresh": "Refresh",
+    "save": "Save",
+    "show": "Show",
+    "undo": "Undo"
   },
   "dashboard": {
+    "description": "Here you can manage your datasets and stations.",
     "title": "Dashboard",
-    "welcome": "Welcome to the Dashboard",
-    "description": "Here you can manage your datasets and stations."
-  },
-  "stations": {
-    "stations": "Stations",
-    "fields": {
-      "name": "Name",
-      "type": {
-        "title": "Type",
-        "fixed": "Fixed",
-        "mobile": "Mobile"
-      }
-    },
-    "datasets": "Datasets",
-    "noDatasets": "No datasets available",
-    "addDataset": "Add a dataset"
+    "welcome": "Welcome to the Dashboard"
   },
   "datasets": {
     "datasets": "Datasets",
-    "titles": {
-      "create": "Create a dataset"
-    },
     "fields": {
       "description": "Description",
-      "startDate": "Start date",
-      "endDate": "End date"
+      "endDate": "End date",
+      "startDate": "Start date"
     },
     "sections": {
       "details": "Details"
     },
-    "uploader": {
-      "title": "Data files",
-      "subtitle": "Upload your data files by clicking to select files.",
-      "button": "Select files",
-      "sectionTitle": "Uploaded files",
-      "instrument": "Instrument"
-    },
     "tabs": {
-      "metadata": "Metadata",
-      "files": "Files"
-    }
-  },
-  "models": {
-    "models": "Instrument models",
-    "titles": {
-      "list": "Instrument models"
+      "files": "Files",
+      "metadata": "Metadata"
     },
-    "fields": {
-      "name": "Name"
+    "titles": {
+      "create": "Create a dataset"
+    },
+    "uploader": {
+      "button": "Select files",
+      "instrument": "Instrument",
+      "sectionTitle": "Uploaded files",
+      "subtitle": "Upload your data files by clicking to select files.",
+      "title": "Data files"
     }
   },
   "instruments": {
+    "fields": {
+      "model": "Model",
+      "serial_number": "Serial Number"
+    },
     "instruments": "Instruments",
     "titles": {
       "list": "Instruments",
       "show": "Show an instrument"
-    },
-    "fields": {
-      "serial_number": "Serial Number",
-      "model": "Model"
     }
-  }
+  },
+  "loading": "Loading",
+  "models": {
+    "fields": {
+      "name": "Name"
+    },
+    "models": "Instrument models",
+    "titles": {
+      "list": "Instrument models"
+    }
+  },
+  "notifications": {
+    "createError": "There was an error creating {{resource}} (status code: {{statusCode}})",
+    "createSuccess": "Successfully created {{resource}}",
+    "deleteError": "Error when deleting {{resource}} (status code: {{statusCode}})",
+    "deleteSuccess": "Successfully deleted {{resource}}",
+    "editError": "Error when editing {{resource}} (status code: {{statusCode}})",
+    "editSuccess": "Successfully edited {{resource}}",
+    "error": "Error (status code: {{statusCode}})",
+    "importProgress": "Importing: {{processed}}/{{total}}",
+    "success": "Successful",
+    "undoable": "You have {{seconds}} seconds to undo"
+  },
+  "pages": {
+    "error": {
+      "404": "Sorry, the page you visited does not exist.",
+      "backHome": "Back Home",
+      "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
+      "resource404": "Are you sure you have created the {{resource}} resource."
+    },
+    "forgotPassword": {
+      "buttons": {
+        "submit": "Send reset instructions"
+      },
+      "errors": {
+        "requiredEmail": "Email is required",
+        "validEmail": "Invalid email address"
+      },
+      "fields": {
+        "email": "Email"
+      },
+      "title": "Forgot your password?"
+    },
+    "login": {
+      "buttons": {
+        "forgotPassword": "Forgot password?",
+        "noAccount": "Don’t have an account?",
+        "rememberMe": "Remember me",
+        "submit": "Login"
+      },
+      "divider": "or",
+      "errors": {
+        "requiredEmail": "Email is required",
+        "requiredPassword": "Password is required",
+        "validEmail": "Invalid email address"
+      },
+      "fields": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "signin": "Sign in",
+      "signup": "Sign up",
+      "title": "Sign in to your account"
+    },
+    "register": {
+      "buttons": {
+        "haveAccount": "Have an account?",
+        "submit": "Register"
+      },
+      "errors": {
+        "requiredEmail": "Email is required",
+        "requiredPassword": "Password is required",
+        "validEmail": "Invalid email address"
+      },
+      "fields": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "title": "Sign up for your account"
+    },
+    "updatePassword": {
+      "buttons": {
+        "submit": "Update"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "Passwords do not match",
+        "requiredConfirmPassword": "Confirm password is required",
+        "requiredPassword": "Password required"
+      },
+      "fields": {
+        "confirmPassword": "Confirm new password",
+        "password": "New Password"
+      },
+      "title": "Update password"
+    }
+  },
+  "stations": {
+    "addDataset": "Add a dataset",
+    "datasets": "Datasets",
+    "fields": {
+      "name": "Name",
+      "type": {
+        "fixed": "Fixed",
+        "mobile": "Mobile",
+        "title": "Type"
+      }
+    },
+    "noDatasets": "No datasets available",
+    "stations": "Stations"
+  },
+  "tags": {
+    "clone": "Clone"
+  },
+  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes."
 }
