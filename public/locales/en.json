@@ -22,6 +22,12 @@
     "show": "Show",
     "undo": "Undo"
   },
+  "commons": {
+    "fields": {
+      "createdAt": "Created at",
+      "updatedAt": "Updated at"
+    }
+  },
   "dashboard": {
     "description": "Here you can manage your datasets and stations.",
     "title": "Dashboard",
@@ -32,7 +38,12 @@
     "fields": {
       "description": "Description",
       "endDate": "End date",
+      "period": "Period",
       "startDate": "Start date"
+    },
+    "list": {
+      "period": "Recording period",
+      "station": "Station"
     },
     "sections": {
       "details": "Details"
@@ -42,12 +53,24 @@
       "metadata": "Metadata"
     },
     "titles": {
-      "create": "Create a dataset"
+      "create": "Create a dataset",
+      "list": "Datasets"
     },
     "uploader": {
       "button": "Select files",
+      "errors": {
+        "duplicateFile": "The file '{{fileName}}' has already been added.",
+        "instrumentNotFoundInFilename": "The instrument was not found in the file name.",
+        "instrumentNotPartOfStation": "The instrument is not part of the current station."
+      },
       "instrument": "Instrument",
       "sectionTitle": "Uploaded files",
+      "status": {
+        "error": "Error",
+        "pending": "Pending",
+        "processed": "Processed",
+        "processing": "Processing"
+      },
       "subtitle": "Upload your data files by clicking to select files.",
       "title": "Data files"
     }
@@ -158,6 +181,11 @@
       "title": "Update password"
     }
   },
+  "shared": {
+    "buttons": {
+      "more": "More informations"
+    }
+  },
   "stations": {
     "addDataset": "Add a dataset",
     "datasets": "Datasets",
@@ -169,11 +197,28 @@
         "title": "Type"
       }
     },
-    "noDatasets": "No datasets available",
-    "stations": "Stations"
-  },
-  "tags": {
-    "clone": "Clone"
+    "show": {
+      "createdAt": "Created at",
+      "datasets": {
+        "actions": {
+          "view": "View dataset"
+        },
+        "create": "Add",
+        "empty": "No datasets available",
+        "listItem": {
+          "primary": "Data from {{start, datetime}} to {{end, datetime}}"
+        },
+        "title": "Datasets"
+      },
+      "details": "Station details",
+      "instruments": "Associated instruments",
+      "updatedAt": "Last updated"
+    },
+    "stations": "Observation stations",
+    "titles": {
+      "list": "Observation stations",
+      "show": "Show a station"
+    }
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes."
 }
