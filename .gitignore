@@ -41,3 +41,6 @@ tests/dummy/generated/*
 !tests/dummy/generated/.gitkeep
 
 .vite
+
+# Virtual environment
+.venv

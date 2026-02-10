@@ -1,0 +1,23 @@
+- name:
+  hosts: all
+  remote_user: "{{ setup_remote_user }}"
+  become: true
+  vars_files:
+    - vars/secrets.yml
+  tasks:
+
+    - name: Create a deploy user with SSH access
+      ansible.builtin.user:
+        name: "{{ deploy_user }}"
+        shell: /bin/bash
+        groups: docker
+        append: yes
+        create_home: yes
+
+    - name: Add deploy user's SSH public key
+      ansible.builtin.authorized_key:
+        user: "{{ deploy_user }}"
+        state: present
+        key: "{{ deploy_ssh_public_key }}"
+
+

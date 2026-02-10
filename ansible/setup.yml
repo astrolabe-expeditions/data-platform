@@ -1,0 +1,48 @@
+- name: Setup frontend and n8n with Docker Compose
+  hosts: all
+  remote_user: "{{ setup_remote_user }}"
+  become: true
+  vars_files:
+    - vars/secrets.yml
+  tasks:
+    - name: Install Docker using soli.docker collection
+      ansible.builtin.import_role:
+        name: soli.docker.docker
+
+    - name: Create a group for data platform files
+      ansible.builtin.group:
+        name: "{{ data_platform_group }}"
+        state: present
+
+    - name: Add deploy user to data platform group
+      ansible.builtin.user:
+        name: "{{ deploy_user }}"
+        append: true
+        groups:
+          - "{{ data_platform_group }}"
+
+    - name: Create data platform directory
+      ansible.builtin.file:
+        path: "{{ data_platform_dir }}"
+        state: directory
+        group: "{{ data_platform_group }}"
+        mode: '0775'
+
+    - name: Copy .env file
+      ansible.builtin.template:
+        src: .env.j2
+        dest: "{{ data_platform_dir }}/.env"
+        group: "{{ data_platform_group }}"
+        mode: '0660'
+
+    - name: Copy docker-compose.yml
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ data_platform_dir }}/docker-compose.yml"
+        group: "{{ data_platform_group }}"
+        mode: '0660'
+
+    - name: Start services
+      community.docker.docker_compose_v2:
+        project_src: "{{ data_platform_dir }}"
+        state: present
