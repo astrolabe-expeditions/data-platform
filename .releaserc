@@ -9,7 +9,7 @@
         "dockerImage": "data-platform",
         "dockerProject": "astrolabe-expeditions",
         "dockerRegistry": "ghcr.io",
-        "dockerFlags": {
+        "dockerBuildFlags": {
           "secret": ["id=SUPABASE_URL", "id=SUPABASE_KEY"]
         }
       }
