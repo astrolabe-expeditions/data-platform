@@ -1,0 +1,25 @@
+- name: Deploy frontend and n8n with Docker Compose
+  hosts: all
+  remote_user: "{{ deploy_user }}"
+  vars_files:
+    - vars/secrets.yml
+  tasks:
+
+    - name: Copy .env file
+      ansible.builtin.template:
+        src: .env.j2
+        dest: "{{ data_platform_dir }}/.env"
+        mode: '0660'
+
+    - name: Copy docker-compose.yml
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ data_platform_dir }}/docker-compose.yml"
+        mode: '0660'
+
+    - name: Start services
+      community.docker.docker_compose_v2:
+        project_src: "{{ data_platform_dir }}"
+        state: present
+        remove_orphans: true
+        wait: true
