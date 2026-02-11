@@ -1,0 +1,39 @@
+services:
+
+  n8n:
+    image: n8nio/n8n:2.8.1
+    container_name: n8n
+    networks:
+      - supabase_network_data-platform
+      - n8n_network
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_DIAGNOSTICS_ENABLED=false # Opt out of telemetry events
+      - N8N_RUNNERS_MODE=external
+      - N8N_RUNNERS_BROKER_LISTEN_ADDRESS=0.0.0.0
+      - N8N_RUNNERS_AUTH_TOKEN=your-secret-here
+      - N8N_NATIVE_PYTHON_RUNNER=true
+
+  task-runners:
+    image: n8nio/runners:2.8.1
+    container_name: n8n-runners
+    environment:
+      - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
+      - N8N_RUNNERS_LAUNCHER_LOG_LEVEL=debug
+      - N8N_RUNNERS_AUTH_TOKEN=your-secret-here
+    depends_on:
+      - n8n
+    networks:
+      - n8n_network
+
+
+networks:
+  n8n_network:
+  supabase_network_data-platform:
+    external: true # Indique que le réseau existe déjà
+
+volumes:
+  n8n_data:
