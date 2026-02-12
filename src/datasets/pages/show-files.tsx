@@ -18,15 +18,13 @@ const ShowDatasetFiles = () => {
 
   const { result: files } = useList<DatasetFile>({
     resource: 'dataset_files',
-    meta: {
-      filters: [
-        {
-          field: 'dataset_id',
-          operator: 'eq',
-          value: datasetId,
-        },
-      ],
-    },
+    filters: [
+      {
+        field: 'dataset_id',
+        operator: 'eq',
+        value: datasetId,
+      },
+    ],
   });
 
   return (
