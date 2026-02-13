@@ -1,0 +1,231 @@
+{
+  "name": "data-ingestion",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ab38d14e-5704-4696-9a33-cc277024e2d0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-336, -160],
+      "id": "47c6b108-d68a-4f0d-a9f9-fc8d812431a5",
+      "name": "Webhook",
+      "webhookId": "ab38d14e-5704-4696-9a33-cc277024e2d0"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "dataset_files",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "dataset_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.query.datasetId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-112, -160],
+      "id": "47e604cd-0500-4b33-a9ee-669f73a404d1",
+      "name": "Get many rows",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=http://supabase_kong_data-platform:8000/storage/v1/object/dataset_files/{{ $json.path }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [112, -160],
+      "id": "fe20a7bb-4e20-4a1d-935e-b8fb52c49a3f",
+      "name": "HTTP Request",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "delimiter": ";"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [336, -160],
+      "id": "93e93acf-491f-43e1-bdbb-706a6f200250",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "pythonNative",
+        "pythonCode": "data = _item[\"json\"]\n\n# Vérifie que 'datetime' est présent\nif \"datetime\" not in data:\n    raise ValueError(\"Le champ 'datetime' est obligatoire.\")\n  \n# Extraire 'datetime'\nrecorded_at = data[\"datetime\"]\nparameters = {}\n\n# Traite chaque paramètre\nfor key, value in data.items():\n    if key == \"datetime\":\n        continue  # On saute 'datetime'\n\n    # Tente de convertir en float si c'est une chaîne représentant un nombre\n    if isinstance(value, str):\n        try:\n            num_value = float(value)\n            parameters[key] = num_value\n        except ValueError:\n            parameters[key] = value\n    else:\n        parameters[key] = value\n\n# Retourne l'item transformé\nreturn {\n    \"recorded_at\": recorded_at,\n    \"parameters\": parameters,\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [560, -160],
+      "id": "6bcc34dd-1407-4aa5-b232-0a51c53b8409",
+      "name": "Code in Python",
+      "alwaysOutputData": true,
+      "notesInFlow": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "removeItemsSeenInPreviousExecutions",
+        "dedupeValue": "={{ $json.datetime }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [-336, -384],
+      "id": "fde92339-ab60-439a-aa33-65e85356c542",
+      "name": "Remove Duplicates",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "tableId": "measures",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recorded_at",
+              "fieldValue": "={{ $json.recorded_at }}"
+            },
+            {
+              "fieldId": "parameters",
+              "fieldValue": "={{ $json.parameters }}"
+            },
+            {
+              "fieldId": "instrument_id",
+              "fieldValue": "={{ $('Get many rows').item.json.instrument_id }}"
+            },
+            {
+              "fieldId": "dataset_id",
+              "fieldValue": "={{ $('Get many rows').item.json.dataset_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [784, -160],
+      "id": "0a38bd5e-34df-4876-a2b9-d2b45fd3717e",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "query": {
+            "datasetId": "d865260c-dcc8-468e-aef7-a1ee47474611"
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Code in Python",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [[]]
+    },
+    "Create a row": {
+      "main": [[]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "7035e122-a338-4b4d-87b4-b72f4e3046c8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5e0ec54da47e405a2fb7faf45aec7e44e092525d2348fce5c139307846720f82"
+  },
+  "id": "FBbnTPiyv4rsCqZZ1Z1UY",
+  "tags": []
+}
