@@ -59,6 +59,9 @@ const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
       station_id: selectedStation?.id,
     });
     await uploadFiles(respData?.data?.id as string);
+    await fetch(
+      `${import.meta.env.VITE_DATA_INGESTION_WEBHOOK_URL}?datasetId=${respData?.data?.id}`,
+    );
     redirect('show', respData?.data?.id);
   };
 
