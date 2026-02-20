@@ -4,34 +4,49 @@
     {
       "parameters": {
         "path": "ab38d14e-5704-4696-9a33-cc277024e2d0",
-        "options": {}
+        "options": {
+          "allowedOrigins": "*"
+        }
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [-336, -160],
+      "position": [-432, -128],
       "id": "47c6b108-d68a-4f0d-a9f9-fc8d812431a5",
       "name": "Webhook",
       "webhookId": "ab38d14e-5704-4696-9a33-cc277024e2d0"
     },
     {
       "parameters": {
-        "operation": "getAll",
+        "operation": "update",
         "tableId": "dataset_files",
         "filters": {
           "conditions": [
             {
-              "keyName": "dataset_id",
+              "keyName": "id",
               "condition": "eq",
-              "keyValue": "={{ $json.query.datasetId }}"
+              "keyValue": "={{ $('Loop Over Items1').last().json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processing_status",
+              "fieldValue": "completed"
+            },
+            {
+              "fieldId": "processed_at",
+              "fieldValue": "={{ $now }}"
             }
           ]
         }
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [-112, -160],
-      "id": "47e604cd-0500-4b33-a9ee-669f73a404d1",
-      "name": "Get many rows",
+      "position": [1360, -320],
+      "id": "3f117094-c238-4455-b8e6-564053b3b2f9",
+      "name": "Update a row",
+      "executeOnce": true,
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
@@ -54,9 +69,10 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
-      "position": [112, -160],
+      "position": [688, -128],
       "id": "fe20a7bb-4e20-4a1d-935e-b8fb52c49a3f",
-      "name": "HTTP Request",
+      "name": "Récupérer le fichier CSV",
+      "retryOnFail": false,
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
@@ -72,37 +88,49 @@
       },
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
-      "position": [336, -160],
+      "position": [912, -128],
       "id": "93e93acf-491f-43e1-bdbb-706a6f200250",
-      "name": "Extract from File"
+      "name": "Extraire les lignes dans le fichier CSV"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "dataset_files",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "dataset_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [16, -128],
+      "id": "47e604cd-0500-4b33-a9ee-669f73a404d1",
+      "name": "Récupérer les fichiers du dataset à traiter",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
         "language": "pythonNative",
-        "pythonCode": "data = _item[\"json\"]\n\n# Vérifie que 'datetime' est présent\nif \"datetime\" not in data:\n    raise ValueError(\"Le champ 'datetime' est obligatoire.\")\n  \n# Extraire 'datetime'\nrecorded_at = data[\"datetime\"]\nparameters = {}\n\n# Traite chaque paramètre\nfor key, value in data.items():\n    if key == \"datetime\":\n        continue  # On saute 'datetime'\n\n    # Tente de convertir en float si c'est une chaîne représentant un nombre\n    if isinstance(value, str):\n        try:\n            num_value = float(value)\n            parameters[key] = num_value\n        except ValueError:\n            parameters[key] = value\n    else:\n        parameters[key] = value\n\n# Retourne l'item transformé\nreturn {\n    \"recorded_at\": recorded_at,\n    \"parameters\": parameters,\n}"
+        "pythonCode": "data = _item[\"json\"]\n\n# Vérifie que 'datetime' est présent\nif \"datetime\" not in data:\n    raise ValueError(\"Le champ 'datetime' est obligatoire.\")\n\noutput = {\n  'recorded_at': data[\"datetime\"]\n}\n\n# Extraire la position\nif \"lat\" in data and \"long\" in data:\n  output['position'] = f\"POINT({data['lat']} {data['long']})\"\nelse:\n  output['position'] = None\n\n\nparameters = {}\n\n# Traite chaque paramètre\nfor key, value in data.items():\n    if key in [\"datetime\", \"lat\", \"long\"]:\n        continue  # On saute 'datetime'\n\n    # Tente de convertir en float si c'est une chaîne représentant un nombre\n    if isinstance(value, str):\n        try:\n            num_value = float(value)\n            parameters[key] = num_value\n        except ValueError:\n            parameters[key] = value\n    else:\n        parameters[key] = value\n\noutput['parameters'] = parameters\n\nreturn output"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [560, -160],
-      "id": "6bcc34dd-1407-4aa5-b232-0a51c53b8409",
-      "name": "Code in Python",
+      "position": [1360, -128],
+      "id": "c50f6779-3120-4bc2-8018-307ac30ce62a",
+      "name": "Formater le retour",
       "alwaysOutputData": true,
-      "notesInFlow": false,
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "operation": "removeItemsSeenInPreviousExecutions",
-        "dedupeValue": "={{ $json.datetime }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.removeDuplicates",
-      "typeVersion": 2,
-      "position": [-336, -384],
-      "id": "fde92339-ab60-439a-aa33-65e85356c542",
-      "name": "Remove Duplicates",
-      "alwaysOutputData": false
+      "notesInFlow": false
     },
     {
       "parameters": {
@@ -119,20 +147,154 @@
             },
             {
               "fieldId": "instrument_id",
-              "fieldValue": "={{ $('Get many rows').item.json.instrument_id }}"
+              "fieldValue": "={{ $('Récupérer les fichiers du dataset à traiter').item.json.instrument_id }}"
             },
             {
               "fieldId": "dataset_id",
-              "fieldValue": "={{ $('Get many rows').item.json.dataset_id }}"
+              "fieldValue": "={{ $('Récupérer les fichiers du dataset à traiter').item.json.dataset_id }}"
+            },
+            {
+              "fieldId": "=position",
+              "fieldValue": "={{ $json.position }}"
             }
           ]
         }
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [784, -160],
+      "position": [1584, -16],
       "id": "0a38bd5e-34df-4876-a2b9-d2b45fd3717e",
-      "name": "Create a row",
+      "name": "Enregistrer une mesures",
+      "retryOnFail": false,
+      "maxTries": 3,
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1136, -128],
+      "id": "c56994c3-3aaf-4428-85c3-2c18054c0492",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [240, -128],
+      "id": "e4f253f8-d4a7-46c5-a919-c4cfddf9c3a1",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "dataset_files",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processing_status",
+              "fieldValue": "processing"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [464, -128],
+      "id": "179d0da2-2e88-4525-8ead-d294a00b9330",
+      "name": "Update a row3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "datasets",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Webhook').item.json.query.datasetId }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processing_status",
+              "fieldValue": "processing"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-208, -128],
+      "id": "64414365-90db-420d-bf30-e4c827aef0f4",
+      "name": "Mettre le jeu de donnée en cours de traitement",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "datasets",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Webhook').item.json.query.datasetId }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processing_status",
+              "fieldValue": "completed"
+            },
+            {
+              "fieldId": "processed_at",
+              "fieldValue": "={{ $now }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [464, -320],
+      "id": "14db98b1-cced-4a5b-9a36-5fcb92f305f8",
+      "name": "Mettre à jour le statut du traitement du jeu de donnée : Terminé",
+      "executeOnce": false,
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
@@ -146,7 +308,7 @@
       {
         "json": {
           "query": {
-            "datasetId": "d865260c-dcc8-468e-aef7-a1ee47474611"
+            "datasetId": "d8b82830-2337-46ec-908b-17fd001867b3"
           }
         }
       }
@@ -157,51 +319,18 @@
       "main": [
         [
           {
-            "node": "Get many rows",
+            "node": "Mettre le jeu de donnée en cours de traitement",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get many rows": {
+    "Récupérer le fichier CSV": {
       "main": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "Code in Python",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in Python": {
-      "main": [
-        [
-          {
-            "node": "Create a row",
+            "node": "Extraire les lignes dans le fichier CSV",
             "type": "main",
             "index": 0
           }
@@ -209,19 +338,133 @@
         []
       ]
     },
-    "Remove Duplicates": {
-      "main": [[]]
+    "Extraire les lignes dans le fichier CSV": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     },
-    "Create a row": {
-      "main": [[]]
+    "Récupérer les fichiers du dataset à traiter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formater le retour": {
+      "main": [
+        [
+          {
+            "node": "Enregistrer une mesures",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enregistrer une mesures": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Formater le retour",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Mettre à jour le statut du traitement du jeu de donnée : Terminé",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a row3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row3": {
+      "main": [
+        [
+          {
+            "node": "Récupérer le fichier CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mettre le jeu de donnée en cours de traitement": {
+      "main": [
+        [
+          {
+            "node": "Récupérer les fichiers du dataset à traiter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Paris",
+    "callerPolicy": "workflowsFromSameOwner",
+    "binaryMode": "separate",
+    "errorWorkflow": "ugIfMyJJfvtMZt0S"
   },
-  "versionId": "7035e122-a338-4b4d-87b4-b72f4e3046c8",
+  "versionId": "99b4ff18-961a-4ff9-b4f6-2fa7aba7698c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5e0ec54da47e405a2fb7faf45aec7e44e092525d2348fce5c139307846720f82"
