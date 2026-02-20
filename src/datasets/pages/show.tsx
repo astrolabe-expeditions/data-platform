@@ -21,6 +21,14 @@ const ShowDataset = () => {
       <Stack spacing={2} mt={2}>
         {dataset ? <DatasetTabs datasetId={dataset?.id} /> : null}
         <Typography>
+          <strong>{t('datasets.fields.description')}:</strong>{' '}
+          {dataset?.description}
+        </Typography>
+        <Typography>
+          <strong>{t('datasets.fields.status')}:</strong>{' '}
+          {t(`commons.processing_status.${dataset?.processing_status}`)}
+        </Typography>
+        <Typography>
           <strong>{t('datasets.fields.period')}:</strong> {dataset?.start_at} -{' '}
           {dataset?.end_at}
         </Typography>

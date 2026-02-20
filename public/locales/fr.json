@@ -26,6 +26,12 @@
     "fields": {
       "createdAt": "Créé le",
       "updatedAt": "Mis à jour le"
+    },
+    "processing_status": {
+      "pending": "Traitement en attente",
+      "processing": "Traitement en cours",
+      "completed": "Traitement terminé",
+      "failed": "Traitement échoué"
     }
   },
   "dashboard": {
@@ -37,6 +43,7 @@
     "datasets": "Jeux de données",
     "fields": {
       "description": "Description",
+      "status": "Statut",
       "endDate": "Date de fin",
       "period": "Période",
       "startDate": "Date de début"
