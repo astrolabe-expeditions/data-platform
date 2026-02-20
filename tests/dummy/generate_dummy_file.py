@@ -14,6 +14,7 @@ def main():
   parser.add_argument("--bad-datetime", action="store_true", help="Generate rows with bad datetime format (error case)")
   parser.add_argument("--gps", action="store_true", help="Add GPS columns (lat, long) in WGS84 DDD format, simulating boat movement")
   parser.add_argument("-c", "--clean", default=False, action="store_true", help="Clean the output directory before generating files")
+  parser.add_argument("--num-rows", type=int, default=1000, help="Number of rows per file (default: 1000)")
   args = parser.parse_args()
 
   try:
@@ -45,11 +46,11 @@ def main():
 
     # Header: datetime, value1, value2 (or bad header), plus lat/long if GPS
     if args.bad_header:
-      headers = ["DateTime", "Value 1", "Value-2"]
+      headers = ["Date & Time", "Sea Temperature (C)", "Absolute Conductivity (mS)", "Sea Depth (m)"]
       if args.gps:
         headers += ["Lat", "Long"]
     else:
-      headers = ["datetime", "value1", "value2"]
+      headers = ["datetime", "sea_temp", "ec_abs", "sea_depth"]
       if args.gps:
         headers += ["lat", "long"]
 
@@ -63,17 +64,18 @@ def main():
       lat_step = random.uniform(0.0005, 0.002)  # small step per row
       long_step = random.uniform(0.0005, 0.002)
 
-    for j in range(10):
+    for j in range(args.num_rows):
       row_dt = file_datetime + timedelta(seconds=j * 5)
       if args.bad_datetime and random.random() < 0.3:
         dt_str = row_dt.strftime("%d/%m/%Y %H:%M:%S")
       else:
         dt_str = row_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-      value1 = random.randint(100, 999)
-      value2 = random.uniform(0, 100)
+      sea_temp = random.randint(-20, 100)
+      ec_abs = random.randint(-10000, 10000)
+      sea_depth = random.randint(0, 1000)
 
-      row = [dt_str, value1, value2]
+      row = [dt_str, sea_temp, ec_abs, sea_depth]
       if args.gps:
         lat = start_lat + j * lat_step
         long = start_long + j * long_step
@@ -82,7 +84,7 @@ def main():
       rows.append(row)
 
     with open(filepath, "w", newline="") as csvfile:
-      writer = csv.writer(csvfile)
+      writer = csv.writer(csvfile, delimiter=";")
       writer.writerows(rows)
 
   print("Dummy CSV file generation completed.")
