@@ -42,8 +42,8 @@ export type Database = {
           instrument_id: string;
           name: string;
           path: string;
-          processed: boolean | null;
           processed_at: string | null;
+          processing_status: Database['public']['Enums']['processing_status'];
           started_at: string | null;
           uploaded_at: string | null;
         };
@@ -54,8 +54,8 @@ export type Database = {
           instrument_id: string;
           name: string;
           path: string;
-          processed?: boolean | null;
           processed_at?: string | null;
+          processing_status?: Database['public']['Enums']['processing_status'];
           started_at?: string | null;
           uploaded_at?: string | null;
         };
@@ -66,8 +66,8 @@ export type Database = {
           instrument_id?: string;
           name?: string;
           path?: string;
-          processed?: boolean | null;
           processed_at?: string | null;
+          processing_status?: Database['public']['Enums']['processing_status'];
           started_at?: string | null;
           uploaded_at?: string | null;
         };
@@ -95,6 +95,8 @@ export type Database = {
           description: string | null;
           end_at: string;
           id: string;
+          processed_at: string | null;
+          processing_status: Database['public']['Enums']['processing_status'];
           start_at: string;
           station_id: string;
           updated_at: string;
@@ -105,6 +107,8 @@ export type Database = {
           description?: string | null;
           end_at: string;
           id?: string;
+          processed_at?: string | null;
+          processing_status?: Database['public']['Enums']['processing_status'];
           start_at: string;
           station_id: string;
           updated_at?: string;
@@ -115,6 +119,8 @@ export type Database = {
           description?: string | null;
           end_at?: string;
           id?: string;
+          processed_at?: string | null;
+          processing_status?: Database['public']['Enums']['processing_status'];
           start_at?: string;
           station_id?: string;
           updated_at?: string;
@@ -313,7 +319,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      processing_status: 'pending' | 'processing' | 'completed' | 'failed';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -446,6 +452,8 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    Enums: {},
+    Enums: {
+      processing_status: ['pending', 'processing', 'completed', 'failed'],
+    },
   },
 } as const;

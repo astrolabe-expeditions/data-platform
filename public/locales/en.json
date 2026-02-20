@@ -26,6 +26,12 @@
     "fields": {
       "createdAt": "Created at",
       "updatedAt": "Updated at"
+    },
+    "processing_status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
     }
   },
   "dashboard": {

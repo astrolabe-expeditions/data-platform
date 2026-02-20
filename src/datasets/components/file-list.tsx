@@ -22,11 +22,9 @@ const FileList: FC<FileListProps> = ({ files }) => {
               </>
             }
             secondary={
-              file.processed_at === null && (
-                <Typography variant="caption">
-                  {t('datasets.uploader.status.pending')}
-                </Typography>
-              )
+              <Typography variant="caption">
+                {t(`commons.processing_status.${file.processing_status}`)}
+              </Typography>
             }
           />
         </ListItem>

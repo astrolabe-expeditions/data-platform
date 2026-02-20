@@ -762,20 +762,6 @@
           "maxLength": null
         },
         {
-          "id": "public.dataset_files.processed",
-          "name": "processed",
-          "columnName": "processed",
-          "type": "bool",
-          "isRequired": false,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": true,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.dataset_files.processed_at",
           "name": "processed_at",
           "columnName": "processed_at",
@@ -786,6 +772,20 @@
           "isGenerated": false,
           "sequence": false,
           "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.dataset_files.processing_status",
+          "name": "processing_status",
+          "columnName": "processing_status",
+          "type": "processing_status",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
           "isId": false,
           "maxLength": null
         },
@@ -954,6 +954,34 @@
           "maxLength": null
         },
         {
+          "id": "public.datasets.processed_at",
+          "name": "processed_at",
+          "columnName": "processed_at",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.datasets.processing_status",
+          "name": "processing_status",
+          "columnName": "processing_status",
+          "type": "processing_status",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "stations",
           "type": "stations",
           "isRequired": true,
@@ -977,6 +1005,20 @@
           "isRequired": false,
           "kind": "object",
           "relationName": "dataset_filesTodatasets",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "measures",
+          "type": "measures",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "measuresTodatasets",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -7774,6 +7816,23 @@
         },
         {
           "name": "SUCCESS"
+        }
+      ]
+    },
+    "processing_status": {
+      "schemaName": "public",
+      "values": [
+        {
+          "name": "completed"
+        },
+        {
+          "name": "failed"
+        },
+        {
+          "name": "pending"
+        },
+        {
+          "name": "processing"
         }
       ]
     },

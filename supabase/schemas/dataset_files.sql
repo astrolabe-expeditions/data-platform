@@ -7,8 +7,8 @@ CREATE TABLE public.dataset_files (
   path text NOT NULL,
   started_at timestamp WITH time zone,
   uploaded_at timestamp WITH time zone DEFAULT NOW(),
-  processed boolean DEFAULT false,
-  processed_at timestamp WITH time zone
+  processing_status processing_status NOT NULL DEFAULT 'pending',
+  processed_at TIMESTAMP WITH TIME ZONE
 );
 
 ALTER TABLE
