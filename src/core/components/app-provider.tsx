@@ -8,7 +8,7 @@ import {
   useNotificationProvider,
 } from '@refinedev/mui';
 import routerProvider from '@refinedev/react-router';
-import { dataProvider } from '@refinedev/supabase';
+import { dataProvider, liveProvider } from '@refinedev/supabase';
 import type { FC, PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter } from 'react-router';
@@ -33,6 +33,8 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
         <RefineSnackbarProvider>
           <Refine
             dataProvider={dataProvider(supabaseClient)}
+            liveProvider={liveProvider(supabaseClient)}
+            options={{ liveMode: 'auto' }}
             authProvider={authProvider}
             routerProvider={routerProvider}
             i18nProvider={i18nProvider}
