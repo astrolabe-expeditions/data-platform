@@ -1,7 +1,7 @@
 CREATE TABLE public.measures (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   recorded_at TIMESTAMPTZ NOT NULL,
-  position GEOGRAPHY,
+  position GEOMETRY(POINT, 4326),
   parameters JSONB,
   instrument_id uuid NOT NULL REFERENCES public.instruments(id) ON DELETE CASCADE,
   dataset_id uuid NOT NULL REFERENCES public.datasets(id) ON DELETE CASCADE
