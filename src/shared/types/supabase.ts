@@ -164,6 +164,48 @@ export type Database = {
           },
         ];
       };
+      measures: {
+        Row: {
+          dataset_id: string;
+          id: string;
+          instrument_id: string;
+          parameters: Json | null;
+          position: unknown;
+          recorded_at: string;
+        };
+        Insert: {
+          dataset_id: string;
+          id?: string;
+          instrument_id: string;
+          parameters?: Json | null;
+          position?: unknown;
+          recorded_at: string;
+        };
+        Update: {
+          dataset_id?: string;
+          id?: string;
+          instrument_id?: string;
+          parameters?: Json | null;
+          position?: unknown;
+          recorded_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'measures_dataset_id_fkey';
+            columns: ['dataset_id'];
+            isOneToOne: false;
+            referencedRelation: 'datasets';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'measures_instrument_id_fkey';
+            columns: ['instrument_id'];
+            isOneToOne: false;
+            referencedRelation: 'instruments';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       models: {
         Row: {
           code: string;
