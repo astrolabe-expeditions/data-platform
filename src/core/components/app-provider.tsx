@@ -42,27 +42,27 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
             resources={[
               {
                 name: 'stations',
-                list: '/stations',
-                show: '/stations/:id',
-                edit: '/stations/:id/edit',
-                create: '/stations/new',
+                list: '/admin/stations',
+                show: '/admin/stations/:id',
+                edit: '/admin/stations/:id/edit',
+                create: '/admin/stations/new',
               },
               {
                 name: 'datasets',
-                list: '/datasets',
-                show: '/datasets/:id',
-                create: '/datasets/new',
+                list: '/admin/datasets',
+                show: '/admin/datasets/:id',
+                create: '/admin/datasets/new',
               },
               {
                 name: 'instruments',
-                list: '/instruments',
-                show: '/instruments/:id',
-                edit: '/instruments/:id/edit',
-                create: '/instruments/new',
+                list: '/admin/instruments',
+                show: '/admin/instruments/:id',
+                edit: '/admin/instruments/:id/edit',
+                create: '/admin/instruments/new',
               },
               {
                 name: 'models',
-                list: '/models',
+                list: '/admin/models',
               },
             ]}
           >

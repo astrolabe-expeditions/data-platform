@@ -11,21 +11,24 @@ interface DatasetTabsProps {
 
 const DatasetTabs: FC<DatasetTabsProps> = ({ datasetId }) => {
   const t = useTranslate();
-  const routeMatch = useRouteMatch(['/datasets/:id', '/datasets/:id/files']);
+  const routeMatch = useRouteMatch([
+    '/admin/datasets/:id',
+    '/admin/datasets/:id/files',
+  ]);
   const currentTab = routeMatch?.pattern?.path;
 
   return (
     <Tabs value={currentTab}>
       <Tab
         label={t('datasets.tabs.metadata')}
-        value="/datasets/:id"
-        to={`/datasets/${datasetId}`}
+        value="/admin/datasets/:id"
+        to={`/admin/datasets/${datasetId}`}
         component={Link}
       />
       <Tab
         label={t('datasets.tabs.files')}
-        value="/datasets/:id/files"
-        to={`/datasets/${datasetId}/files`}
+        value="/admin/datasets/:id/files"
+        to={`/admin/datasets/${datasetId}/files`}
         component={Link}
       />
     </Tabs>

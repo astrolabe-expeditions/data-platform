@@ -17,52 +17,54 @@ import { ShowStation } from '@/stations/pages/show';
 const AppRouter = () => {
   return (
     <Routes>
-      <Route
-        element={
-          <Authenticated key="authenticated-routes" redirectOnFail="/login">
-            <AppLayout>
-              <Outlet />
-            </AppLayout>
-          </Authenticated>
-        }
-      >
-        <Route index element={<DashboardPage />} />
-        <Route path="stations">
-          <Route index element={<ListStation />} />
-          <Route path=":id" element={<ShowStation />} />
-          <Route path=":id/datasets/create" element={<CreateDataset />} />
-        </Route>
-        <Route path="instruments">
-          <Route index element={<ListInstrument />} />
-          <Route path=":id" element={<ShowInstrument />} />
-        </Route>
-        <Route path="datasets">
-          <Route index element={<ListDataset />} />
-          <Route path=":id" element={<ShowDataset />} />
-          <Route path=":id/files" element={<ShowDatasetFiles />} />
-          <Route path="new" element={<CreateDataset />} />
-        </Route>
-        <Route path="models">
-          <Route index element={<ListModel />} />
-        </Route>
-      </Route>
-      <Route
-        element={
-          <Authenticated key="auth-pages" fallback={<Outlet />}>
-            <Navigate to="/" />
-          </Authenticated>
-        }
-      >
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/register" element={<AuthPage type="register" />} />
+      <Route path="admin">
         <Route
-          path="/forgot-password"
-          element={<AuthPage type="forgotPassword" />}
-        />
+          element={
+            <Authenticated key="authenticated-routes" redirectOnFail="login">
+              <AppLayout>
+                <Outlet />
+              </AppLayout>
+            </Authenticated>
+          }
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="stations">
+            <Route index element={<ListStation />} />
+            <Route path=":id" element={<ShowStation />} />
+            <Route path=":id/datasets/create" element={<CreateDataset />} />
+          </Route>
+          <Route path="instruments">
+            <Route index element={<ListInstrument />} />
+            <Route path=":id" element={<ShowInstrument />} />
+          </Route>
+          <Route path="datasets">
+            <Route index element={<ListDataset />} />
+            <Route path=":id" element={<ShowDataset />} />
+            <Route path=":id/files" element={<ShowDatasetFiles />} />
+            <Route path="new" element={<CreateDataset />} />
+          </Route>
+          <Route path="models">
+            <Route index element={<ListModel />} />
+          </Route>
+        </Route>
         <Route
-          path="/update-password"
-          element={<AuthPage type="updatePassword" />}
-        />
+          element={
+            <Authenticated key="auth-pages" fallback={<Outlet />}>
+              <Navigate to="admin" />
+            </Authenticated>
+          }
+        >
+          <Route path="login" element={<AuthPage />} />
+          <Route path="register" element={<AuthPage type="register" />} />
+          <Route
+            path="forgot-password"
+            element={<AuthPage type="forgotPassword" />}
+          />
+          <Route
+            path="update-password"
+            element={<AuthPage type="updatePassword" />}
+          />
+        </Route>
       </Route>
     </Routes>
   );
