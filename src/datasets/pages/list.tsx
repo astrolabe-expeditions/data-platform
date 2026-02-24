@@ -23,7 +23,7 @@ const ListDataset = () => {
   });
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    go({ to: `/datasets/${params.row.id}` });
+    go({ to: `/admin/datasets/${params.row.id}` });
   };
 
   const columns = useMemo<GridColDef<DatasetWithRelations>[]>(

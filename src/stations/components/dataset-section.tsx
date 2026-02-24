@@ -29,7 +29,7 @@ const DatasetSection: FC<DatasetSectionProps> = ({ stationId }) => {
 
   const handleCreate = () => {
     go({
-      to: `/stations/${stationId}/datasets/create`,
+      to: `/admin/stations/${stationId}/datasets/create`,
       type: 'replace',
     });
   };

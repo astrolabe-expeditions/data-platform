@@ -37,7 +37,7 @@ export const DatasetList: React.FC<DatasetListProps> = ({
       label: t('stations.show.datasets.actions.view'),
       onClick: (dataset?: Dataset) => {
         if (dataset) {
-          go({ to: `/datasets/${dataset.id}` });
+          go({ to: `/admin/datasets/${dataset.id}` });
         }
       },
       icon: <VisibilityIcon />,

@@ -40,7 +40,7 @@ const ListInstrument = () => {
   );
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    go({ to: `/instruments/${params.row.id}` });
+    go({ to: `/admin/instruments/${params.row.id}` });
   };
 
   return (

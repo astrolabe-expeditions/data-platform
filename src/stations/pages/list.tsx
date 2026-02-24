@@ -16,7 +16,7 @@ const ListStation = () => {
   const { dataGridProps } = useDataGrid();
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    go({ to: `/stations/${params.row.id}` });
+    go({ to: `/admin/stations/${params.row.id}` });
   };
 
   const columns = useMemo<GridColDef<Station>[]>(
