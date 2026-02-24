@@ -11,12 +11,16 @@ import { ShowDatasetFiles } from '@/datasets/pages/show-files';
 import { ListInstrument } from '@/instruments/pages/list';
 import { ShowInstrument } from '@/instruments/pages/show';
 import { ListModel } from '@/models/pages/list';
+import { StationDetail as PublicStationDetail } from '@/public/pages/station-detail';
+import { StationList as PublicStationList } from '@/public/pages/station-list';
 import { ListStation } from '@/stations/pages/list';
 import { ShowStation } from '@/stations/pages/show';
 
 const AppRouter = () => {
   return (
     <Routes>
+      <Route path="/" element={<PublicStationList />} />
+      <Route path="/stations/:id" element={<PublicStationDetail />} />
       <Route path="admin">
         <Route
           element={

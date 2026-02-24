@@ -225,5 +225,36 @@
       "show": "Afficher une station"
     }
   },
-  "warnWhenUnsavedChanges": "Êtes-vous sûr de vouloir quitter ? Vous avez des modifications non enregistrées."
+  "warnWhenUnsavedChanges": "Êtes-vous sûr de vouloir quitter ? Vous avez des modifications non enregistrées.",
+  "public": {
+    "list": {
+      "explore": "Visualiser les données"
+    },
+    "detail": {
+      "back": "Retour à la carte"
+    },
+    "graph": {
+      "loading": "Chargement des données en cours...",
+      "empty": "Aucune donnée disponible pour ce paramètre.",
+      "parameter": {
+        "label": "Paramètre",
+        "options": {
+          "sea_temp": "Température de la mer",
+          "ec_abs": "Conductivité absolue",
+          "sea_depth": "Profondeur de la mer",
+          "ec20": "Conductivité EC20",
+          "ec25": "Conductivité EC25",
+          "sea_sal": "Salinité de la mer",
+          "sea_chl": "Chlorophylle marine",
+          "sea_oxg": "Oxygène marin",
+          "sea_pres": "Pression sous-marine",
+          "sea_turbid": "Turbidité de la mer",
+          "air_temp": "Température de l'air",
+          "air_pres": "Pression atmosphérique",
+          "air_hum": "Humidité relative",
+          "total_dissolved_solids": "Total des solides dissous"
+        }
+      }
+    }
+  }
 }
