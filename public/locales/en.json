@@ -226,5 +226,36 @@
       "show": "Show a station"
     }
   },
-  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes."
+  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
+  "public": {
+    "list": {
+      "explore": "Explore data"
+    },
+    "detail": {
+      "back": "Back to map"
+    },
+    "graph": {
+      "loading": "Loading data...",
+      "empty": "No data available for this parameter.",
+      "parameter": {
+        "label": "Parameter",
+        "options": {
+          "sea_temp": "Sea temperature",
+          "ec_abs": "Absolute conductivity",
+          "sea_depth": "Sea depth",
+          "ec20": "EC20 conductivity",
+          "ec25": "EC25 conductivity",
+          "sea_sal": "Sea salinity",
+          "sea_chl": "Sea chlorophyll",
+          "sea_oxg": "Sea oxygen",
+          "sea_pres": "Sea pressure",
+          "sea_turbid": "Sea turbidity",
+          "air_temp": "Air temperature",
+          "air_pres": "Air pressure",
+          "air_hum": "Air humidity",
+          "total_dissolved_solids": "Total dissolved solids"
+        }
+      }
+    }
+  }
 }

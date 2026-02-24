@@ -23,3 +23,7 @@ export type UpdateDatasetFile = TablesUpdate<'dataset_files'>;
 export type Model = Tables<'models'>;
 export type InsertModel = TablesInsert<'models'>;
 export type UpdateModel = TablesUpdate<'models'>;
+
+export type Measure = Omit<Tables<'measures'>, 'parameters'> & {
+  parameters: Record<string, unknown>;
+};
