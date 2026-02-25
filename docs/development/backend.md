@@ -82,7 +82,7 @@ yarn type:generate
 To create seed data from your current local database:
 
 ```bash
-yarn generate:seed
+yarn seed:generate
 ```
 
 **When to use this:**
