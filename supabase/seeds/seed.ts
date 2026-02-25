@@ -1,5 +1,5 @@
 import { createSeedClient } from '@snaplet/seed';
-import { copycat } from '@snaplet/copycat';
+import { copycat, faker } from '@snaplet/copycat';
 import bcrypt from 'bcryptjs';
 
 const hashPassword = async (password: string) => {
@@ -69,14 +69,21 @@ const main = async () => {
     })),
   );
 
+  const brest_position: [number, number] = [48.400002, -4.48333];
+
   const { stations } = await seed.stations((x) =>
     x(10, ({ seed, index }) => {
       const isMobile = copycat.bool(seed);
+      const [lat, long] = faker.location.nearbyGPSCoordinate({
+        origin: brest_position,
+        radius: 10, // 10km radius
+        isMetric: true,
+      });
 
       return {
         name: isMobile ? `Voilier ${copycat.word(seed)}` : `Bouée n°${index}`,
         is_mobile: isMobile,
-        position: null,
+        position: isMobile ? null : `POINT(${long} ${lat})`,
         deleted_at: null,
       };
     }),
