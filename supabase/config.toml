@@ -62,6 +62,8 @@ schema_paths = [
   "./schemas/stations.sql",
   "./schemas/datasets.sql",
   "./schemas/dataset_files.sql",
+  "./schemas/measures.sql",
+  "./schemas/functions.sql",
   "./schemas/*.sql"
 ]
 
