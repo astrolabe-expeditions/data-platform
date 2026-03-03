@@ -95,6 +95,7 @@ export type Database = {
           description: string | null;
           end_at: string;
           id: string;
+          is_public: boolean | null;
           processed_at: string | null;
           processing_status: Database['public']['Enums']['processing_status'];
           start_at: string;
@@ -107,6 +108,7 @@ export type Database = {
           description?: string | null;
           end_at: string;
           id?: string;
+          is_public?: boolean | null;
           processed_at?: string | null;
           processing_status?: Database['public']['Enums']['processing_status'];
           start_at: string;
@@ -119,6 +121,7 @@ export type Database = {
           description?: string | null;
           end_at?: string;
           id?: string;
+          is_public?: boolean | null;
           processed_at?: string | null;
           processing_status?: Database['public']['Enums']['processing_status'];
           start_at?: string;
