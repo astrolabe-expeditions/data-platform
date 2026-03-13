@@ -170,7 +170,8 @@
         "email": "E-mail",
         "password": "Mot de passe"
       },
-      "title": "Inscrivez-vous à votre compte"
+      "title": "Inscrivez-vous à votre compte",
+      "signup": "S'inscrire"
     },
     "updatePassword": {
       "buttons": {

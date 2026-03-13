@@ -1,7 +1,7 @@
 import { Authenticated } from '@refinedev/core';
-import { AuthPage } from '@refinedev/mui';
 import { Navigate, Outlet, Route, Routes } from 'react-router';
 
+import { AuthPage } from '@/auth/pages/auth-page';
 import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
 import { CreateDataset } from '@/datasets/pages/create';
