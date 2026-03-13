@@ -97,5 +97,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.SERVER_IP }}" >> ~/.ssh/known_hosts
 
+      - name: Configure Ansible secrets
+        run: |
+          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > ansible/vault_password.txt
+
       - name: Deploy with Ansible
-        run: ansible-playbook ansible/deploy.yml -i "${{ secrets.SERVER_IP }}," --private-key=~/.ssh/id_ed25519
+        run: ansible-playbook ansible/deploy.yml -i "${{ secrets.SERVER_IP }}," --private-key=~/.ssh/id_ed25519 --vault-password-file=ansible/vault_password.txt
