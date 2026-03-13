@@ -48,7 +48,7 @@ const ListDataset = () => {
   );
 
   return (
-    <List resource="datasets" canCreate>
+    <List resource="datasets" canCreate={false}>
       <DataGrid
         {...dataGridProps}
         columns={columns}
