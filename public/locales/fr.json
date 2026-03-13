@@ -227,6 +227,11 @@
   },
   "warnWhenUnsavedChanges": "Êtes-vous sûr de vouloir quitter ? Vous avez des modifications non enregistrées.",
   "public": {
+    "nav": {
+      "about": "À propos",
+      "admin": "Admin",
+      "map": "Carte"
+    },
     "list": {
       "explore": "Visualiser les données"
     },

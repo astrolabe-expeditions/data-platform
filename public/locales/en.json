@@ -228,6 +228,11 @@
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "public": {
+    "nav": {
+      "about": "About",
+      "admin": "Admin",
+      "map": "Map"
+    },
     "list": {
       "explore": "Explore data"
     },

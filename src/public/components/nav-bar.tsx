@@ -15,27 +15,30 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { useTranslate } from '@refinedev/core';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router';
 
 const drawerWidth = 240;
-const navItems = [
-  { label: 'Carte', path: '/' },
-  {
-    label: 'À propos',
-    path: import.meta.env.VITE_APP_ORGANIZATION_SITE_URL,
-    external: true,
-  },
-  { label: 'Admin', path: '/admin' },
-];
 const AppOrganization = import.meta.env.VITE_APP_ORGANIZATION;
 
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const t = useTranslate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const navItems = [
+    { label: t('public.nav.map'), path: '/' },
+    {
+      label: t('public.nav.about'),
+      path: import.meta.env.VITE_APP_ORGANIZATION_SITE_URL,
+      external: true,
+    },
+    { label: t('public.nav.admin'), path: '/admin' },
+  ];
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
