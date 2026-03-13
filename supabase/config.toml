@@ -64,6 +64,7 @@ schema_paths = [
   "./schemas/dataset_files.sql",
   "./schemas/measures.sql",
   "./schemas/functions.sql",
+  "./schemas/public_policies.sql",
   "./schemas/*.sql"
 ]
 
