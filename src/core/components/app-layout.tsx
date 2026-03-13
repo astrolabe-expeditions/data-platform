@@ -1,16 +1,11 @@
-import { ThemedLayout, ThemedTitle } from '@refinedev/mui';
+import { ThemedLayout } from '@refinedev/mui';
 import type { FC, PropsWithChildren } from 'react';
+
+import { AppTitle } from './app-title';
 
 const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <ThemedLayout
-      Title={({ collapsed }) => (
-        <ThemedTitle
-          collapsed={collapsed}
-          text={import.meta.env.VITE_APP_ORGANIZATION}
-        />
-      )}
-    >
+    <ThemedLayout Title={({ collapsed }) => <AppTitle collapsed={collapsed} />}>
       {children}
     </ThemedLayout>
   );
