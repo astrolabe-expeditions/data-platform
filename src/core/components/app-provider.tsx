@@ -1,6 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Refine } from '@refinedev/core';
 import {
   RefineSnackbarProvider,
@@ -25,9 +25,22 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
     getLocale: () => i18n.language,
   };
 
+  const overriddenLightTheme = createTheme({
+    ...RefineThemes.Blue,
+    palette: {
+      ...RefineThemes.Blue.palette,
+      primary: {
+        main: '#263340',
+      },
+      secondary: {
+        main: '#eea200',
+      },
+    },
+  });
+
   return (
     <BrowserRouter>
-      <ThemeProvider theme={RefineThemes.Blue}>
+      <ThemeProvider theme={overriddenLightTheme}>
         <CssBaseline />
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
         <RefineSnackbarProvider>

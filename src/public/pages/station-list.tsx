@@ -54,7 +54,9 @@ const StationList = () => {
     type: 'circle',
     filter: ['has', 'point_count'],
     paint: {
-      'circle-color': '#1976D2',
+      'circle-color': '#eea200',
+      'circle-stroke-width': 1,
+      'circle-stroke-color': '#263340',
       'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 300, 40],
     },
   };
@@ -77,10 +79,10 @@ const StationList = () => {
     type: 'circle',
     filter: ['!', ['has', 'point_count']],
     paint: {
-      'circle-color': '#1976D2',
+      'circle-color': '#eea200',
       'circle-radius': 8,
       'circle-stroke-width': 1,
-      'circle-stroke-color': '#000',
+      'circle-stroke-color': '#263340',
     },
   };
 

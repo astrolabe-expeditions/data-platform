@@ -67,7 +67,7 @@ const StationMapMobile: FC<StationMapMobileProps> = ({
     type: 'circle',
     paint: {
       'circle-radius': 5,
-      'circle-color': '#1976D2',
+      'circle-color': '#eea200',
     },
     'source-layer': 'measures',
   };
