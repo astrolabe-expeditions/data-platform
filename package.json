@@ -53,7 +53,8 @@
     "postgres": "^3.4.8",
     "supabase": "^2.72.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-svgr": "^4.5.0"
   },
   "@snaplet/seed": {
     "config": "supabase/seeds/seed.config.ts"

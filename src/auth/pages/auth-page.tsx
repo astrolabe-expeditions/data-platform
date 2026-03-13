@@ -4,6 +4,8 @@ import { AuthPage as RefineAuthPage } from '@refinedev/mui';
 import type { FC } from 'react';
 import { Link as RouterLink } from 'react-router';
 
+import { AppTitle } from '@/core/components/app-title';
+
 interface AuthPageProps {
   type?: 'register' | 'forgotPassword' | 'updatePassword';
 }
@@ -14,6 +16,7 @@ const AuthPage: FC<AuthPageProps> = ({ type }) => {
   return (
     <RefineAuthPage
       type={type}
+      title={<AppTitle />}
       loginLink={
         <Box
           display="flex"
