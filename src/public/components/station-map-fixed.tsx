@@ -56,7 +56,7 @@ const StationMapFixed: FC<StationMapFixedProps> = ({ stationId }) => {
           <Marker
             longitude={lastPosition.long}
             latitude={lastPosition.lat}
-            color="#1976D2"
+            color="#eea200"
           />
         )}
       </MapLibre>

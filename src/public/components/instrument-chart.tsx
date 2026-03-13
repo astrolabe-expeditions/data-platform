@@ -55,6 +55,7 @@ const InstrumentChart: FC<InstrumentChartProps> = ({
         data: values,
         type: 'line',
         smooth: true,
+        color: '#eea200',
       },
     ],
     tooltip: {
