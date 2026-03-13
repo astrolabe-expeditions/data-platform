@@ -2,20 +2,16 @@ import { Box, Stack, TextField, Typography } from '@mui/material';
 import { type HttpError, useTranslate } from '@refinedev/core';
 import { Create } from '@refinedev/mui';
 import { useForm } from '@refinedev/react-hook-form';
-import { type FC, type SyntheticEvent, useState } from 'react';
+import type { FC } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import { useDatasetUploadFile } from '@/datasets/components/dataset-upload-file-provider';
 import { Uploader } from '@/datasets/components/uploader/uploader';
 import type { Dataset } from '@/shared/types/models';
-import {
-  type AutocompleteOption,
-  StationSelect,
-} from '@/stations/components/station-select';
 import { useOneStation } from '@/stations/hooks/use-one-station';
 
 interface CreateDatasetFormProps {
-  stationId?: string;
+  stationId: string;
 }
 
 const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
@@ -36,27 +32,15 @@ const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
     },
   });
 
-  const [selectedStation, setSelectedStation] =
-    useState<AutocompleteOption | null>(
-      stationId ? { id: stationId, label: '' } : null,
-    );
-
-  const handleStationChange = (
-    _: SyntheticEvent<Element, Event>,
-    value: AutocompleteOption | null,
-  ) => {
-    setSelectedStation(value);
-  };
-
   const { instruments, isInstrumentsLoading, isInstrumentsError } =
     useOneStation({
-      id: selectedStation?.id,
+      id: stationId,
     });
 
   const onFinishHandler = async (data: FieldValues) => {
     const respData = await onFinish({
       ...data,
-      station_id: selectedStation?.id,
+      station_id: stationId,
     });
     await uploadFiles(respData?.data?.id as string);
     await fetch(
@@ -76,12 +60,6 @@ const CreateDatasetForm: FC<CreateDatasetFormProps> = ({ stationId }) => {
     >
       <Box component="form" autoComplete="off">
         <Stack spacing={2}>
-          {stationId ? null : (
-            <StationSelect
-              value={selectedStation}
-              onChange={handleStationChange}
-            />
-          )}
           <Typography variant="h5" gutterBottom>
             {t('datasets.sections.details')}
           </Typography>
