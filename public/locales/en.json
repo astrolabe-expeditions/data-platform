@@ -169,7 +169,8 @@
         "email": "Email",
         "password": "Password"
       },
-      "title": "Sign up for your account"
+      "title": "Sign up for your account",
+      "signup": "Sign up"
     },
     "updatePassword": {
       "buttons": {
