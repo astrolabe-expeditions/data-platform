@@ -1,5 +1,5 @@
-import { createSeedClient } from '@snaplet/seed';
 import { copycat, faker } from '@snaplet/copycat';
+import { createSeedClient } from '@snaplet/seed';
 import bcrypt from 'bcryptjs';
 
 const hashPassword = async (password: string) => {
@@ -68,6 +68,30 @@ const main = async () => {
       deleted_at: null,
     })),
   );
+
+  const { programs } = await seed.programs([
+    {
+      name: 'RiOMar',
+      description:
+        'Le projet RiOMar à pour but d’observer et d’anticiper l’évolution des zones côtières françaises sous influence des fleuves au 21e siècle.',
+      deleted_at: null,
+    },
+    {
+      name: 'LittObs',
+      description:
+        'Le projet LittObs vise à développer une infrastructure de données pour l’observation des littoraux français.',
+      deleted_at: null,
+    },
+  ]);
+
+  await seed.campaigns([
+    {
+      name: 'Campagne Mor Braz 2025',
+      description: 'Première campagne de mesure du projet RiOMar',
+      program_id: programs[0].id,
+      deleted_at: null,
+    }
+  ]);
 
   const brest_position: [number, number] = [48.400002, -4.48333];
 
