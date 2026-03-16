@@ -27,3 +27,7 @@ export type UpdateModel = TablesUpdate<'models'>;
 export type Measure = Omit<Tables<'measures'>, 'parameters'> & {
   parameters: Record<string, unknown>;
 };
+
+export type Program = Tables<'programs'>;
+
+export type Campaign = Tables<'campaigns'>;

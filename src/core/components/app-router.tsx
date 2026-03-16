@@ -2,6 +2,7 @@ import { Authenticated } from '@refinedev/core';
 import { Navigate, Outlet, Route, Routes } from 'react-router';
 
 import { AuthPage } from '@/auth/pages/auth-page';
+import { ListCampaign } from '@/campaigns/pages/list';
 import { AppLayout } from '@/core/components/app-layout';
 import { DashboardPage } from '@/dashboard/pages';
 import { ListDataset } from '@/datasets/pages/list';
@@ -10,6 +11,7 @@ import { ShowDatasetFiles } from '@/datasets/pages/show-files';
 import { ListInstrument } from '@/instruments/pages/list';
 import { ShowInstrument } from '@/instruments/pages/show';
 import { ListModel } from '@/models/pages/list';
+import { ListProgram } from '@/programs/pages/list';
 import { StationDetail as PublicStationDetail } from '@/public/pages/station-detail';
 import { StationList as PublicStationList } from '@/public/pages/station-list';
 import { CreateDataset as CreateStationDataset } from '@/stations/pages/create-dataset';
@@ -51,6 +53,12 @@ const AppRouter = () => {
           </Route>
           <Route path="models">
             <Route index element={<ListModel />} />
+          </Route>
+          <Route path="programs">
+            <Route index element={<ListProgram />} />
+          </Route>
+          <Route path="campaigns">
+            <Route index element={<ListCampaign />} />
           </Route>
         </Route>
         <Route
