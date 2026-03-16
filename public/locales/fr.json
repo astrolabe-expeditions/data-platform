@@ -262,5 +262,26 @@
         }
       }
     }
+  },
+  "programs": {
+    "fields": {
+      "description": "Description",
+      "name": "Nom"
+    },
+    "programs": "Programmes",
+    "titles": {
+      "list": "Programmes"
+    }
+  },
+  "campaigns": {
+    "fields": {
+      "description": "Description",
+      "name": "Nom",
+      "program": "Programme"
+    },
+    "campaigns": "Campagnes",
+    "titles": {
+      "list": "Campagnes"
+    }
   }
 }
