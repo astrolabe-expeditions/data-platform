@@ -34,6 +34,44 @@ export type Database = {
   };
   public: {
     Tables: {
+      campaigns: {
+        Row: {
+          created_at: string;
+          deleted_at: string | null;
+          description: string | null;
+          id: string;
+          name: string;
+          program_id: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          deleted_at?: string | null;
+          description?: string | null;
+          id?: string;
+          name: string;
+          program_id?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          deleted_at?: string | null;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          program_id?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'campaigns_program_id_fkey';
+            columns: ['program_id'];
+            isOneToOne: false;
+            referencedRelation: 'programs';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       dataset_files: {
         Row: {
           dataset_id: string;
@@ -90,6 +128,7 @@ export type Database = {
       };
       datasets: {
         Row: {
+          campaign_id: string | null;
           created_at: string;
           deleted_at: string | null;
           description: string | null;
@@ -98,11 +137,13 @@ export type Database = {
           is_public: boolean | null;
           processed_at: string | null;
           processing_status: Database['public']['Enums']['processing_status'];
+          program_id: string | null;
           start_at: string;
           station_id: string;
           updated_at: string;
         };
         Insert: {
+          campaign_id?: string | null;
           created_at?: string;
           deleted_at?: string | null;
           description?: string | null;
@@ -111,11 +152,13 @@ export type Database = {
           is_public?: boolean | null;
           processed_at?: string | null;
           processing_status?: Database['public']['Enums']['processing_status'];
+          program_id?: string | null;
           start_at: string;
           station_id: string;
           updated_at?: string;
         };
         Update: {
+          campaign_id?: string | null;
           created_at?: string;
           deleted_at?: string | null;
           description?: string | null;
@@ -124,11 +167,26 @@ export type Database = {
           is_public?: boolean | null;
           processed_at?: string | null;
           processing_status?: Database['public']['Enums']['processing_status'];
+          program_id?: string | null;
           start_at?: string;
           station_id?: string;
           updated_at?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: 'datasets_campaign_id_fkey';
+            columns: ['campaign_id'];
+            isOneToOne: false;
+            referencedRelation: 'campaigns';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'datasets_program_id_fkey';
+            columns: ['program_id'];
+            isOneToOne: false;
+            referencedRelation: 'programs';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'datasets_station_id_fkey';
             columns: ['station_id'];
@@ -245,6 +303,66 @@ export type Database = {
         };
         Relationships: [];
       };
+      programs: {
+        Row: {
+          created_at: string;
+          deleted_at: string | null;
+          description: string | null;
+          id: string;
+          name: string;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          deleted_at?: string | null;
+          description?: string | null;
+          id?: string;
+          name: string;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          deleted_at?: string | null;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      station_has_campaigns: {
+        Row: {
+          campaign_id: string;
+          enroll_at: string | null;
+          station_id: string;
+        };
+        Insert: {
+          campaign_id: string;
+          enroll_at?: string | null;
+          station_id: string;
+        };
+        Update: {
+          campaign_id?: string;
+          enroll_at?: string | null;
+          station_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'station_has_campaigns_campaign_id_fkey';
+            columns: ['campaign_id'];
+            isOneToOne: false;
+            referencedRelation: 'campaigns';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'station_has_campaigns_station_id_fkey';
+            columns: ['station_id'];
+            isOneToOne: false;
+            referencedRelation: 'stations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       station_has_instruments: {
         Row: {
           assigned_at: string | null;
@@ -274,6 +392,39 @@ export type Database = {
           },
           {
             foreignKeyName: 'station_has_instruments_station_id_fkey';
+            columns: ['station_id'];
+            isOneToOne: false;
+            referencedRelation: 'stations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      station_has_programs: {
+        Row: {
+          enroll_at: string | null;
+          program_id: string;
+          station_id: string;
+        };
+        Insert: {
+          enroll_at?: string | null;
+          program_id: string;
+          station_id: string;
+        };
+        Update: {
+          enroll_at?: string | null;
+          program_id?: string;
+          station_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'station_has_programs_program_id_fkey';
+            columns: ['program_id'];
+            isOneToOne: false;
+            referencedRelation: 'programs';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'station_has_programs_station_id_fkey';
             columns: ['station_id'];
             isOneToOne: false;
             referencedRelation: 'stations';
@@ -319,7 +470,19 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_station_last_position: {
+        Args: { station_id: string };
+        Returns: string;
+      };
+      get_station_measure_parameter_list: {
+        Args: { station_id: string };
+        Returns: string[];
+      };
+      get_stations_geojson: { Args: never; Returns: Json };
+      mvt_measures: {
+        Args: { instrument_id: string; x: number; y: number; z: number };
+        Returns: string;
+      };
     };
     Enums: {
       processing_status: 'pending' | 'processing' | 'completed' | 'failed';

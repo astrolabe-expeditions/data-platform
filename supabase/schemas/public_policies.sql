@@ -50,3 +50,27 @@ CREATE POLICY "Public can view station-instrument links for public stations" ON 
       AND d.deleted_at IS NULL
     )
   );
+
+CREATE POLICY "Public can view station-program links for public stations" ON public.station_has_programs FOR SELECT
+  TO anon USING (
+    EXISTS (
+      SELECT 1
+      FROM public.stations s
+      JOIN public.datasets d ON d.station_id = s.id
+      WHERE s.id = public.station_has_programs.station_id
+      AND d.is_public = true
+      AND d.deleted_at IS NULL
+    )
+  );
+
+CREATE POLICY "Public can view station-campaign links for public stations" ON public.station_has_campaigns FOR SELECT
+  TO anon USING (
+    EXISTS (
+      SELECT 1
+      FROM public.stations s
+      JOIN public.datasets d ON d.station_id = s.id
+      WHERE s.id = public.station_has_campaigns.station_id
+      AND d.is_public = true
+      AND d.deleted_at IS NULL
+    )
+  );

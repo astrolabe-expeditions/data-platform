@@ -58,6 +58,8 @@ enabled = true
 schema_paths = [
   "./schemas/extensions.sql",
   "./schemas/models.sql",
+  "./schemas/programs.sql",
+  "./schemas/campaigns.sql",
   "./schemas/instruments.sql",
   "./schemas/stations.sql",
   "./schemas/datasets.sql",
