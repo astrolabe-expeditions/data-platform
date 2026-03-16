@@ -11,7 +11,9 @@ CREATE TABLE public.datasets (
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   deleted_at TIMESTAMPTZ,
-  station_id uuid NOT NULL REFERENCES public.stations(id) ON DELETE CASCADE
+  station_id uuid NOT NULL REFERENCES public.stations(id) ON DELETE CASCADE,
+  program_id uuid REFERENCES public.programs(id) ON DELETE SET NULL,
+  campaign_id uuid REFERENCES public.campaigns(id) ON DELETE SET NULL
 );
 
 ALTER TABLE
@@ -24,4 +26,3 @@ SELECT
 CREATE POLICY "Allow all authenticated users to insert datasets" ON public.datasets FOR
 INSERT
   TO authenticated WITH CHECK (TRUE);
-
