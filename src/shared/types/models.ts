@@ -11,6 +11,14 @@ export type UpdateInstrument = TablesUpdate<'instruments'>;
 export type Station = Tables<'stations'>;
 export type InsertStation = TablesInsert<'stations'>;
 export type UpdateStation = TablesUpdate<'stations'>;
+export type StationWithCoordinates = Station & {
+  long: number;
+  lat: number;
+};
+export type StationWithPublicData = StationWithCoordinates & {
+  campaign_ids: string[];
+  program_ids: string[];
+};
 
 export type Dataset = Tables<'datasets'>;
 export type InsertDataset = TablesInsert<'datasets'>;

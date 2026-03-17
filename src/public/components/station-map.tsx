@@ -5,8 +5,10 @@ import type {
   GeoJSONSource,
   SymbolLayerSpecification,
 } from 'maplibre-gl';
+
+import type { StationWithCoordinates } from '@/shared/types/models';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { useEffect, useRef, useState } from 'react';
+import { type FC, useMemo, useState } from 'react';
 import {
   Layer,
   Map as MapLibre,
@@ -18,8 +20,6 @@ import {
   Source,
 } from 'react-map-gl/maplibre';
 
-import { supabaseClient } from '@/core/utils/supabase-client';
-
 interface StationPopupInfo {
   id: string;
   name: string;
@@ -30,22 +30,33 @@ interface StationPopupInfo {
 
 const brestCoordinate = [48.400002, -4.48333];
 
-const StationMap = () => {
-  const mapRef = useRef<MapRef>(null);
+interface StationMapProps {
+  stations: StationWithCoordinates[];
+  mapRef: React.RefObject<MapRef | null>;
+}
+
+const StationMap: FC<StationMapProps> = ({ stations, mapRef }) => {
   const go = useGo();
   const [popupInfo, setPopupInfo] = useState<StationPopupInfo | null>(null);
   const t = useTranslate();
 
-  const [geojsonData, setGeojsonData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const resp = await supabaseClient.rpc('get_stations_geojson');
-      setGeojsonData(resp.data);
+  const geojsonData: GeoJSON.GeoJSON = useMemo(() => {
+    return {
+      type: 'FeatureCollection',
+      features: stations.map((station) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [station.long, station.lat],
+        },
+        properties: {
+          id: station.id,
+          name: station.name,
+          description: station.description,
+        },
+      })),
     };
-
-    fetchData();
-  }, []);
+  }, [stations]);
 
   const clusterLayer: CircleLayerSpecification = {
     id: 'clusters',
@@ -135,7 +146,7 @@ const StationMap = () => {
       initialViewState={{
         latitude: brestCoordinate[0],
         longitude: brestCoordinate[1],
-        zoom: 4,
+        zoom: 6,
         bearing: 0,
         pitch: 0,
       }}
@@ -147,7 +158,7 @@ const StationMap = () => {
       <NavigationControl position="top-right" />
       <ScaleControl />
 
-      {geojsonData ? (
+      {stations ? (
         <Source
           id="stations"
           type="geojson"

@@ -234,7 +234,32 @@
       "map": "Carte"
     },
     "list": {
-      "explore": "Visualiser les données"
+      "title": "Liste des stations d'observation",
+      "explore": "Visualiser les données",
+      "filter": {
+        "title": "Filters",
+        "open": {
+          "one": "1 Filtre",
+          "few": "{{count}} Filtres",
+          "other": "Toutes les stations"
+        },
+        "type": {
+          "label": "Type de station",
+          "options": {
+            "fixed": "Bouées",
+            "mobile": "Voiliers"
+          }
+        },
+        "program": {
+          "label": "Participant au programme"
+        },
+        "campaign": {
+          "label": "Participant à la campagne"
+        },
+        "apply": "Appliquer",
+        "clearAll": "Effacer tous"
+      },
+      "empty": "Aucune station trouvée"
     },
     "detail": {
       "back": "Retour à la carte"
