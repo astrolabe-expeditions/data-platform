@@ -90,7 +90,7 @@ const main = async () => {
       description: 'Première campagne de mesure du projet RiOMar',
       program_id: programs[0].id,
       deleted_at: null,
-    }
+    },
   ]);
 
   const brest_position: [number, number] = [48.400002, -4.48333];
