@@ -479,6 +479,19 @@ export type Database = {
         Returns: string[];
       };
       get_stations_geojson: { Args: never; Returns: Json };
+      get_stations_with_public_data: {
+        Args: never;
+        Returns: {
+          campaign_ids: string[];
+          description: string;
+          id: string;
+          is_mobile: boolean;
+          lat: number;
+          long: number;
+          name: string;
+          program_ids: string[];
+        }[];
+      };
       mvt_measures: {
         Args: { instrument_id: string; x: number; y: number; z: number };
         Returns: string;
