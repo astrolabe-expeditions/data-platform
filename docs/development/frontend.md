@@ -63,3 +63,21 @@ src/
 - **Format code:** `yarn format`
 - **Check for errors:** `yarn lint`
 
+## TypeScript Types
+
+**Why do we need types?** TypeScript types help catch errors before you run your code by telling your editor what shape your data should have.
+
+### Generating Types from the Database
+
+After making database changes, regenerate types:
+
+```bash
+yarn type:generate
+```
+
+**What this does:**
+- Uses Supabase CLI to read your local database structure
+- Creates TypeScript type definitions in `src/shared/types/supabase.ts`
+- Gives you autocomplete when working with database data
+
+**⚠️ Important:** After running this command, you need to manually remove the last line in `src/shared/types/supabase.ts` (it's usually an extra export that causes issues).
