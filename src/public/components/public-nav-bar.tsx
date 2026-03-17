@@ -22,7 +22,7 @@ import { Link as RouterLink } from 'react-router';
 const drawerWidth = 240;
 const AppOrganization = import.meta.env.VITE_APP_ORGANIZATION;
 
-const NavBar = () => {
+const PublicNavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = useTranslate();
 
@@ -152,4 +152,4 @@ const NavBar = () => {
   );
 };
 
-export { NavBar };
+export { PublicNavBar };
