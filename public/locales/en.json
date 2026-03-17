@@ -235,7 +235,32 @@
       "map": "Map"
     },
     "list": {
-      "explore": "Explore data"
+      "title": "List of observation stations",
+      "explore": "Explore data",
+      "filter": {
+        "title": "Filters",
+        "open": {
+          "one": "1 Filter",
+          "few": "{{count}} Filters",
+          "other": "All stations"
+        },
+        "type": {
+          "label": "Station type",
+          "options": {
+            "fixed": "Buoys",
+            "mobile": "Sailboats"
+          }
+        },
+        "program": {
+          "label": "Enroll in program"
+        },
+        "campaign": {
+          "label": "Enroll in campaign"
+        },
+        "apply": "Apply",
+        "clearAll": "Clear all"
+      },
+      "empty": "No stations found"
     },
     "detail": {
       "back": "Back to map"
