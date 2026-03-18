@@ -26,12 +26,6 @@
     "fields": {
       "createdAt": "Créé le",
       "updatedAt": "Mis à jour le"
-    },
-    "processing_status": {
-      "pending": "Traitement en attente",
-      "processing": "Traitement en cours",
-      "completed": "Traitement terminé",
-      "failed": "Traitement échoué"
     }
   },
   "dashboard": {
@@ -61,6 +55,15 @@
     "titles": {
       "create": "Créer un jeu de données",
       "list": "Jeux de données"
+    },
+    "files": {
+      "processingStatus": {
+        "validating": "En attente de validation",
+        "pending": "Traitement en attente",
+        "processing": "Traitement en cours",
+        "completed": "Traitement terminé",
+        "failed": "Traitement échoué"
+      }
     },
     "uploader": {
       "button": "Sélectionner des fichiers",

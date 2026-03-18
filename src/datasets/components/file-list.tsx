@@ -2,6 +2,7 @@ import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useTranslate } from '@refinedev/core';
 import type { FC } from 'react';
 
+import { getFileProcessingStatusKey } from '@/datasets/helpers/dataset-files';
 import type { DatasetFile } from '@/shared/types/models.ts';
 
 interface FileListProps {
@@ -23,7 +24,7 @@ const FileList: FC<FileListProps> = ({ files }) => {
             }
             secondary={
               <Typography variant="caption">
-                {t(`commons.processing_status.${file.processing_status}`)}
+                {t(getFileProcessingStatusKey(file))}
               </Typography>
             }
           />

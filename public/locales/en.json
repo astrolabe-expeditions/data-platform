@@ -26,12 +26,6 @@
     "fields": {
       "createdAt": "Created at",
       "updatedAt": "Updated at"
-    },
-    "processing_status": {
-      "pending": "Pending",
-      "processing": "Processing",
-      "completed": "Completed",
-      "failed": "Failed"
     }
   },
   "dashboard": {
@@ -61,6 +55,15 @@
     "titles": {
       "create": "Create a dataset",
       "list": "Datasets"
+    },
+    "files": {
+      "processingStatus": {
+        "validating": "Validating",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "failed": "Failed"
+      }
     },
     "uploader": {
       "button": "Select files",
