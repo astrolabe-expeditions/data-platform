@@ -78,6 +78,7 @@ export type Database = {
           extension: string;
           id: string;
           instrument_id: string;
+          is_validated: boolean | null;
           name: string;
           path: string;
           processed_at: string | null;
@@ -90,6 +91,7 @@ export type Database = {
           extension: string;
           id?: string;
           instrument_id: string;
+          is_validated?: boolean | null;
           name: string;
           path: string;
           processed_at?: string | null;
@@ -102,6 +104,7 @@ export type Database = {
           extension?: string;
           id?: string;
           instrument_id?: string;
+          is_validated?: boolean | null;
           name?: string;
           path?: string;
           processed_at?: string | null;
@@ -135,8 +138,6 @@ export type Database = {
           end_at: string;
           id: string;
           is_public: boolean | null;
-          processed_at: string | null;
-          processing_status: Database['public']['Enums']['processing_status'];
           program_id: string | null;
           start_at: string;
           station_id: string;
@@ -150,8 +151,6 @@ export type Database = {
           end_at: string;
           id?: string;
           is_public?: boolean | null;
-          processed_at?: string | null;
-          processing_status?: Database['public']['Enums']['processing_status'];
           program_id?: string | null;
           start_at: string;
           station_id: string;
@@ -165,8 +164,6 @@ export type Database = {
           end_at?: string;
           id?: string;
           is_public?: boolean | null;
-          processed_at?: string | null;
-          processing_status?: Database['public']['Enums']['processing_status'];
           program_id?: string | null;
           start_at?: string;
           station_id?: string;

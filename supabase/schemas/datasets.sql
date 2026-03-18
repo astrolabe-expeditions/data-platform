@@ -1,12 +1,8 @@
-CREATE TYPE processing_status AS ENUM ('pending', 'processing', 'completed', 'failed');
-
 CREATE TABLE public.datasets (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   description TEXT,
   start_at TIMESTAMPTZ NOT NULL,
   end_at TIMESTAMPTZ NOT NULL,
-  processing_status processing_status NOT NULL DEFAULT 'pending',
-  processed_at TIMESTAMPTZ,
   is_public BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,

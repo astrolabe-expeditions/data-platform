@@ -1,3 +1,5 @@
+CREATE TYPE processing_status AS ENUM ('pending', 'processing', 'completed', 'failed');
+
 CREATE TABLE public.dataset_files (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
@@ -7,6 +9,7 @@ CREATE TABLE public.dataset_files (
   path text NOT NULL,
   started_at timestamp WITH time zone,
   uploaded_at timestamp WITH time zone DEFAULT NOW(),
+  is_validated boolean DEFAULT false,
   processing_status processing_status NOT NULL DEFAULT 'pending',
   processed_at TIMESTAMP WITH TIME ZONE
 );
