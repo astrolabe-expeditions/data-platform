@@ -29,6 +29,7 @@ services:
   frontend:
     image: ghcr.io/astrolabe-expeditions/data-platform:latest
     restart: always
+    pull_policy: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${FRONTEND_SUBDOMAIN}.${DOMAIN_NAME}`)"
