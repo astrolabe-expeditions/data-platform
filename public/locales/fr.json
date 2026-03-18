@@ -43,7 +43,6 @@
     "datasets": "Jeux de données",
     "fields": {
       "description": "Description",
-      "status": "Statut",
       "endDate": "Date de fin",
       "period": "Période",
       "startDate": "Date de début"
