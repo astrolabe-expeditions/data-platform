@@ -3,59 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "path": "ab38d14e-5704-4696-9a33-cc277024e2d0",
-        "options": {
-          "allowedOrigins": "*"
-        }
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [-432, -128],
-      "id": "47c6b108-d68a-4f0d-a9f9-fc8d812431a5",
-      "name": "Webhook",
-      "webhookId": "ab38d14e-5704-4696-9a33-cc277024e2d0"
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "tableId": "dataset_files",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "condition": "eq",
-              "keyValue": "={{ $('Loop Over Items1').last().json.id }}"
-            }
-          ]
-        },
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "processing_status",
-              "fieldValue": "completed"
-            },
-            {
-              "fieldId": "processed_at",
-              "fieldValue": "={{ $now }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [1360, -320],
-      "id": "3f117094-c238-4455-b8e6-564053b3b2f9",
-      "name": "Update a row",
-      "executeOnce": true,
-      "credentials": {
-        "supabaseApi": {
-          "id": "qmu8Prx2w5FPDUd8",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "url": "=http://supabase_kong_data-platform:8000/storage/v1/object/dataset_files/{{ $json.path }}",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "supabaseApi",
@@ -69,7 +16,7 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
-      "position": [688, -128],
+      "position": [464, -80],
       "id": "fe20a7bb-4e20-4a1d-935e-b8fb52c49a3f",
       "name": "Récupérer le fichier CSV",
       "retryOnFail": false,
@@ -88,35 +35,9 @@
       },
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
-      "position": [912, -128],
+      "position": [688, -80],
       "id": "93e93acf-491f-43e1-bdbb-706a6f200250",
       "name": "Extraire les lignes dans le fichier CSV"
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "tableId": "dataset_files",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "dataset_id",
-              "condition": "eq",
-              "keyValue": "={{ $json.id }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [16, -128],
-      "id": "47e604cd-0500-4b33-a9ee-669f73a404d1",
-      "name": "Récupérer les fichiers du dataset à traiter",
-      "credentials": {
-        "supabaseApi": {
-          "id": "qmu8Prx2w5FPDUd8",
-          "name": "Supabase account"
-        }
-      }
     },
     {
       "parameters": {
@@ -126,7 +47,7 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1360, -128],
+      "position": [1136, -272],
       "id": "c50f6779-3120-4bc2-8018-307ac30ce62a",
       "name": "Formater le retour",
       "alwaysOutputData": true,
@@ -147,11 +68,11 @@
             },
             {
               "fieldId": "instrument_id",
-              "fieldValue": "={{ $('Récupérer les fichiers du dataset à traiter').item.json.instrument_id }}"
+              "fieldValue": "={{ $('Boucler sur les fichiers').last().json.instrument_id }}"
             },
             {
               "fieldId": "dataset_id",
-              "fieldValue": "={{ $('Récupérer les fichiers du dataset à traiter').item.json.dataset_id }}"
+              "fieldValue": "={{ $('Boucler sur les fichiers').last().json.dataset_id }}"
             },
             {
               "fieldId": "=position",
@@ -162,7 +83,7 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1584, -16],
+      "position": [1360, -32],
       "id": "0a38bd5e-34df-4876-a2b9-d2b45fd3717e",
       "name": "Enregistrer une mesures",
       "retryOnFail": false,
@@ -176,24 +97,51 @@
     },
     {
       "parameters": {
-        "batchSize": 100,
-        "options": {}
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
       },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [1136, -128],
-      "id": "c56994c3-3aaf-4428-85c3-2c18054c0492",
-      "name": "Loop Over Items"
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [-432, -80],
+      "id": "deca484c-1a93-4c5c-a9d9-f4e8fddf97f3",
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "options": {}
+        "operation": "getAll",
+        "tableId": "dataset_files",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "is_validated",
+              "condition": "is",
+              "keyValue": "true"
+            },
+            {
+              "keyName": "processed_at",
+              "condition": "is",
+              "keyValue": "null"
+            }
+          ]
+        }
       },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [240, -128],
-      "id": "e4f253f8-d4a7-46c5-a919-c4cfddf9c3a1",
-      "name": "Loop Over Items1"
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-208, -80],
+      "id": "2999f628-d741-406f-b410-005b06fa9435",
+      "name": "Récupérer les fichiers non traitées",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -219,9 +167,9 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [464, -128],
+      "position": [240, -80],
       "id": "179d0da2-2e88-4525-8ead-d294a00b9330",
-      "name": "Update a row3",
+      "name": "Mettre le statut \"En cours de traitement\"",
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
@@ -232,47 +180,13 @@
     {
       "parameters": {
         "operation": "update",
-        "tableId": "datasets",
+        "tableId": "dataset_files",
         "filters": {
           "conditions": [
             {
               "keyName": "id",
               "condition": "eq",
-              "keyValue": "={{ $('Webhook').item.json.query.datasetId }}"
-            }
-          ]
-        },
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "processing_status",
-              "fieldValue": "processing"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [-208, -128],
-      "id": "64414365-90db-420d-bf30-e4c827aef0f4",
-      "name": "Mettre le jeu de donnée en cours de traitement",
-      "credentials": {
-        "supabaseApi": {
-          "id": "qmu8Prx2w5FPDUd8",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "tableId": "datasets",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "condition": "eq",
-              "keyValue": "={{ $('Webhook').item.json.query.datasetId }}"
+              "keyValue": "={{ $('Boucler sur les fichiers').last().json.id }}"
             }
           ]
         },
@@ -291,41 +205,49 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [464, -320],
-      "id": "14db98b1-cced-4a5b-9a36-5fcb92f305f8",
-      "name": "Mettre à jour le statut du traitement du jeu de donnée : Terminé",
-      "executeOnce": false,
+      "position": [1136, -80],
+      "id": "3f117094-c238-4455-b8e6-564053b3b2f9",
+      "name": "Mettre le statut \"Traitement terminer\"",
+      "executeOnce": true,
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
           "name": "Supabase account"
         }
       }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [16, -80],
+      "id": "5ce7835c-304e-4008-9d66-264405299f43",
+      "name": "Boucler sur les fichiers"
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [912, -80],
+      "id": "c56994c3-3aaf-4428-85c3-2c18054c0492",
+      "name": "Boucler sur les mesures"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [240, -272],
+      "id": "fa921fec-bb96-490e-8b2b-b4ee39f96945",
+      "name": "Fin du workflow"
     }
   ],
-  "pinData": {
-    "Webhook": [
-      {
-        "json": {
-          "query": {
-            "datasetId": "d8b82830-2337-46ec-908b-17fd001867b3"
-          }
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "connections": {
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Mettre le jeu de donnée en cours de traitement",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Récupérer le fichier CSV": {
       "main": [
         [
@@ -342,23 +264,12 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Boucler sur les mesures",
             "type": "main",
             "index": 0
           }
         ],
         []
-      ]
-    },
-    "Récupérer les fichiers du dataset à traiter": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "Formater le retour": {
@@ -376,7 +287,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Boucler sur les mesures",
             "type": "main",
             "index": 0
           }
@@ -384,54 +295,29 @@
         []
       ]
     },
-    "Update a row": {
+    "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "Loop Over Items1",
+            "node": "Récupérer les fichiers non traitées",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Loop Over Items": {
+    "Récupérer les fichiers non traitées": {
       "main": [
         [
           {
-            "node": "Update a row",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Formater le retour",
+            "node": "Boucler sur les fichiers",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Loop Over Items1": {
-      "main": [
-        [
-          {
-            "node": "Mettre à jour le statut du traitement du jeu de donnée : Terminé",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Update a row3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update a row3": {
+    "Mettre le statut \"En cours de traitement\"": {
       "main": [
         [
           {
@@ -442,11 +328,47 @@
         ]
       ]
     },
-    "Mettre le jeu de donnée en cours de traitement": {
+    "Mettre le statut \"Traitement terminer\"": {
       "main": [
         [
           {
-            "node": "Récupérer les fichiers du dataset à traiter",
+            "node": "Boucler sur les fichiers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Boucler sur les fichiers": {
+      "main": [
+        [
+          {
+            "node": "Fin du workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mettre le statut \"En cours de traitement\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Boucler sur les mesures": {
+      "main": [
+        [
+          {
+            "node": "Mettre le statut \"Traitement terminer\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Formater le retour",
             "type": "main",
             "index": 0
           }
@@ -464,7 +386,7 @@
     "binaryMode": "separate",
     "errorWorkflow": "ugIfMyJJfvtMZt0S"
   },
-  "versionId": "0633177e-0be4-41a4-a617-630a4d955186",
+  "versionId": "12d99267-ab2e-4221-b0b2-b4e6da4fd58c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5e0ec54da47e405a2fb7faf45aec7e44e092525d2348fce5c139307846720f82"
