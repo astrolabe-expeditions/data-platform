@@ -51,7 +51,6 @@ jobs:
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-          DATA_INGESTION_WEBHOOK_URL: ${{ secrets.DATA_INGESTION_WEBHOOK_URL }}
         run: npx --package semantic-release@25 --package @codedependant/semantic-release-docker semantic-release
 
   deploy:
