@@ -14,7 +14,10 @@ import { useTranslation } from 'react-i18next';
 import { BrowserRouter } from 'react-router';
 
 import { authProvider } from '@/auth/providers/auth-provider';
-import { supabaseClient } from '@/core/utils/supabase-client';
+import {
+  addRpcToDataProvider,
+  supabaseClient,
+} from '@/core/utils/supabase-client';
 
 const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   const { t, i18n } = useTranslation();
@@ -38,6 +41,8 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
+  const supabaseProvider = addRpcToDataProvider(dataProvider(supabaseClient));
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={overriddenLightTheme}>
@@ -45,7 +50,7 @@ const AppProvider: FC<PropsWithChildren> = ({ children }) => {
         <GlobalStyles styles={{ html: { WebkitFontSmoothing: 'auto' } }} />
         <RefineSnackbarProvider>
           <Refine
-            dataProvider={dataProvider(supabaseClient)}
+            dataProvider={supabaseProvider}
             liveProvider={liveProvider(supabaseClient)}
             options={{ liveMode: 'auto' }}
             authProvider={authProvider}

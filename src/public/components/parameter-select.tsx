@@ -3,9 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { type SelectChangeEvent } from '@mui/material/Select';
 import { useTranslate } from '@refinedev/core';
-import { type FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
 
-import { supabaseClient as supabase } from '@/core/utils/supabase-client';
+import { useSupabaseRpc } from '@/core/hooks/use-supabase-rpc';
 
 interface ParameterSelectProps {
   value: string;
@@ -20,28 +20,23 @@ const ParameterSelect: FC<ParameterSelectProps> = ({
 }) => {
   const t = useTranslate();
 
-  const [parameters, setParameters] = useState<string[]>([]);
+  const {
+    query: { data: parameters, isSuccess },
+  } = useSupabaseRpc<string[]>({
+    name: 'get_station_measure_parameter_list',
+    params: {
+      station_id: stationId,
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const resp = await supabase.rpc('get_station_measure_parameter_list', {
-        station_id: stationId,
-      });
-      setParameters(resp.data);
-      onChange(resp.data[0]);
-    };
-
-    if (parameters.length === 0) {
-      fetchData();
-    }
-  }, [stationId, onChange, parameters]);
+  console.log('Parameters from RPC:', parameters);
 
   const handleChangeParameter = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
     onChange(newValue);
   };
 
-  if (parameters.length === 0 || value === '') return null;
+  if (!isSuccess || parameters.length === 0 || value === '') return null;
 
   return (
     <FormControl
@@ -55,6 +50,7 @@ const ParameterSelect: FC<ParameterSelectProps> = ({
       <Select
         labelId="parameter-select-label"
         id="parameter-select"
+        defaultValue={parameters[0]}
         value={value}
         label={t('public.graph.parameter.label')}
         onChange={handleChangeParameter}
