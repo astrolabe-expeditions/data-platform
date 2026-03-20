@@ -1,5 +1,5 @@
 {
-  "name": "data-ingestion",
+  "name": "ingest-dataset-file",
   "nodes": [
     {
       "parameters": {
@@ -16,8 +16,8 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
-      "position": [464, -80],
-      "id": "fe20a7bb-4e20-4a1d-935e-b8fb52c49a3f",
+      "position": [-800, 160],
+      "id": "2bee16a9-32a8-4ec8-b6b1-cc1c41e00a79",
       "name": "Récupérer le fichier CSV",
       "retryOnFail": false,
       "credentials": {
@@ -35,23 +35,26 @@
       },
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
-      "position": [688, -80],
-      "id": "93e93acf-491f-43e1-bdbb-706a6f200250",
+      "position": [-576, 160],
+      "id": "5944453c-275f-42e9-ac21-ca51a0f30c92",
       "name": "Extraire les lignes dans le fichier CSV"
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
         "language": "pythonNative",
-        "pythonCode": "data = _item[\"json\"]\n\n# Vérifie que 'datetime' est présent\nif \"datetime\" not in data:\n    raise ValueError(\"Le champ 'datetime' est obligatoire.\")\n\noutput = {\n  'recorded_at': data[\"datetime\"]\n}\n\n# Extraire la position\nif \"lat\" in data and \"long\" in data:\n  output['position'] = f\"POINT({data['long']} {data['lat']})\"\nelse:\n  output['position'] = None\n\n\nparameters = {}\n\n# Traite chaque paramètre\nfor key, value in data.items():\n    if key in [\"datetime\", \"lat\", \"long\"]:\n        continue  # On saute 'datetime'\n\n    # Tente de convertir en float si c'est une chaîne représentant un nombre\n    if isinstance(value, str):\n        try:\n            num_value = float(value)\n            parameters[key] = num_value\n        except ValueError:\n            parameters[key] = value\n    else:\n        parameters[key] = value\n\noutput['parameters'] = parameters\n\nreturn output"
+        "pythonCode": "output = {\n  'error': False\n}\n\ntry:\n  data = _item[\"json\"]\n  \n  # Vérifie que 'datetime' est présent\n  if \"datetime\" not in data:\n      raise ValueError(\"Le champ 'datetime' est obligatoire.\")\n  \n  output['recorded_at'] = data[\"datetime\"]\n  \n  # Extraire la position\n  if \"lat\" in data and \"long\" in data:\n    output['position'] = f\"POINT( {data['long']} )\"\n  else:\n    output['position'] = None\n  \n  \n  parameters = {}\n  \n  # Traite chaque paramètre\n  for key, value in data.items():\n      if key in [\"datetime\", \"lat\", \"long\"]:\n          continue  # On saute 'datetime'\n  \n      # Tente de convertir en float si c'est une chaîne représentant un nombre\n      if isinstance(value, str):\n          try:\n              num_value = float(value)\n              parameters[key] = num_value\n          except ValueError:\n              parameters[key] = value\n      else:\n          parameters[key] = value\n  \n  output['parameters'] = parameters\n  \n  return output\nexcept:\n  output['error'] = True\n  return output"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1136, -272],
-      "id": "c50f6779-3120-4bc2-8018-307ac30ce62a",
+      "position": [-128, 160],
+      "id": "7c56020b-02ea-4d58-8b45-cadf50419d17",
       "name": "Formater le retour",
       "alwaysOutputData": true,
-      "notesInFlow": false
+      "notesInFlow": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -68,11 +71,11 @@
             },
             {
               "fieldId": "instrument_id",
-              "fieldValue": "={{ $('Boucler sur les fichiers').last().json.instrument_id }}"
+              "fieldValue": "={{ $('Mettre le statut \"En cours de traitement\"').item.json.instrument_id }}"
             },
             {
               "fieldId": "dataset_id",
-              "fieldValue": "={{ $('Boucler sur les fichiers').last().json.dataset_id }}"
+              "fieldValue": "={{ $('Mettre le statut \"En cours de traitement\"').item.json.dataset_id }}"
             },
             {
               "fieldId": "=position",
@@ -83,59 +86,11 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1360, -32],
-      "id": "0a38bd5e-34df-4876-a2b9-d2b45fd3717e",
+      "position": [320, 328],
+      "id": "ed64d370-ba3f-46f9-b953-6583bb732e75",
       "name": "Enregistrer une mesures",
       "retryOnFail": false,
       "maxTries": 3,
-      "credentials": {
-        "supabaseApi": {
-          "id": "qmu8Prx2w5FPDUd8",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.3,
-      "position": [-432, -80],
-      "id": "deca484c-1a93-4c5c-a9d9-f4e8fddf97f3",
-      "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "tableId": "dataset_files",
-        "matchType": "allFilters",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "is_validated",
-              "condition": "is",
-              "keyValue": "true"
-            },
-            {
-              "keyName": "processed_at",
-              "condition": "is",
-              "keyValue": "null"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [-208, -80],
-      "id": "2999f628-d741-406f-b410-005b06fa9435",
-      "name": "Récupérer les fichiers non traitées",
       "credentials": {
         "supabaseApi": {
           "id": "qmu8Prx2w5FPDUd8",
@@ -152,7 +107,7 @@
             {
               "keyName": "id",
               "condition": "eq",
-              "keyValue": "={{ $json.id }}"
+              "keyValue": "={{ $json.dataset_file_id }}"
             }
           ]
         },
@@ -167,8 +122,8 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [240, -80],
-      "id": "179d0da2-2e88-4525-8ead-d294a00b9330",
+      "position": [-1024, 160],
+      "id": "18f0c333-07bc-4cbd-b22d-ea295feb496d",
       "name": "Mettre le statut \"En cours de traitement\"",
       "credentials": {
         "supabaseApi": {
@@ -186,7 +141,7 @@
             {
               "keyName": "id",
               "condition": "eq",
-              "keyValue": "={{ $('Boucler sur les fichiers').last().json.id }}"
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.dataset_file_id }}"
             }
           ]
         },
@@ -205,8 +160,8 @@
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [1136, -80],
-      "id": "3f117094-c238-4455-b8e6-564053b3b2f9",
+      "position": [-128, -32],
+      "id": "f5853cbb-24a0-436a-a7f6-3d579a2a6ca9",
       "name": "Mettre le statut \"Traitement terminer\"",
       "executeOnce": true,
       "credentials": {
@@ -218,35 +173,120 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [16, -80],
-      "id": "5ce7835c-304e-4008-9d66-264405299f43",
-      "name": "Boucler sur les fichiers"
-    },
-    {
-      "parameters": {
         "batchSize": 100,
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [912, -80],
-      "id": "c56994c3-3aaf-4428-85c3-2c18054c0492",
+      "position": [-352, 160],
+      "id": "970dd823-f7ea-4dd7-aa03-5124c13b0c76",
       "name": "Boucler sur les mesures"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "dataset_file_id"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [-1248, 160],
+      "id": "b12a474b-9699-4651-980e-5178f1b28f6d",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "errorMessage": "Erreur pendant le formatage des données"
+      },
+      "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
-      "position": [240, -272],
-      "id": "fa921fec-bb96-490e-8b2b-b4ee39f96945",
-      "name": "Fin du workflow"
+      "position": [544, 112],
+      "id": "7bc930ad-e048-4f30-865b-51e792033203",
+      "name": "Stop and Error"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "dataset_files",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Mettre le statut \"En cours de traitement\"').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processing_status",
+              "fieldValue": "failed"
+            },
+            {
+              "fieldId": "processed_at",
+              "fieldValue": "={{ $now }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [320, 112],
+      "id": "becf9304-cb74-444c-a637-273196ce6aa7",
+      "name": "Mettre le statut \"Erreur\"",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c4cc4be7-60ec-41ca-aef2-299ffdb5a9f8",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [96, 160],
+      "id": "6785329e-92fb-4e72-8e0b-0c105414fe61",
+      "name": "Si erreur de formatage"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "dataset_file_id": "f20097e7-4c76-4e06-9000-3b69748e84fc"
+        }
+      }
+    ]
+  },
   "connections": {
     "Récupérer le fichier CSV": {
       "main": [
@@ -256,8 +296,7 @@
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Extraire les lignes dans le fichier CSV": {
@@ -268,19 +307,19 @@
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Formater le retour": {
       "main": [
         [
           {
-            "node": "Enregistrer une mesures",
+            "node": "Si erreur de formatage",
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "Enregistrer une mesures": {
@@ -288,29 +327,6 @@
         [
           {
             "node": "Boucler sur les mesures",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        []
-      ]
-    },
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Récupérer les fichiers non traitées",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Récupérer les fichiers non traitées": {
-      "main": [
-        [
-          {
-            "node": "Boucler sur les fichiers",
             "type": "main",
             "index": 0
           }
@@ -322,35 +338,6 @@
         [
           {
             "node": "Récupérer le fichier CSV",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Mettre le statut \"Traitement terminer\"": {
-      "main": [
-        [
-          {
-            "node": "Boucler sur les fichiers",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Boucler sur les fichiers": {
-      "main": [
-        [
-          {
-            "node": "Fin du workflow",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Mettre le statut \"En cours de traitement\"",
             "type": "main",
             "index": 0
           }
@@ -374,23 +361,60 @@
           }
         ]
       ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Mettre le statut \"En cours de traitement\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mettre le statut \"Erreur\"": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Si erreur de formatage": {
+      "main": [
+        [
+          {
+            "node": "Mettre le statut \"Erreur\"",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enregistrer une mesures",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1",
+    "binaryMode": "separate",
     "availableInMCP": false,
     "timeSavedMode": "fixed",
-    "timezone": "Europe/Paris",
-    "callerPolicy": "workflowsFromSameOwner",
-    "binaryMode": "separate",
-    "errorWorkflow": "ugIfMyJJfvtMZt0S"
+    "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "12d99267-ab2e-4221-b0b2-b4e6da4fd58c",
+  "versionId": "7bb94724-f047-4010-993b-3fe0832ad0bb",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "5e0ec54da47e405a2fb7faf45aec7e44e092525d2348fce5c139307846720f82"
   },
-  "id": "FBbnTPiyv4rsCqZZ1Z1UY",
+  "id": "GQAg41l7Cw053a3R",
   "tags": []
 }

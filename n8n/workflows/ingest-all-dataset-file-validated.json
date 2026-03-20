@@ -1,0 +1,135 @@
+{
+  "name": "ingest-all-dataset-file-validated",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [-432, -80],
+      "id": "deca484c-1a93-4c5c-a9d9-f4e8fddf97f3",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "dataset_files",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "is_validated",
+              "condition": "is",
+              "keyValue": "true"
+            },
+            {
+              "keyName": "processed_at",
+              "condition": "is",
+              "keyValue": "null"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-224, -80],
+      "id": "2999f628-d741-406f-b410-005b06fa9435",
+      "name": "Récupérer les fichiers non traitées",
+      "credentials": {
+        "supabaseApi": {
+          "id": "qmu8Prx2w5FPDUd8",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "GQAg41l7Cw053a3R",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/GQAg41l7Cw053a3R",
+          "cachedResultName": "ingest-dataset-file"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "dataset_file_id": "={{ $json.id }}"
+          },
+          "matchingColumns": ["dataset_file_id"],
+          "schema": [
+            {
+              "id": "dataset_file_id",
+              "displayName": "dataset_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [-16, -80],
+      "id": "69fb45bf-5655-4e5b-a1c5-d4b41cb7d666",
+      "name": "Call 'ingest-dataset-file'",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Récupérer les fichiers non traitées",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Récupérer les fichiers non traitées": {
+      "main": [
+        [
+          {
+            "node": "Call 'ingest-dataset-file'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Paris",
+    "callerPolicy": "workflowsFromSameOwner",
+    "binaryMode": "separate",
+    "errorWorkflow": "ugIfMyJJfvtMZt0S"
+  },
+  "versionId": "77766bfc-e22e-44f3-807e-6a8aac8edf3c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5e0ec54da47e405a2fb7faf45aec7e44e092525d2348fce5c139307846720f82"
+  },
+  "id": "FBbnTPiyv4rsCqZZ1Z1UY",
+  "tags": []
+}
